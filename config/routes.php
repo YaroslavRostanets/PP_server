@@ -4,8 +4,9 @@ return array(
     "admin/detail/([0-9]+)" => "admin/detail/$1",
     "admin/list" => "admin/list",
     "admin/addplace" => "admin/addplace",
-    'admin/uploadplaceimg' => "admin/uploadplaceimg",
-    "admin" => "admin/index",
+    "admin/uploadplaceimg" => "admin/uploadplaceimg",
+    "admin/removeplace" => "admin/removeplace",
+    "admin" => "admin/list",
     "" => "site/index"
 );
 

@@ -132,7 +132,7 @@
                                             <button class="btn btn-info btn-fill">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                             </button>
-                                            <button class="btn btn-danger btn-fill">
+                                            <button class="btn btn-danger btn-fill js-remove-place" data-id="<?=  $parkPlace['id'] ?>">
                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                             </button>
                                         </td>
@@ -142,7 +142,8 @@
                             </table>
                         </div>
                         <div class="row-bot">
-                            <button class="btn btn-success btn-fill pull-right">
+                            <button class="btn btn-success btn-fill pull-right"
+                                    onclick="window.location.href=window.location.origin + '/admin/addplace/'">
                                 <i class="fa fa-plus-square-o" aria-hidden="true"></i> Добавить новую парковку
                             </button>
                             <div class="clearfix"></div>
@@ -187,6 +188,46 @@
             </nav>
         </div>
     </footer>
+
 </div>
+
+    <!-- Modal -->
+    <div class="remove-place modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Удаление парковки №<span class="js-park-id"></span></h4>
+                </div>
+                <div class="modal-body">
+                    <p>Вы уверены что хотите удалить парковку?</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="<?= "/admin/removeplace?id=" ?>" class="btn btn-danger js-remove-id">
+                        Удалить
+                    </a>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+
+        $(document).ready(function(){
+
+            $(".js-remove-place").on("click", function(){
+                var id = $(this).attr("data-id");
+                $(".js-park-id").text( id );
+                $(".js-remove-id").attr("href", $(".js-remove-id").attr("href") + id );
+                $('.remove-place').modal({show:true});
+            });
+
+        });
+
+    </script>
 
 <? include_once ROOT."/layouts/footer.php" ?>

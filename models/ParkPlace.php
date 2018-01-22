@@ -65,13 +65,15 @@ class ParkPlace {
     }
 
     public static function addNewParkPlace(
-        $weekday_from,$weekday_to,$saturday_from,$saturday_to,$sunday_from,$sunday_to,$time_interval, $park_zone, $lat, $lon
+        $photo_url,$weekday_from,$weekday_to,$saturday_from,$saturday_to,$sunday_from,$sunday_to,$time_interval, $park_zone, $lat, $lon
     ){
+        copy(SRC_PLACES . $photo_url, PLACES . $photo_url);
         $db = Db::getConnection();
         $sql = "INSERT INTO parking_place (
-                    weekday_from, weekday_to, saturday_from, saturday_to, sunday_from, sunday_to,
+                    photo_url, weekday_from, weekday_to, saturday_from, saturday_to, sunday_from, sunday_to,
                     time_interval, park_zone, coordinates )
                 VALUES (
+                    :photo_url,
                     :weekday_from, 
                     :weekday_to, 
                     :saturday_from, 
@@ -84,6 +86,9 @@ class ParkPlace {
 
         $result = $db->prepare($sql);
 
+        $http_places = HTTP_PLACES.$photo_url;
+
+        $result->bindParam(':photo_url', $http_places, PDO::PARAM_STR);
         $result->bindParam(':weekday_from', $weekday_from, PDO::PARAM_STR);
         $result->bindParam(':weekday_to', $weekday_to, PDO::PARAM_STR);
         $result->bindParam(':saturday_from', $saturday_from, PDO::PARAM_STR);
@@ -102,5 +107,12 @@ class ParkPlace {
 
     }
 
+    public static function removeParkPlace($id){
+        $db = Db::getConnection();
+        $sql = "DELETE FROM parking_place WHERE id=:id;";
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        return $result->execute();
+    }
 
 }

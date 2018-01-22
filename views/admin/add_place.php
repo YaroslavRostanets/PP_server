@@ -213,7 +213,7 @@
                                         <div class="form-group">
                                             <label>filename</label>
                                             <input type="text" class="form-control js-filename"
-                                                   name="filename"
+                                                   name="photo_url"
                                                    value="">
                                         </div>
                                     </div>
@@ -347,7 +347,7 @@
                 var fullFileName = file['fileName'] + "." + file['format'];
                 $(".js-filename").val( fullFileName );
                 $(".js-upload-photo").hide();
-                $(".card-user .image img").attr("src","<?= UPLOADS ?>places/" + fullFileName);
+                $(".card-user .image img").attr("src","<?= TMP_PLACES ?>" + fullFileName);
                 $(".card-user .image").show();
             }
         });

@@ -41,6 +41,7 @@ class AdminController {
         if( isset($_POST['submit']) ){
             pri($_POST);
             ParkPlace::addNewParkPlace(
+                $_POST['photo_url'],
                 $_POST['weekday_from'],
                 $_POST['weekday_to'],
                 $_POST['saturday_from'],
@@ -66,13 +67,25 @@ class AdminController {
             $timestamp = time();
             $format = explode(".",$_FILES['file']['name']);
             $format = array_pop( $format );
-            move_uploaded_file($_FILES['file']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . 'uploads/places/' . $timestamp . "." . $format);
+            move_uploaded_file($_FILES['file']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . 'uploads/tmp_places/' . $timestamp . "." . $format);
             $arrResult = array(
                 "fileName" => $timestamp,
                 "format" => $format
             );
             echo json_encode($arrResult);
         }
+        return true;
+    }
+
+    public function ActionRemoveplace(){
+        $id = $_GET['id'];
+        $result = ParkPlace::removeParkPlace($id);
+
+        if($result){
+            header("Location: ".$_SERVER['HTTP_REFERER']);
+        }
+        pri($result);
+
         return true;
     }
 }

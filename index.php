@@ -9,7 +9,6 @@ require_once dirname(__FILE__)."/vars.php";
 require_once ROOT."/components/router.php";
 require_once ROOT."/components/autoload.php";
 $routes = require_once ROOT."/config/routes.php";
-session_start();
 //3. Подключение к БД
 //4. Вызов Router
 $router = new Router($routes);
