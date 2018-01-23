@@ -43,8 +43,6 @@ class ParkPlace {
                 coordinates=Point(:lat, :lon);
                  WHERE id=:id";
 
-        pri($sql);
-
         $result = $db->prepare($sql);
 
         $result->bindParam(':id', $id, PDO::PARAM_INT);
@@ -67,7 +65,8 @@ class ParkPlace {
     public static function addNewParkPlace(
         $photo_url,$weekday_from,$weekday_to,$saturday_from,$saturday_to,$sunday_from,$sunday_to,$time_interval, $park_zone, $lat, $lon
     ){
-        copy(SRC_PLACES . $photo_url, PLACES . $photo_url);
+        copy(SRC_TMP_PLACES . $photo_url, PLACES . $photo_url);
+        unlink(SRC_TMP_PLACES . $photo_url);
         $db = Db::getConnection();
         $sql = "INSERT INTO parking_place (
                     photo_url, weekday_from, weekday_to, saturday_from, saturday_to, sunday_from, sunday_to,
@@ -101,7 +100,6 @@ class ParkPlace {
         $result->bindParam(':lon', $lon, PDO::PARAM_STR);
 
         $result->execute();
-        pri($sql);
 
         return TRUE;
 

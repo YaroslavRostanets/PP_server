@@ -6,6 +6,7 @@ return array(
     "admin/addplace" => "admin/addplace",
     "admin/uploadplaceimg" => "admin/uploadplaceimg",
     "admin/removeplace" => "admin/removeplace",
+    "admin/signin" => "admin/signin",
     "admin" => "admin/list",
     "" => "site/index"
 );

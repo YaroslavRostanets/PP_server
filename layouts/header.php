@@ -17,6 +17,7 @@
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="<?= TEMPLATE ?>css/demo.css" rel="stylesheet" />
     <script src="<?= TEMPLATE ?>js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
+    <script src="<?= TEMPLATE ?>js/validator.min.js" type="text/javascript"></script>
 </head>
 
 <body>

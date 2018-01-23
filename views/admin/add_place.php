@@ -96,7 +96,7 @@
                             <h4 class="title">Добавление парковки</h4>
                         </div>
                         <div class="content">
-                            <form action="#" method="post">
+                            <form id="add-park-form" action="#" method="post">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <h6>Будни</h6>
@@ -174,14 +174,17 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Интервал</label>
-                                            <input type="text" class="form-control" name="time_interval"
+                                            <input type="text" class="form-control time-interval" name="time_interval"
+                                                   required
                                                    value="">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Зона</label>
-                                            <input type="text" class="form-control"
+                                            <input type="text"
+                                                   required
+                                                   class="form-control park-zone"
                                                    name="park_zone"
                                                    value="">
                                         </div>
@@ -196,7 +199,9 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Latitude (X coord)</label>
-                                            <input type="text" class="form-control js-lat"
+                                            <input type="text"
+                                                   required
+                                                   class="form-control js-lat"
                                                    name="X(coordinates)"
                                                    value="">
                                         </div>
@@ -204,7 +209,9 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Longitude (Y coord)</label>
-                                            <input type="text" class="form-control js-lon"
+                                            <input type="text"
+                                                   required
+                                                   class="form-control js-lon"
                                                    name="Y(coordinates)"
                                                    value="">
                                         </div>
@@ -212,7 +219,9 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>filename</label>
-                                            <input type="text" class="form-control js-filename"
+                                            <input type="text" readonly
+                                                   required
+                                                   class="form-control js-filename"
                                                    name="photo_url"
                                                    value="">
                                         </div>
@@ -290,7 +299,8 @@
         var center = new google.maps.LatLng( 60.16318816140338, 24.941539764404297);
 
         var parkPlace = {lat: 60.16318816140338, lng: 24.941539764404297};
-
+        $('.js-lat').val(60.16318816140338);
+        $('.js-lon').val(24.941539764404297);
         var map = new google.maps.Map(document.getElementById('map'), {
             center: center,
             zoom: 13,
@@ -322,6 +332,12 @@
     }
     $(document).ready(function(){
         $(".list-item").addClass("active");
+
+        $(".js-lat, .js-lon, .time-interval, .park-zone").keypress(function (e) {
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                return false;
+            }
+        });
     });
 
     /*--Загрузка картинки--*/
@@ -353,8 +369,11 @@
         });
 
     });
-
     /*--конец Загрузка картинки--*/
+
+    /*--Валидация--*/
+    $('#add-park-form').validator();
+    /*--конец Валидация--*/
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDa557ija5pS08O4xsINwAEXTCyUzoB-js&callback=initMap" async defer></script>

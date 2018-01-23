@@ -39,8 +39,7 @@ class AdminController {
 
     public function actionAddplace(){
         if( isset($_POST['submit']) ){
-            pri($_POST);
-            ParkPlace::addNewParkPlace(
+            $result = ParkPlace::addNewParkPlace(
                 $_POST['photo_url'],
                 $_POST['weekday_from'],
                 $_POST['weekday_to'],
@@ -53,6 +52,9 @@ class AdminController {
                 $_POST['X(coordinates)'],
                 $_POST['Y(coordinates)']
             );
+
+            header("Location: "."/admin/list/");
+
         }
 
         include_once ROOT."/views/admin/add_place.php";
@@ -79,12 +81,34 @@ class AdminController {
 
     public function ActionRemoveplace(){
         $id = $_GET['id'];
+        $place = ParkPlace::getParkPlaceById($id);
+        $photo_path_array = explode("/",$place['photo_url']);
+        $img_name = array_pop($photo_path_array);
+        unlink( PLACES . $img_name );
         $result = ParkPlace::removeParkPlace($id);
 
         if($result){
             header("Location: ".$_SERVER['HTTP_REFERER']);
         }
-        pri($result);
+
+        return true;
+    }
+
+    public function ActionSignin(){
+        $login = "";
+        $password = "";
+        $error_msg = "";
+
+        if( isset($_POST['submit']) ){
+            pri($_POST);
+            $adminId = Admin::checkAdminData($login,$password);
+
+            if($adminId = false){
+                $error_msg = "Неправельные данные";
+            }
+        }
+
+        include_once ROOT."/views/admin/signin.php";
 
         return true;
     }

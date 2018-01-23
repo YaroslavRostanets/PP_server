@@ -1,3 +1,6 @@
 .idea
 .idea/*
 .idea/
+uploads/*
+uploads/places/*
+uploads/tmp_places/*
