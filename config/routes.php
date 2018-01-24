@@ -7,6 +7,7 @@ return array(
     "admin/uploadplaceimg" => "admin/uploadplaceimg",
     "admin/removeplace" => "admin/removeplace",
     "admin/signin" => "admin/signin",
+    "admin/logout" => "admin/logout",
     "admin" => "admin/list",
     "" => "site/index"
 );

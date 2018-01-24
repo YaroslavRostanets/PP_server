@@ -57,8 +57,6 @@ class ParkPlace {
         $result->bindParam(':lat', $lat, PDO::PARAM_STR);
         $result->bindParam(':lon', $lon, PDO::PARAM_STR);
 
-        pri($result->execute());
-
         return TRUE;
     }
 

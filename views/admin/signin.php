@@ -7,16 +7,14 @@
  */
 ?>
 <? include_once ROOT."/layouts/header.php" ?>
-<div class="alert alert-danger">
-    <?php  if($error_msg !== ""): ?>
-    <div class="alert alert-danger">
-        <?= $error_msg ?>
-    </div>
+    <?php  if(!empty($error_msg)): ?>
+        <div class="alert alert-danger">
+            <?= $error_msg ?>
+        </div>
     <?php endif; ?>
-</div>
 <style>
     body {
-        padding-top: 40px;
+        padding-top: 0;
         padding-bottom: 40px;
         background-color: #eee;
     }

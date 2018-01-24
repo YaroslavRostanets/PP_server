@@ -25,19 +25,35 @@ class AdminController {
                 $_POST['Y(coordinates)']
             );
         }
-        pri($_POST);
 
         include_once ROOT."/views/admin/detail.php";
         return true;
     }
 
     public function actionList(){
+        $adminId = Admin::isLogged();
+        if( $adminId !== FALSE ){
+            $admin = Admin::getAdminById($adminId);
+            $adminName = $admin['name'];
+        } else {
+            header("Location: "."/admin/signin/");
+        }
+
+
         $parkPlaces = ParkPlace::getAllParks();
         include_once ROOT."/views/admin/list.php";
         return true;
     }
 
     public function actionAddplace(){
+        $adminId = Admin::isLogged();
+        if( $adminId !== FALSE ){
+            $admin = Admin::getAdminById($adminId);
+            $adminName = $admin['name'];
+        } else {
+            header("Location: "."/admin/signin/");
+        }
+
         if( isset($_POST['submit']) ){
             $result = ParkPlace::addNewParkPlace(
                 $_POST['photo_url'],
@@ -100,16 +116,29 @@ class AdminController {
         $error_msg = "";
 
         if( isset($_POST['submit']) ){
-            pri($_POST);
-            $adminId = Admin::checkAdminData($login,$password);
 
-            if($adminId = false){
-                $error_msg = "Неправельные данные";
+            $login = $_POST['login'];
+            $password = $_POST['password'];
+            $adminRow = Admin::checkAdminData($login,$password);
+
+            if((bool)$adminRow == FALSE){
+                $error_msg = "<i class=\"fa fa-exclamation-triangle\" aria-hidden=\"true\"></i> Неправильные данные";
+            } else {
+                Admin::auth($adminRow['id']);
+                header("Location: /admin/list/");
             }
         }
 
         include_once ROOT."/views/admin/signin.php";
 
         return true;
+    }
+
+    public function ActionLogout(){
+        session_start();
+        unset($_SESSION['adminId']);
+        header("Location: /admin/signin/");
+
+        return TRUE;
     }
 }
