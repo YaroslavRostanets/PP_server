@@ -53,7 +53,7 @@
                                             <?= $parkPlace['sunday_from'] ?> - <?= $parkPlace['sunday_to'] ?>
                                         </td>
                                         <td>
-                                            <?= $parkPlace['time_interval'] ?>
+                                            <?= minToHours($parkPlace['time_interval'])  ?>
                                         </td>
                                         <td>
                                             <div>
@@ -65,7 +65,7 @@
                                         </td>
                                         <td>
                                             <i class="pe-7s-albums"></i>
-                                            <button class="btn btn-info btn-fill">
+                                            <button class="btn btn-info btn-fill js-edit-place" data-id="<?=  $parkPlace['id'] ?>">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                             </button>
                                             <button class="btn btn-danger btn-fill js-remove-place" data-id="<?=  $parkPlace['id'] ?>">
@@ -76,6 +76,7 @@
                                 <?php endforeach; ?>
                                 </tbody>
                             </table>
+
                         </div>
                         <div class="row-bot">
                             <button class="btn btn-success btn-fill pull-right"
@@ -85,6 +86,7 @@
                             <div class="clearfix"></div>
                         </div>
                     </div>
+                    <?php include_once ROOT . "/layouts/pagination.php"?>
                 </div>
             </div>
         </div>
@@ -160,6 +162,11 @@
                 $(".js-park-id").text( id );
                 $(".js-remove-id").attr("href", $(".js-remove-id").attr("href") + id );
                 $('.remove-place').modal({show:true});
+            });
+
+            $(".js-edit-place").on("click", function () {
+               var id = $(this).attr("data-id");
+               window.location.href = "/admin/detail/" + id;
             });
 
         });

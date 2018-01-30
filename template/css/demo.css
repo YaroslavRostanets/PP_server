@@ -869,3 +869,73 @@ button.close {
 .modal .modal-content .modal-footer .js-remove-id {
     margin-right: 10px;
 }
+.pagination>li>a, .pagination>li>span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #337ab7;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+.pagination>li:first-child>a, .pagination>li:first-child>span {
+    margin-left: 0;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+.pagination>.active {
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: #337ab7;
+    border-color: #337ab7;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    border: 1px solid #ddd;
+}
+.place-card {
+    padding: 15px 15px;
+    border-top: 1px solid #E3E3E3;
+}
+.place-card h6 {
+    text-align: center;
+}
+.place-card h4 {
+    margin: 0 0 15px 0;
+    text-align: center;
+}
+.place-card .wrap {
+    margin-bottom: 15px;
+}
+.signs {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.signs .radio {
+    width: 20%;
+}
+.signs label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.signs label img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 5px;
+}
+.card {
+    margin-bottom: 0;
+    height: 100%;
+}
+.card-block {
+    display: block;
+    padding: 20px;
+}

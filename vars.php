@@ -14,3 +14,11 @@ function pri($obj){
     print_r($obj);
     echo '</pre>';
 };
+
+function minToHours($min){
+    if($min >= 60) {
+        return floor( ($min / 60) ) . "h";
+    } else {
+        return floor( $min ) . "m";
+    }
+}

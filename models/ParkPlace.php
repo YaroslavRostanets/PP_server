@@ -6,6 +6,8 @@
  * Time: 15:51
  */
 class ParkPlace {
+    const PLACES_ON_PAGE = 4;
+
     public static function getParkPlaceById($id) {
         $db = Db::getConnection();
         $result = $db->query("SELECT *, X(coordinates), Y(coordinates) FROM parking_place WHERE id=$id");
@@ -15,15 +17,31 @@ class ParkPlace {
         return $result;
     }
 
-    public static function getAllParks() {
+    public static function getCountPlaces() {
         $db = Db::getConnection();
-        $result = $db->query("SELECT *, X(coordinates), Y(coordinates) FROM parking_place");
-        $result->setFetchMode(PDO::FETCH_ASSOC);
-        $arrResult = array();
+        $sql = "SELECT COUNT(*) from parking_place;";
+        $result = $db->prepare($sql);
+        $result->setFetchMode(PDO::FETCH_NUM);
+        $result->execute();
+        $arrResult = $result->fetch();
 
+        return $arrResult[0];
+    }
+
+    public static function getAllParks($page) {
+        $offset = self::PLACES_ON_PAGE * (--$page);
+
+        $db = Db::getConnection();
+        $sql = "SELECT *, X(coordinates), Y(coordinates) FROM parking_place LIMIT " . self::PLACES_ON_PAGE . " OFFSET $offset";
+        $result = $db->prepare($sql);
+        $result->bindParam(':page', $page, PDO::PARAM_INT);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $result->execute();
+        $arrResult = array();
         while($row = $result->fetch()){
             $arrResult[] = $row;
         }
+
         return $arrResult;
     }
 
@@ -65,6 +83,9 @@ class ParkPlace {
     ){
         copy(SRC_TMP_PLACES . $photo_url, PLACES . $photo_url);
         unlink(SRC_TMP_PLACES . $photo_url);
+
+        pri($time_interval);
+
         $db = Db::getConnection();
         $sql = "INSERT INTO parking_place (
                     photo_url, weekday_from, weekday_to, saturday_from, saturday_to, sunday_from, sunday_to,

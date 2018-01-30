@@ -38,9 +38,10 @@ class AdminController {
         } else {
             header("Location: "."/admin/signin/");
         }
+        $pages = ceil(ParkPlace::getCountPlaces() / ParkPlace::PLACES_ON_PAGE);
+        $page = (isset($_GET['page']))? $_GET['page'] : 1;
 
-
-        $parkPlaces = ParkPlace::getAllParks();
+        $parkPlaces = ParkPlace::getAllParks($page);
         include_once ROOT."/views/admin/list.php";
         return true;
     }
@@ -55,6 +56,7 @@ class AdminController {
         }
 
         if( isset($_POST['submit']) ){
+            pri($_POST);
             $result = ParkPlace::addNewParkPlace(
                 $_POST['photo_url'],
                 $_POST['weekday_from'],
@@ -69,7 +71,7 @@ class AdminController {
                 $_POST['Y(coordinates)']
             );
 
-            header("Location: "."/admin/list/");
+            //header("Location: "."/admin/list/");
 
         }
 
