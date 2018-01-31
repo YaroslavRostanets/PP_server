@@ -58,7 +58,7 @@ class ParkPlace {
                 sunday_to=:sunday_to, 
                 time_interval=:time_interval,
                 park_zone=:park_zone,
-                coordinates=Point(:lat, :lon);
+                coordinates=Point(:lat, :lon)
                  WHERE id=:id";
 
         $result = $db->prepare($sql);
@@ -74,23 +74,31 @@ class ParkPlace {
         $result->bindParam(':park_zone', $park_zone, PDO::PARAM_INT);
         $result->bindParam(':lat', $lat, PDO::PARAM_STR);
         $result->bindParam(':lon', $lon, PDO::PARAM_STR);
+        $result->bindParam(':sign_weekday_from', $weekday_from, PDO::PARAM_STR);
+        $result->bindParam(':sign_weekday_to', $weekday_to, PDO::PARAM_STR);
+        $result->bindParam(':sign_saturday_from', $sign_saturday_from, PDO::PARAM_STR);
+        $result->bindParam(':sign_saturday_to', $sign_saturday_to, PDO::PARAM_STR);
+        $result->bindParam(':sign_sunday_from', $sign_sunday_from, PDO::PARAM_STR);
+        $result->bindParam(':sign_sunday_to', $sign_sunday_to, PDO::PARAM_STR);
 
         return TRUE;
     }
 
     public static function addNewParkPlace(
-        $photo_url,$weekday_from,$weekday_to,$saturday_from,$saturday_to,$sunday_from,$sunday_to,$time_interval, $park_zone, $lat, $lon
+        $kind_of_place,$photo_url,$weekday_from,$weekday_to,$saturday_from,$saturday_to,$sunday_from,$sunday_to,$time_interval,$park_zone,
+        $lat, $lon
     ){
         copy(SRC_TMP_PLACES . $photo_url, PLACES . $photo_url);
         unlink(SRC_TMP_PLACES . $photo_url);
 
-        pri($time_interval);
+        pri($kind_of_place);
 
         $db = Db::getConnection();
         $sql = "INSERT INTO parking_place (
-                    photo_url, weekday_from, weekday_to, saturday_from, saturday_to, sunday_from, sunday_to,
-                    time_interval, park_zone, coordinates )
+                    kind_of_place, photo_url, weekday_from, weekday_to, saturday_from, saturday_to, sunday_from, sunday_to,
+                    time_interval, park_zone, coordinates)
                 VALUES (
+                    :kind_of_place,
                     :photo_url,
                     :weekday_from, 
                     :weekday_to, 
@@ -106,6 +114,7 @@ class ParkPlace {
 
         $http_places = HTTP_PLACES.$photo_url;
 
+        $result->bindParam(':kind_of_place', $kind_of_place, PDO::PARAM_STR);
         $result->bindParam(':photo_url', $http_places, PDO::PARAM_STR);
         $result->bindParam(':weekday_from', $weekday_from, PDO::PARAM_STR);
         $result->bindParam(':weekday_to', $weekday_to, PDO::PARAM_STR);

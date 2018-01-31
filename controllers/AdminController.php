@@ -56,8 +56,9 @@ class AdminController {
         }
 
         if( isset($_POST['submit']) ){
-            pri($_POST);
+
             $result = ParkPlace::addNewParkPlace(
+                $_POST['kind_of_place'],
                 $_POST['photo_url'],
                 $_POST['weekday_from'],
                 $_POST['weekday_to'],
@@ -71,7 +72,7 @@ class AdminController {
                 $_POST['Y(coordinates)']
             );
 
-            //header("Location: "."/admin/list/");
+            header("Location: "."/admin/list/");
 
         }
 
@@ -113,6 +114,12 @@ class AdminController {
     }
 
     public function ActionSignin(){
+        $adminId = Admin::isLogged();
+        if( $adminId !== FALSE ){
+            header("Location: "."/admin/list/");
+        }
+
+
         $login = "";
         $password = "";
         $error_msg = "";

@@ -18,6 +18,8 @@ function pri($obj){
 function minToHours($min){
     if($min >= 60) {
         return floor( ($min / 60) ) . "h";
+    } elseif ($min == 0){
+        return "-";
     } else {
         return floor( $min ) . "m";
     }

@@ -110,6 +110,7 @@
                                             <div class="form-group">
                                                 <label>Интервал</label>
                                                 <select name="time_interval" class="form-control time-interval" id="">
+                                                    <option selected value="0">Нет интервала</option>
                                                     <option value="10">10m</option>
                                                     <option value="15">15m</option>
                                                     <option value="30">30m</option>
@@ -185,92 +186,42 @@
                                 </div>
                                 <input type="file" class="js-upload-img" multiple="multiple" accept=".txt,image/*">
                             </div>
-                            <zdiv class="place-card">
-                                <h4>Карточка парковки</h4>
+                            <div class="place-card">
+                                <h4>Знак</h4>
                                 <div class="signs">
                                     <div class="radio">
                                         <label>
                                             <img src="<?= TEMPLATE ?>img/thumb1.png" alt="">
-                                            <input type="radio" value="FREE" checked name="kind_of_place">
+                                            <input type="radio" value="FREE" checked required name="kind_of_place">
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
                                             <img src="<?= TEMPLATE ?>img/thumb2.png" alt="">
-                                            <input type="radio" value="PAY" name="kind_of_place">
+                                            <input type="radio" value="PAY" required name="kind_of_place">
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
                                             <img src="<?= TEMPLATE ?>img/thumb3.png" alt="">
-                                            <input type="radio" value="forbidden" name="kind_of_place">
+                                            <input type="radio" value="FORBIDDEN" required name="kind_of_place">
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <img src="<?= TEMPLATE ?>img/thumb4.png" alt="">
+                                            <input type="radio"  value="FORBIDDEN_YELLOW" required name="kind_of_place">
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
                                             <img src="<?= TEMPLATE ?>img/thumb3.png" alt="">
-                                            <input type="radio"  value="forbidden" name="kind_of_place">
+                                            <input type="radio"  value="FORBIDDEN_PAY" required name="kind_of_place">
                                         </label>
                                     </div>
                                 </div>
 
-                                <div class="wrap">
-                                    <h6>Будни</h6>
-                                    <div class="row" style="justify-content: center;">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>От</label>
-                                                <input type="time" class="form-control" name="weekday_from" value="">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>До</label>
-                                                <input type="time" class="form-control" name="weekday_to" value="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="wrap">
-                                    <h6>( Суббота )</h6>
-                                    <div class="row" style="justify-content: center;">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>От</label>
-                                                <input type="time" class="form-control" name="saturday_from" value="">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>До</label>
-                                                <input type="time" class="form-control" name="saturday_to" value="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="wrap">
-                                    <h6 style="color: red;">
-                                        Воскресение
-                                    </h6>
-                                    <div class="row" style="justify-content: center;">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>От</label>
-                                                <input type="time" class="form-control" name="sunday_from" value="">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">До</label>
-                                                <input type="time" class="form-control" name="sunday_to" value="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </zdiv>
+                            </div>
                         </div>
                     </div>
                 </div>

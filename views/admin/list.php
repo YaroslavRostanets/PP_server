@@ -27,6 +27,7 @@
                             <table class="table table-hover table-striped">
                                 <thead>
                                 <th>ID</th>
+                                <th>Знак</th>
                                 <th>Фото</th>
                                 <th>Будни</th>
                                 <th>Суббота</th>
@@ -39,6 +40,27 @@
                                     <tr>
                                         <td>
                                             <?=  $parkPlace['id'] ?>
+                                        </td>
+                                        <td class="sign-place">
+                                            <?php
+                                                switch ( $parkPlace['kind_of_place'] ) {
+                                                    case "FREE":
+                                                        echo '<img src="' . TEMPLATE .'img/thumb1.png" >';
+                                                        break;
+                                                    case "PAY":
+                                                        echo '<img src="' . TEMPLATE .'img/thumb2.png" >';
+                                                        break;
+                                                    case "FORBIDDEN":
+                                                        echo '<img src="' . TEMPLATE .'img/thumb3.png" >';
+                                                        break;
+                                                    case "FORBIDDEN_YELLOW":
+                                                        echo '<img src="' . TEMPLATE .'img/thumb4.png" >';
+                                                        break;
+                                                    case "FORBIDDEN_PAY":
+                                                        echo '<img src="' . TEMPLATE .'img/thumb5.png" >';
+                                                        break;
+                                                }
+                                            ?>
                                         </td>
                                         <td>
                                             <img style="max-width: 80px; max-height: 80px;" src="<?= $parkPlace['photo_url'] ?>" alt="url">
