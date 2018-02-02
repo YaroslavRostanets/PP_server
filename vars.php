@@ -24,3 +24,11 @@ function minToHours($min){
         return floor( $min ) . "m";
     }
 }
+
+function clearDirectory($path){
+    $filesArray = array_diff( scandir( $path ), array('..', '.'));
+
+    foreach ($filesArray as $filename) {
+        unlink($path . $filename);
+    }
+}

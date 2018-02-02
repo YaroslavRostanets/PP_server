@@ -5,6 +5,7 @@ return array(
     "admin/list" => "admin/list",
     "admin/addplace" => "admin/addplace",
     "admin/uploadplaceimg" => "admin/uploadplaceimg",
+    "admin/replaceimg" => "admin/replaceimg",
     "admin/removeplace" => "admin/removeplace",
     "admin/signin" => "admin/signin",
     "admin/logout" => "admin/logout",

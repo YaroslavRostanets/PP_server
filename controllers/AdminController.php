@@ -7,12 +7,18 @@ class AdminController {
     }
 
     public function actionDetail($parkId = NULL){
-
+        session_start();
         $parkPlace = ParkPlace::getParkPlaceById($parkId);
+        $referer = $_SERVER['HTTP_REFERER'];
+
+        $photo_path_array = explode("/",$parkPlace['photo_url']);
+        $filename = array_pop($photo_path_array);
 
         if( isset($_POST['submit']) ){
             ParkPlace::updateParkPlace(
                 $_POST['id'],
+                $_POST['filename'],
+                $_POST['kind_of_place'],
                 $_POST['weekday_from'],
                 $_POST['weekday_to'],
                 $_POST['saturday_from'],
@@ -24,6 +30,12 @@ class AdminController {
                 $_POST['X(coordinates)'],
                 $_POST['Y(coordinates)']
             );
+
+            if( isset($_SESSION['referer']) ){
+                header("Location: ".$_SESSION['referer']);
+            }
+        } else {
+            $_SESSION['referer'] = $_SERVER["HTTP_REFERER"];
         }
 
         include_once ROOT."/views/admin/detail.php";
@@ -98,6 +110,31 @@ class AdminController {
         return true;
     }
 
+    public function ActionReplaceimg() {
+
+        if ( 0 < $_FILES['file']['error'] ) {
+            echo 'Error: ' . $_FILES['file']['error'] . '<br>';
+        } else {
+            if( file_exists($_SERVER['DOCUMENT_ROOT'] . 'uploads/places/' . $_GET['filename']) ){
+                unlink( $_SERVER['DOCUMENT_ROOT'] . 'uploads/places/' . $_GET['filename']);
+            }
+
+            $timestamp = time();
+            $format = explode(".",$_FILES['file']['name']);
+            $format = array_pop( $format );
+            move_uploaded_file($_FILES['file']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . 'uploads/tmp_places/' . $timestamp . "." . $format);
+            $arrResult = array(
+                "fileName" => $timestamp,
+                "format" => $format
+            );
+            echo json_encode($arrResult);
+        }
+
+
+
+        return true;
+    }
+
     public function ActionRemoveplace(){
         $id = $_GET['id'];
         $place = ParkPlace::getParkPlaceById($id);
@@ -118,7 +155,6 @@ class AdminController {
         if( $adminId !== FALSE ){
             header("Location: "."/admin/list/");
         }
-
 
         $login = "";
         $password = "";

@@ -7,7 +7,7 @@
  */
 $menu = array(
     "ParkList" => [
-        "link" => "/",
+        "link" => "/admin/list/",
         "route" => "/admin/list",
         "title" => "Список парковок",
         "class" => "list-item",

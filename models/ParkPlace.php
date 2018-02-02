@@ -46,10 +46,20 @@ class ParkPlace {
     }
 
     public static function updateParkPlace(
-        $id,$weekday_from,$weekday_to,$saturday_from,$saturday_to,$sunday_from,$sunday_to,$time_interval, $park_zone, $lat, $lon
+        $id, $filename, $kind_of_place, $weekday_from,$weekday_to,$saturday_from,$saturday_to,$sunday_from,$sunday_to,$time_interval, $park_zone, $lat, $lon
     ) {
+
+        if( file_exists(SRC_TMP_PLACES . $filename) ){
+            copy(SRC_TMP_PLACES . $filename, PLACES . $filename);
+            clearDirectory(SRC_TMP_PLACES);
+        }
+
+        $http_places = HTTP_PLACES.$filename;
+
         $db = Db::getConnection();
         $sql = "UPDATE parking_place SET 
+                photo_url=:photo_url,
+                kind_of_place=:kind_of_place,
                 weekday_from=:weekday_from, 
                 weekday_to=:weekday_to, 
                 saturday_from=:saturday_from, 
@@ -64,6 +74,8 @@ class ParkPlace {
         $result = $db->prepare($sql);
 
         $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(':photo_url', $http_places, PDO::PARAM_STR);
+        $result->bindParam(':kind_of_place', $kind_of_place, PDO::PARAM_STR);
         $result->bindParam(':weekday_from', $weekday_from, PDO::PARAM_STR);
         $result->bindParam(':weekday_to', $weekday_to, PDO::PARAM_STR);
         $result->bindParam(':saturday_from', $saturday_from, PDO::PARAM_STR);
@@ -74,12 +86,8 @@ class ParkPlace {
         $result->bindParam(':park_zone', $park_zone, PDO::PARAM_INT);
         $result->bindParam(':lat', $lat, PDO::PARAM_STR);
         $result->bindParam(':lon', $lon, PDO::PARAM_STR);
-        $result->bindParam(':sign_weekday_from', $weekday_from, PDO::PARAM_STR);
-        $result->bindParam(':sign_weekday_to', $weekday_to, PDO::PARAM_STR);
-        $result->bindParam(':sign_saturday_from', $sign_saturday_from, PDO::PARAM_STR);
-        $result->bindParam(':sign_saturday_to', $sign_saturday_to, PDO::PARAM_STR);
-        $result->bindParam(':sign_sunday_from', $sign_sunday_from, PDO::PARAM_STR);
-        $result->bindParam(':sign_sunday_to', $sign_sunday_to, PDO::PARAM_STR);
+
+        $result->execute();
 
         return TRUE;
     }
@@ -88,10 +96,9 @@ class ParkPlace {
         $kind_of_place,$photo_url,$weekday_from,$weekday_to,$saturday_from,$saturday_to,$sunday_from,$sunday_to,$time_interval,$park_zone,
         $lat, $lon
     ){
-        copy(SRC_TMP_PLACES . $photo_url, PLACES . $photo_url);
-        unlink(SRC_TMP_PLACES . $photo_url);
 
-        pri($kind_of_place);
+        copy(SRC_TMP_PLACES . $photo_url, PLACES . $photo_url);
+        clearDirectory(SRC_TMP_PLACES);
 
         $db = Db::getConnection();
         $sql = "INSERT INTO parking_place (

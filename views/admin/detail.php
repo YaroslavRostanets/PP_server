@@ -9,6 +9,10 @@
 
 <? include_once ROOT."/layouts/header.php" ?>
 <? include_once ROOT."/layouts/sidebar.php" ?>
+<?php
+    $arrUrl = explode("/",$parkPlace['photo_url']);
+    $filename = array_pop( $arrUrl );
+?>
 
 <div class="main-panel">
     <!-- Navbar -->
@@ -81,14 +85,15 @@
     <!-- End Navbar -->
     <div class="content">
         <div class="container-fluid">
-            <div class="row">
+            <form action="#" method="post">
+                <div class="row">
                 <div class="col-md-8">
                     <div class="card" style="padding: 20px;">
                         <div class="header">
                             <h4 class="title">Редактирование парковки</h4>
                         </div>
                         <div class="content">
-                            <form action="#" method="post">
+
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-group">
@@ -175,8 +180,24 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Интервал</label>
-                                            <input type="text" class="form-control" name="time_interval"
-                                                   value="<?= $parkPlace['time_interval'] ?>">
+                                            <select name="time_interval" class="form-control time-interval" id="">
+                                                <option selected value="0">Нет интервала</option>
+                                                <option value="10">10m</option>
+                                                <option value="15">15m</option>
+                                                <option value="30">30m</option>
+                                                <option value="60">1h</option>
+                                                <option value="120">2h</option>
+                                                <option value="180">3h</option>
+                                                <option value="240">4h</option>
+                                                <option value="360">6h</option>
+                                                <option value="720">12h</option>
+                                                <option value="1140">24h</option>
+                                            </select>
+                                            <script>
+                                                $(".time-interval").val(
+                                                    <?= $parkPlace['time_interval'] ?>
+                                                );
+                                            </script>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -210,23 +231,96 @@
                                                    value="<?= $parkPlace['Y(coordinates)'] ?>">
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>filename</label>
+                                            <input type="text" readonly
+                                                   required
+                                                   class="form-control js-filename"
+                                                   name="filename"
+                                                   value="<?= $filename ?>">
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <input type="submit" name="submit" class="btn btn-info btn-fill pull-right" value="Обновить парковку"></input>
-                                <div class="clearfix"></div>
-                            </form>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="card card-user">
-                        <div class="image">
+                        <div class="image js-replace-image">
                             <img src="<?= $parkPlace['photo_url'] ?>" alt="..."/>
+                        </div>
+                        <input type="file" class="js-upload-img" multiple="multiple" accept=".txt,image/*">
+                        <div class="place-card">
+                            <h4>Знак</h4>
+                            <div class="signs">
+                                <div class="radio">
+                                    <label>
+                                        <img src="<?= TEMPLATE ?>img/thumb1.png" alt="">
+                                        <input type="radio"
+                                               value="FREE"
+                                               <?= ($parkPlace['kind_of_place'] === 'FREE')? "checked" : "" ?>
+                                               required
+                                               name="kind_of_place">
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <img src="<?= TEMPLATE ?>img/thumb2.png" alt="">
+                                        <input type="radio"
+                                               value="PAY"
+                                               <?= ($parkPlace['kind_of_place'] === 'PAY')? "checked" : "" ?>
+                                               required
+                                               name="kind_of_place">
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <img src="<?= TEMPLATE ?>img/thumb3.png" alt="">
+                                        <input type="radio"
+                                               value="FORBIDDEN"
+                                               <?= ($parkPlace['kind_of_place'] === 'FORBIDDEN')? "checked" : "" ?>
+                                               required
+                                               name="kind_of_place">
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <img src="<?= TEMPLATE ?>img/thumb4.png" alt="">
+                                        <input type="radio"
+                                               value="FORBIDDEN_YELLOW"
+                                               <?= ($parkPlace['kind_of_place'] === 'FORBIDDEN_YELLOW')? "checked" : "" ?>
+                                               required
+                                               name="kind_of_place">
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <img src="<?= TEMPLATE ?>img/thumb3.png" alt="">
+                                        <input type="radio"
+                                               value="FORBIDDEN_PAY"
+                                               <?= ($parkPlace['kind_of_place'] === 'FORBIDDEN_PAY')? "checked" : "" ?>
+                                               required
+                                               name="kind_of_place">
+                                    </label>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
-
             </div>
+                <div class="row" style="margin-top: 30px;">
+                    <div class="col-md-12">
+                        <div class="card card-block">
+                            <button class="btn btn-info btn-fill pull-right" style="margin-left: 10px;" onclick="window.history.back();">Назад</button>
+                            <input type="submit" name="submit" class="btn btn-info btn-fill pull-right" value="Обновить парковку"></input>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <footer class="footer">
@@ -304,6 +398,37 @@
                
         });
     }
+
+    /*--Замена картинки--*/
+    $('.js-upload-photo, .js-replace-image').on("click", function () {
+        $(".js-upload-img").click();
+    });
+
+    $('.js-upload-img').on('change', function(){
+        var file_data = this.files[0];
+        console.log(file_data);
+        var form_data = new FormData();
+        form_data.append('file', file_data);
+        $.ajax({
+            url: window.location.origin + '/admin/replaceimg?filename=<?= $filename ?>',
+            dataType: 'text',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,
+            type: 'post',
+            success: function(data,textStatus,XHR){
+                console.log(data);
+                var file = JSON.parse( data );
+                var fullFileName = file['fileName'] + "." + file['format'];
+                $(".js-filename").val( fullFileName );
+                $(".card-user .js-replace-image img").attr("src","<?= TMP_PLACES ?>" + fullFileName);
+            }
+        });
+
+    });
+    /*--конец Загрузка картинки--*/
+
     $(document).ready(function(){
         $(".list-item").addClass("active");
     })
@@ -311,3 +436,4 @@
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDa557ija5pS08O4xsINwAEXTCyUzoB-js&callback=initMap" async defer></script>
 <? include_once ROOT."/layouts/footer.php" ?>
+

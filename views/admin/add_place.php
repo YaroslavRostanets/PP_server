@@ -181,7 +181,7 @@
                                 <div class="js-upload-photo">
                                     <img src="<?= TEMPLATE ?>img/upload_photo.png" alt="Нет фото">
                                 </div>
-                                <div class="image" style="display: none;">
+                                <div class="image js-replace-image" style="display: none;">
                                     <img src="" alt="">
                                 </div>
                                 <input type="file" class="js-upload-img" multiple="multiple" accept=".txt,image/*">
@@ -326,7 +326,7 @@
     });
 
     /*--Загрузка картинки--*/
-    $('.js-upload-photo').on("click", function () {
+    $('.js-upload-photo, .js-replace-image').on("click", function () {
        $(".js-upload-img").click();
     });
 

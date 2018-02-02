@@ -13,7 +13,7 @@
                     <?php foreach ($menu as $item) :?>
                         <?php if( stripos($_SERVER['REQUEST_URI'], $item['route']) === 0 ) : ?>
                             <li class="active <?= $item['class'] ?>">
-                                <a class="nav-link" href="javascript:void(0);">
+                                <a class="nav-link" href="<? $item['link'] ?> ">
                                     <i class="<?= $item['icon'] ?>"></i>
                                     <p><?= $item['title'] ?></p>
                                 </a>
