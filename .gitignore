@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 .idea
 .idea/*
 .idea/
 uploads/*
 uploads/places/*
+=======
+.idea
+.idea/*
+.idea/
+uploads/*
+uploads/places/*
+>>>>>>> 090b71933c9f7bba0aae4c62d638cc796f7c190c
 uploads/tmp_places/*

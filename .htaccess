@@ -8,6 +8,12 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 RewriteRule ^(.*)$ index.php
 
+<<<<<<< HEAD
+#RewriteRule api/(.*)$ api.php
+#RewriteRule ^(.*)$ index.php
+
+=======
+>>>>>>> 090b71933c9f7bba0aae4c62d638cc796f7c190c
 # Попробуйте эту настройку .htaccess, если у Вас возникли проблемы с отображением
 # стилей css
 #AddDefaultCharset cp-1251

@@ -17,7 +17,7 @@ class Admin {
         $result->setFetchMode(PDO::FETCH_ASSOC);
         $result->execute();
         $admin = $result->fetch();
-
+        pri($admin);
         return $admin;
 
     }

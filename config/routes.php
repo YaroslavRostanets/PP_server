@@ -10,6 +10,10 @@ return array(
     "admin/signin" => "admin/signin",
     "admin/logout" => "admin/logout",
     "admin" => "admin/list",
+
+    "api/fastlist" => "api/fastlist",
+
+
     "" => "site/index"
 );
 

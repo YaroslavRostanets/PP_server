@@ -1,3 +1,4 @@
+
 <?php
 /**
  * Created by PhpStorm.
@@ -11,4 +12,5 @@ class Pagination {
         $pagination = include ROOT."/layouts/pagination.php";
         return $pagination;
     }
+
 }
