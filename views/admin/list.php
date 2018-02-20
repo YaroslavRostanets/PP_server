@@ -176,7 +176,7 @@
     </div>
 
     <script>
-/*
+
         $(document).ready(function(){
 
             $(".js-remove-place").on("click", function(){
@@ -192,5 +192,5 @@
             });
 
         });
-*/
+
     </script>

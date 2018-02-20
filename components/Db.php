@@ -7,6 +7,7 @@ class Db {
         $host = $config['host'];
         $dsn = "mysql:dbname=$db_name;host=$host;charset=utf8";
         $db = new PDO($dsn, $config['user'], $config['password']);
+        //$db->exec('SET NAMES utf8');
         return $db;
     }
 }

@@ -12,7 +12,7 @@ return array(
     "admin" => "admin/list",
 
     "api/fastlist" => "api/fastlist",
-
+    "api/location" => "api/location",
 
     "" => "site/index"
 );

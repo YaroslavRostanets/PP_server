@@ -9,6 +9,9 @@ define("SRC_TMP_PLACES",$_SERVER['DOCUMENT_ROOT']."/uploads/tmp_places/");
 define("PLACES",$_SERVER['DOCUMENT_ROOT']."/uploads/places/");
 define("HTTP_PLACES",'http://'.$_SERVER['HTTP_HOST'].'/uploads/places/');
 define("TMP_PLACES",'http://'.$_SERVER['HTTP_HOST'].'/uploads/tmp_places/');
+
+define("LOCATION_JSON",'http://freegeoip.net/json/');
+
 function pri($obj){
     echo '<pre>';
     print_r($obj);
@@ -32,3 +35,4 @@ function clearDirectory($path){
         unlink($path . $filename);
     }
 }
+
