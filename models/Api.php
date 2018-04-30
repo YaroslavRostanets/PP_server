@@ -23,8 +23,9 @@ class Api {
         $db = Db::getConnection();
 
         $sql = "SELECT 
-              id, 
-              geodist_pt( Point($lat, $lon), coordinates ), 
+              id,
+              kind_of_place,
+              geodist_pt( Point($lat, $lon), coordinates ),
               time_interval, 
               weekday_from, 
               weekday_to,
@@ -34,12 +35,12 @@ class Api {
               sunday_to,
               X(coordinates), 
               Y(coordinates)
-              FROM parking_place WHERE $dayFromTo AND 
-              kind_of_place='FREE' 
+              FROM parking_place WHERE $dayFromTo 
               ORDER BY geodist_pt( Point($lat, $lon), coordinates )";
 
         //http://1117158.kiray92.web.hosting-test.net/api/fastlist?lat=60.14902464279283&lon=24.913558959960938&day_index=2
         //SELECT *, geodist_pt( Point($lat, $lon), 	coordinates ) FROM parking_place
+        //AND kind_of_place='FREE'
 
         $result = $db->prepare($sql);
         $result->setFetchMode(PDO::FETCH_ASSOC);
@@ -62,5 +63,28 @@ class Api {
         $jsonResult = json_encode($arrResult, JSON_UNESCAPED_UNICODE);
         echo $jsonResult;
         return $arrResult;
+    }
+
+    public static function getPlaceById($id) {
+        $db = Db::getConnection();
+
+        $sql = "SELECT 
+              kind_of_place,
+              photo_url,
+              time_interval, 
+              weekday_from, 
+              weekday_to,
+              saturday_from,
+              saturday_to,
+              sunday_from,
+              sunday_to
+              FROM parking_place WHERE id=$id";
+
+        $result = $db->prepare($sql);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $result->execute();
+        $arrResult = $result->fetch();
+
+        return json_encode($arrResult, JSON_UNESCAPED_UNICODE);
     }
 }

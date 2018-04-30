@@ -31,7 +31,13 @@ class ApiController {
             echo getLocationByIp($ip);
             return true;
         }
+    }
 
-
+    public function actionGetplace(){
+        if( isset($_GET['id']) ){
+            $onePlace = Api::getPlaceById($_GET['id']);
+            echo $onePlace;
+        }
+        return true;
     }
 }
