@@ -35,7 +35,7 @@ class ApiController {
 
     public function actionGetplace(){
         if( isset($_GET['id']) ){
-            $onePlace = Api::getPlaceById($_GET['id']);
+            $onePlace = Api::getPlaceById($_GET['id'],$_GET['lat'], $_GET['lon']);
             echo $onePlace;
         }
         return true;
