@@ -6,33 +6,57 @@
  * Time: 23:41
  */
 class Api {
-    public static function getPlacesListNearPoint($lat, $lon, $dayIndex){
+    public static function getPlacesListNearPoint($lat, $lon){
 
         function seconds_from_time($time) {
             list($h, $m, $s) = explode(':', $time);
             return ($h * 3600) + ($m * 60) + $s;
         }
-
+        $day_index = date('w');
         $time_now_hour = seconds_from_time( date('H:m:s') );
 
-        //pri($time_now_hour);
-
-        switch ($dayIndex) {
+        switch ($day_index) {
             case 0: //ВС
                 $dayFromTo = "( TIME_TO_SEC(sunday_from) < $time_now_hour AND TIME_TO_SEC(sunday_to) > $time_now_hour AND kind_of_place = 'FREE' )
+                 OR ( sunday_from = '' AND kind_of_place = 'PAY' )
                  OR ( TIME_TO_SEC(sunday_from) > $time_now_hour AND kind_of_place = 'PAY' ) 
                  OR ( TIME_TO_SEC(sunday_to) < $time_now_hour AND kind_of_place = 'PAY')
+                 OR ( TIME_TO_SEC(sunday_from) > $time_now_hour AND kind_of_place = 'FORBIDDEN' )
+                 OR ( TIME_TO_SEC(sunday_to) < $time_now_hour AND kind_of_place = 'FORBIDDEN')
+                 OR ( TIME_TO_SEC(sunday_from) > $time_now_hour AND kind_of_place = 'FORBIDDEN_YELLOW' )
+                 OR ( TIME_TO_SEC(sunday_to) < $time_now_hour AND kind_of_place = 'FORBIDDEN_YELLOW')
+                 OR ( sunday_from = '' AND kind_of_place = 'FORBIDDEN_PAY' )
+                 OR ( TIME_TO_SEC(sunday_from) > $time_now_hour AND kind_of_place = 'FORBIDDEN_PAY' ) 
+                 OR ( TIME_TO_SEC(sunday_to) < $time_now_hour AND kind_of_place = 'FORBIDDEN_PAY')
                  ";
                 break;
             case 6: //СБ
                 $dayFromTo = "( TIME_TO_SEC(saturday_from) < $time_now_hour AND TIME_TO_SEC(saturday_to) > $time_now_hour AND kind_of_place = 'FREE' )
+                 OR ( saturday_from = '' AND kind_of_place = 'PAY' )
                  OR ( TIME_TO_SEC(saturday_from) > $time_now_hour AND kind_of_place = 'PAY' ) 
-                 OR ( TIME_TO_SEC(saturday_to) < $time_now_hour AND kind_of_place = 'PAY')";
+                 OR ( TIME_TO_SEC(saturday_to) < $time_now_hour AND kind_of_place = 'PAY')
+                 OR ( TIME_TO_SEC(saturday_from) > $time_now_hour AND kind_of_place = 'FORBIDDEN' )
+                 OR ( TIME_TO_SEC(saturday_to) < $time_now_hour AND kind_of_place = 'FORBIDDEN')
+                 OR ( TIME_TO_SEC(saturday_from) > $time_now_hour AND kind_of_place = 'FORBIDDEN_YELLOW' )
+                 OR ( TIME_TO_SEC(saturday_to) < $time_now_hour AND kind_of_place = 'FORBIDDEN_YELLOW')
+                 OR ( saturday_from = '' AND kind_of_place = 'FORBIDDEN_PAY' )
+                 OR ( TIME_TO_SEC(saturday_from) > $time_now_hour AND kind_of_place = 'FORBIDDEN_PAY' ) 
+                 OR ( TIME_TO_SEC(saturday_to) < $time_now_hour AND kind_of_place = 'FORBIDDEN_PAY')
+                 ";
                 break;
             default:
                 $dayFromTo = "( TIME_TO_SEC(weekday_from) < $time_now_hour AND TIME_TO_SEC(weekday_to) > $time_now_hour AND kind_of_place = 'FREE' )
+                 OR ( weekday_from = '' AND kind_of_place = 'PAY' )
                  OR ( TIME_TO_SEC(weekday_from) > $time_now_hour AND kind_of_place = 'PAY' ) 
-                 OR ( TIME_TO_SEC(weekday_to) < $time_now_hour AND kind_of_place = 'PAY')";
+                 OR ( TIME_TO_SEC(weekday_to) < $time_now_hour AND kind_of_place = 'PAY')
+                 OR ( TIME_TO_SEC(weekday_from) > $time_now_hour AND kind_of_place = 'FORBIDDEN' )
+                 OR ( TIME_TO_SEC(weekday_to) < $time_now_hour AND kind_of_place = 'FORBIDDEN')
+                 OR ( TIME_TO_SEC(weekday_from) > $time_now_hour AND kind_of_place = 'FORBIDDEN_YELLOW' )
+                 OR ( TIME_TO_SEC(weekday_to) < $time_now_hour AND kind_of_place = 'FORBIDDEN_YELLOW')
+                 OR ( weekday_from = '' AND kind_of_place = 'FORBIDDEN_PAY' )
+                 OR ( TIME_TO_SEC(weekday_from) > $time_now_hour AND kind_of_place = 'FORBIDDEN_PAY' ) 
+                 OR ( TIME_TO_SEC(weekday_to) < $time_now_hour AND kind_of_place = 'FORBIDDEN_PAY')
+                 ";
                 break;
         }
 
@@ -54,7 +78,7 @@ class Api {
               FROM parking_place WHERE $dayFromTo
               ORDER BY geodist_pt( Point($lat, $lon), coordinates )";
 
-        //http://1117158.kiray92.web.hosting-test.net/api/fastlist?lat=60.14902464279283&lon=24.913558959960938&day_index=2
+        //http://1117158.kiray92.web.hosting-test.net/api/fastlist?lat=60.14902464279283&lon=24.913558959960938
         //SELECT *, geodist_pt( Point($lat, $lon), 	coordinates ) FROM parking_place
         //AND kind_of_place='FREE'
 

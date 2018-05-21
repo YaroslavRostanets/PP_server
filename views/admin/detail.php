@@ -297,7 +297,7 @@ $filename = array_pop( $arrUrl );
                                         </div>
                                         <div class="radio">
                                             <label>
-                                                <img src="<?= TEMPLATE ?>img/thumb3.png" alt="">
+                                                <img src="<?= TEMPLATE ?>img/thumb5.png" alt="">
                                                 <input type="radio"
                                                        value="FORBIDDEN_PAY"
                                                     <?= ($parkPlace['kind_of_place'] === 'FORBIDDEN_PAY')? "checked" : "" ?>

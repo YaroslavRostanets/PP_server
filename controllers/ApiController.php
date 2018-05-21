@@ -8,7 +8,7 @@
 class ApiController {
     public function actionFastlist(){
         if( isset($_GET) ){
-            $FastParkingArray = Api::getPlacesListNearPoint($_GET['lat'],$_GET['lon'],$_GET['day_index']); //передаем координаты и день недели
+            $FastParkingArray = Api::getPlacesListNearPoint($_GET['lat'],$_GET['lon']); //передаем координаты и день недели
 
         }
 
