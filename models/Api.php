@@ -138,4 +138,46 @@ class Api {
 
         return json_encode($arrResult, JSON_UNESCAPED_UNICODE);
     }
+
+    public static function getPlacesByFilter ($lat, $lon){
+
+        $db = Db::getConnection();
+
+        $sql = "SELECT 
+              id,
+              kind_of_place,
+              geodist_pt( Point($lat, $lon), coordinates ),
+              time_interval, 
+              weekday_from, 
+              weekday_to,
+              saturday_from,
+              saturday_to,
+              sunday_from,
+              sunday_to,
+              X(coordinates), 
+              Y(coordinates)
+              FROM parking_place";
+
+        $result = $db->prepare($sql);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $result->execute();
+        $arrResult = array();
+
+        while($row = $result->fetch()){
+            foreach ($row as $key => $value){
+                if( strripos($key,"geodist_pt") !== FALSE ){
+                    $row['geodist_pt'] = $row[$key];
+                    unset($row[$key]);
+                    break;
+                }
+            }
+            $row['lat'] = $row['X(coordinates)'];
+            $row['lon'] = $row['Y(coordinates)'];
+            unset($row['X(coordinates)']);
+            unset($row['Y(coordinates)']);
+            array_push($arrResult,$row);
+        }
+
+        return json_encode($arrResult, JSON_UNESCAPED_UNICODE);
+    }
 }

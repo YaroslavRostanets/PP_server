@@ -31,6 +31,8 @@ class ApiController {
             echo getLocationByIp($ip);
             return true;
         }
+
+        return true;
     }
 
     public function actionGetplace(){
@@ -38,6 +40,15 @@ class ApiController {
             $onePlace = Api::getPlaceById($_GET['id'],$_GET['lat'], $_GET['lon']);
             echo $onePlace;
         }
+        return true;
+    }
+
+    public function actionGetplacebyfilter(){
+        if( isset($_GET) ){
+            $resultArray = Api::getPlacesByFilter($_GET['lat'], $_GET['lon']);
+            echo $resultArray;
+        }
+
         return true;
     }
 }
