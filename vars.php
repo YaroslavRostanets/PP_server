@@ -36,3 +36,13 @@ function clearDirectory($path){
     }
 }
 
+function intervalToSec($param){
+    if( strpos($param, 'min') !== FALSE ){
+        $param = preg_replace("/[^0-9]/", '', $param);
+        return $param * 60;
+    } elseif ( strpos($param, 'h') !== FALSE ) {
+        $param = preg_replace("/[^0-9]/", '', $param);
+        return $param * 60 * 60;
+    }
+
+}

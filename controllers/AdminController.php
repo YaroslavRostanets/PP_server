@@ -28,7 +28,8 @@ class AdminController {
                 $_POST['time_interval'],
                 $_POST['park_zone'],
                 $_POST['X(coordinates)'],
-                $_POST['Y(coordinates)']
+                $_POST['Y(coordinates)'],
+                (isset($_POST['hasnt_table'])) ? $_POST['hasnt_table'] : 0
             );
 
             if( isset($_SESSION['referer']) ){
@@ -68,6 +69,7 @@ class AdminController {
         }
 
         if( isset($_POST['submit']) ){
+            pri($_POST);
 
             $result = ParkPlace::addNewParkPlace(
                 $_POST['kind_of_place'],
@@ -81,7 +83,8 @@ class AdminController {
                 $_POST['time_interval'],
                 $_POST['park_zone'],
                 $_POST['X(coordinates)'],
-                $_POST['Y(coordinates)']
+                $_POST['Y(coordinates)'],
+                (isset($_POST['hasnt_table'])) ? $_POST['hasnt_table'] : 0
             );
 
             header("Location: "."/admin/list/");

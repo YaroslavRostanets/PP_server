@@ -943,3 +943,9 @@ button.close {
     display: block;
     width: 50px;
 }
+.without-table {
+    border: 1px solid #054854;
+    padding: 3px;
+    font-size: 9px !important;
+    margin-top: 10px;
+}

@@ -6,7 +6,7 @@
  * Time: 15:51
  */
 class ParkPlace {
-    const PLACES_ON_PAGE = 4;
+    const PLACES_ON_PAGE = 20;
 
     public static function getParkPlaceById($id) {
         $db = Db::getConnection();
@@ -46,7 +46,8 @@ class ParkPlace {
     }
 
     public static function updateParkPlace(
-        $id, $filename, $kind_of_place, $weekday_from,$weekday_to,$saturday_from,$saturday_to,$sunday_from,$sunday_to,$time_interval, $park_zone, $lat, $lon
+        $id, $filename, $kind_of_place, $weekday_from,$weekday_to,$saturday_from,
+        $saturday_to,$sunday_from,$sunday_to,$time_interval, $park_zone, $lat, $lon,$hasnt_table
     ) {
 
         if( file_exists(SRC_TMP_PLACES . $filename) ){
@@ -68,7 +69,8 @@ class ParkPlace {
                 sunday_to=:sunday_to, 
                 time_interval=:time_interval,
                 park_zone=:park_zone,
-                coordinates=Point(:lat, :lon)
+                coordinates=Point(:lat, :lon),
+                hasnt_table=:hasnt_table
                  WHERE id=:id";
 
         $result = $db->prepare($sql);
@@ -86,7 +88,7 @@ class ParkPlace {
         $result->bindParam(':park_zone', $park_zone, PDO::PARAM_INT);
         $result->bindParam(':lat', $lat, PDO::PARAM_STR);
         $result->bindParam(':lon', $lon, PDO::PARAM_STR);
-
+        $result->bindParam(':hasnt_table', $hasnt_table, PDO::PARAM_STR);
         $result->execute();
 
         return TRUE;
@@ -94,7 +96,7 @@ class ParkPlace {
 
     public static function addNewParkPlace(
         $kind_of_place,$photo_url,$weekday_from,$weekday_to,$saturday_from,$saturday_to,$sunday_from,$sunday_to,$time_interval,$park_zone,
-        $lat, $lon
+        $lat, $lon, $hasnt_table
     ){
 
         copy(SRC_TMP_PLACES . $photo_url, PLACES . $photo_url);
@@ -103,7 +105,7 @@ class ParkPlace {
         $db = Db::getConnection();
         $sql = "INSERT INTO parking_place (
                     kind_of_place, photo_url, weekday_from, weekday_to, saturday_from, saturday_to, sunday_from, sunday_to,
-                    time_interval, park_zone, coordinates)
+                    time_interval, park_zone, coordinates, hasnt_table)
                 VALUES (
                     :kind_of_place,
                     :photo_url,
@@ -115,7 +117,10 @@ class ParkPlace {
                     :sunday_to, 
                     :time_interval,
                     :park_zone,
-                    Point(:lat, :lon) );";
+                    Point(:lat, :lon),
+                    :hasnt_table
+                    )
+                    ;";
 
         $result = $db->prepare($sql);
 
@@ -133,6 +138,7 @@ class ParkPlace {
         $result->bindParam(':park_zone', $park_zone, PDO::PARAM_INT);
         $result->bindParam(':lat', $lat, PDO::PARAM_STR);
         $result->bindParam(':lon', $lon, PDO::PARAM_STR);
+        $result->bindParam(':hasnt_table', $hasnt_table, PDO::PARAM_INT);
 
         $result->execute();
 

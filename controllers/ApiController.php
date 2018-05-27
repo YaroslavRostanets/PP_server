@@ -44,8 +44,24 @@ class ApiController {
     }
 
     public function actionGetplacebyfilter(){
+        //pri($_GET);
         if( isset($_GET) ){
-            $resultArray = Api::getPlacesByFilter($_GET['lat'], $_GET['lon']);
+            $MONFRY = $_GET['MONFRY'];
+            $SAT = $_GET['SAT'];
+            $SUN = $_GET['SUN'];
+            $filterFrom = $_GET['filterFrom'];
+            $filterTo = $_GET['filterTo'];
+            $filterTimeFrom = intervalToSec($_GET['filterTimeFrom']);
+            $resultArray = Api::getPlacesByFilter(
+                $_GET['lat'],
+                $_GET['lon'],
+                $MONFRY,
+                $SAT,
+                $SUN,
+                str_replace('-',':',$filterFrom),
+                str_replace('-',':',$filterTo),
+                $filterTimeFrom
+                );
             echo $resultArray;
         }
 

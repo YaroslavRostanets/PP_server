@@ -188,6 +188,10 @@
                                             <img src="<?= TEMPLATE ?>img/thumb1.png" alt="">
                                             <input type="radio" value="FREE" checked required name="kind_of_place">
                                         </label>
+                                        <label class="without-table">
+                                            <div>Знак без таблички</div>
+                                            <input type="checkbox" name="hasnt_table" value="1">
+                                        </label>
                                     </div>
                                     <div class="radio">
                                         <label>

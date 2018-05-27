@@ -264,6 +264,10 @@ $filename = array_pop( $arrUrl );
                                                        required
                                                        name="kind_of_place">
                                             </label>
+                                            <label class="without-table">
+                                                <div>Знак без таблички</div>
+                                                <input type="checkbox" name="hasnt_table" <?= ($parkPlace['hasnt_table'] === '1')? "checked" : "" ?> value="1">
+                                            </label>
                                         </div>
                                         <div class="radio">
                                             <label>
