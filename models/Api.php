@@ -142,7 +142,7 @@ class Api {
         return json_encode($arrResult, JSON_UNESCAPED_UNICODE);
     }
 
-    public static function getPlacesByFilter ($lat, $lon, $MONFRY, $SAT, $SUN, $FilterFrom, $FilterTo, $FilterTimeFrom){
+    public static function getPlacesByFilter ($lat, $lon, $MONFRY, $SAT, $SUN, $FilterFrom, $FilterTo, $FilterTimeFrom, $distance = 999){
         //pri($FilterTimeFrom);
         $hour24sec = 86400;
 

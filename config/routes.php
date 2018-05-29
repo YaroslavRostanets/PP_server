@@ -14,6 +14,7 @@ return array(
     "api/fastlist" => "api/fastlist",
     "api/getplace" => "api/getplace",
     "api/getplacebyfilter" => "api/getplacebyfilter",
+    "api/getplacessearch" => "api/getplacessearch",
     "api/location" => "api/location",
 
     "" => "site/index"
