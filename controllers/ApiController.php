@@ -92,4 +92,22 @@ class ApiController {
 
         return true;
     }
+
+    public static function actionOfferparking(){
+        if ( 0 < $_FILES['file']['error'] ) {
+            echo 'Error: ' . $_FILES['file']['error'] . '<br>';
+        }
+        else {
+            $timestamp = time();
+            $format = explode(".",$_FILES['file']['name']);
+            $fileName = $format[0] . $timestamp;
+            move_uploaded_file($_FILES['file']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . 'uploads/offer_parking/' . $timestamp . "." . $format);
+            $arrResult = array(
+                "fileName" => $timestamp,
+                "format" => $format
+            );
+            echo json_encode($arrResult);
+        }
+        return true;
+    }
 }

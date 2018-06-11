@@ -16,6 +16,7 @@ return array(
     "api/getplacebyfilter" => "api/getplacebyfilter",
     "api/getplacessearch" => "api/getplacessearch",
     "api/location" => "api/location",
+    "api/offerparking" => "api/offerparking",
 
     "" => "site/index"
 );

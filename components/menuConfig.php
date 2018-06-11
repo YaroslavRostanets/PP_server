@@ -20,6 +20,13 @@ $menu = array(
         "class=" => "user-item",
         "icon" => "nc-icon nc-single-02"
     ],
+    "OfferedParking" => [
+        "link" => "/",
+        "route" => "/admin/offeredparking",
+        "title" => "Новые",
+        "class=" => "user-item",
+        "icon" => "fa fa-plus-square-o"
+    ],
 );
 
 ?>
