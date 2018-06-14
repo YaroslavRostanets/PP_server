@@ -99,9 +99,6 @@ class ParkPlace {
         $lat, $lon, $hasnt_table
     ){
 
-        copy(SRC_TMP_PLACES . $photo_url, PLACES . $photo_url);
-        clearDirectory(SRC_TMP_PLACES);
-
         $db = Db::getConnection();
         $sql = "INSERT INTO parking_place (
                     kind_of_place, photo_url, weekday_from, weekday_to, saturday_from, saturday_to, sunday_from, sunday_to,

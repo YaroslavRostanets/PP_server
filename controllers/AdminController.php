@@ -69,7 +69,9 @@ class AdminController {
         }
 
         if( isset($_POST['submit']) ){
-            pri($_POST);
+
+            copy(SRC_TMP_PLACES . $_POST['photo_url'], PLACES . $_POST['photo_url']);
+            clearDirectory(SRC_TMP_PLACES);
 
             $result = ParkPlace::addNewParkPlace(
                 $_POST['kind_of_place'],
@@ -133,12 +135,18 @@ class AdminController {
             echo json_encode($arrResult);
         }
 
-
-
         return true;
     }
 
     public function ActionRemoveplace(){
+        $adminId = Admin::isLogged();
+        if( $adminId !== FALSE ){
+            $admin = Admin::getAdminById($adminId);
+            $adminName = $admin['name'];
+        } else {
+            header("Location: "."/admin/signin/");
+        }
+
         $id = $_GET['id'];
         $place = ParkPlace::getParkPlaceById($id);
         $photo_path_array = explode("/",$place['photo_url']);
@@ -190,5 +198,85 @@ class AdminController {
         return TRUE;
     }
 
-    
+    public function ActionOfferlist(){
+        $adminId = Admin::isLogged();
+        if( $adminId !== FALSE ){
+            $admin = Admin::getAdminById($adminId);
+            $adminName = $admin['name'];
+        } else {
+            header("Location: "."/admin/signin/");
+        }
+
+        $pages = ceil(OfferPlaces::getCountPlaces() / OfferPlaces::PLACES_ON_PAGE);
+        $page = (isset($_GET['page']))? $_GET['page'] : 1;
+
+        $offerPlaces = OfferPlaces::getAllParks($page);
+
+        include_once ROOT."/views/admin/offer_list.php";
+
+        pri($offerPlaces);
+
+
+        return TRUE;
+    }
+
+    public function ActionRemoveofferplace(){
+        if(isset($_GET['id'])){
+            $id = $_GET['id'];
+            $place = OfferPlaces::getOfferPlaceById($id);
+            $photo_path_array = explode("/",$place['photo_url']);
+
+            $img_name = array_pop($photo_path_array);
+            unlink( OFFER_PLACES . $img_name );
+
+            $result = OfferPlaces::removeOfferPlace($id);
+
+            if($result){
+                header("Location: ".$_SERVER['HTTP_REFERER']);
+            }
+        }
+    }
+
+    public function ActionOfferdetail( $offerId=NULL ){
+
+        $offerPlace = OfferPlaces::getOfferPlaceById($offerId);
+
+
+        if( isset($_POST['submit']) ){
+            pri($_POST);
+
+            copy(OFFER_PLACES . $_POST['photo_url'], PLACES . $_POST['photo_url']);
+            unlink(OFFER_PLACES . $_POST['photo_url']);
+
+            ParkPlace::addNewParkPlace(
+                $_POST['kind_of_place'],
+                $_POST['photo_url'],
+                $_POST['weekday_from'],
+                $_POST['weekday_to'],
+                $_POST['saturday_from'],
+                $_POST['saturday_to'],
+                $_POST['sunday_from'],
+                $_POST['sunday_to'],
+                $_POST['time_interval'],
+                $_POST['park_zone'],
+                $_POST['X(coordinates)'],
+                $_POST['Y(coordinates)'],
+                (isset($_POST['hasnt_table'])) ? $_POST['hasnt_table'] : 0
+            );
+
+            if( isset($_SESSION['referer']) ){
+                header("Location: ".$_SESSION['referer']);
+            }
+        } else {
+            $_SESSION['referer'] = $_SERVER["HTTP_REFERER"];
+        }
+
+
+        include_once ROOT."/views/admin/offer_place_detail.php";
+
+        pri($offerPlace);
+
+        return TRUE;
+    }
+
 }

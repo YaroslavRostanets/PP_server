@@ -284,5 +284,26 @@ class Api {
         return json_encode($arrResult, JSON_UNESCAPED_UNICODE);
     }
 
+    public static function addOfferParking($lat, $lon, $photo_url, $from_user_id) {
+        $db = Db::getConnection();
+
+
+
+        $sql = "INSERT INTO offer_parking (from_user_id, photo_url, coordinates) VALUES (
+        :from_user_id,
+        :photo_url,
+        Point(:lat, :lon)
+        )";
+
+        $result = $db->prepare($sql);
+
+        $result->bindParam(':from_user_id', $from_user_id, PDO::PARAM_STR);
+        $result->bindParam(':photo_url', $photo_url, PDO::PARAM_STR);
+        $result->bindParam(':lat', $lat, PDO::PARAM_STR);
+        $result->bindParam(':lon', $lon, PDO::PARAM_STR);
+        $result->execute();
+
+        return TRUE;//
+    }
 
 }

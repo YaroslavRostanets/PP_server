@@ -94,20 +94,31 @@ class ApiController {
     }
 
     public static function actionOfferparking(){
-        if ( 0 < $_FILES['file']['error'] ) {
-            echo 'Error: ' . $_FILES['file']['error'] . '<br>';
-        }
-        else {
-            $timestamp = time();
-            $format = explode(".",$_FILES['file']['name']);
-            $fileName = $format[0] . $timestamp;
-            move_uploaded_file($_FILES['file']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . 'uploads/offer_parking/' . $timestamp . "." . $format);
-            $arrResult = array(
-                "fileName" => $timestamp,
-                "format" => $format
+        //Name, key,
+
+        if ( !empty($_FILES) && 0 < $_FILES['file']['error'] ) {
+            $error = array(
+                'error' => $_FILES['file']['error']
             );
-            echo json_encode($arrResult);
+            echo json_encode($error);
         }
+
+        else {
+
+            $timestamp = time();
+            $fileArr = explode(".",$_FILES['file']['name']);
+            $fileName = $fileArr[0] . $timestamp;
+            $format = $fileArr[1];
+            move_uploaded_file($_FILES['file']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . 'uploads/offer_parking/' . $fileName . "." . $format);
+
+            $location = json_decode($_POST['location'], TRUE);
+            $photo_url = HTTP_OFFER_PLACES . $fileName . "." . $format;
+            $from_user_id = $_POST['from_user_id'];
+
+            Api::addOfferParking($location['lat'], $location['lon'], $photo_url, $from_user_id);
+        }
+
+
         return true;
     }
 }

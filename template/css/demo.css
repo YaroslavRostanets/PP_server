@@ -949,3 +949,30 @@ button.close {
     font-size: 9px !important;
     margin-top: 10px;
 }
+.offer-img-cont {
+    height: 100px;
+}
+.offer-img-cont img {
+    display: block;
+    max-height: 100%;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+}
+.sidebar .nav li .nav-link {
+    position: relative;
+}
+.sidebar .nav li .nav-link .count {
+    position: absolute;
+    top: 50%;
+    right: 4px;
+    transform: translate(0,-50%);
+    font-size: 14px;
+    height: 25px;
+    width: 25px;
+    border-radius: 13px;
+    background: #FF4A55;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

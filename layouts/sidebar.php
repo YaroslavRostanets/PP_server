@@ -1,12 +1,10 @@
 <?php require_once ROOT."/components/menuConfig.php" ?>
 
-
-
 <div class="sidebar" data-image="<?= TEMPLATE ?>img/sidebar-5.jpg">
             <div class="sidebar-wrapper">
                 <div class="logo">
                     <a href="/" class="simple-text">
-                        Free Park
+                        Park Panda
                     </a>
                 </div>
                 <ul class="nav">
@@ -16,6 +14,9 @@
                                 <a class="nav-link" href="<? $item['link'] ?> ">
                                     <i class="<?= $item['icon'] ?>"></i>
                                     <p><?= $item['title'] ?></p>
+                                    <? if( isset($item['count']) && $item['count'] > 0) :?>
+                                        <p class="count"><?= $item['count'] ?></p>
+                                    <? endif; ?>
                                 </a>
                             </li>
                             <?php else: ?>
@@ -23,6 +24,9 @@
                                 <a class="nav-link" href="<?= $item['link'] ?>">
                                     <i class="<?= $item['icon'] ?>"></i>
                                     <p><?= $item['title'] ?></p>
+                                    <? if( isset($item['count']) && $item['count'] > 0 ) :?>
+                                        <p class="count"><?= $item['count'] ?></p>
+                                    <? endif; ?>
                                 </a>
                             </li>
                         <?php endif ; ?>

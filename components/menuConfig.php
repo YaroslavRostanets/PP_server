@@ -5,6 +5,8 @@
  * Date: 29.12.2017
  * Time: 15:11
  */
+$count = OfferPlaces::getCountPlaces();
+
 $menu = array(
     "ParkList" => [
         "link" => "/admin/list/",
@@ -21,11 +23,12 @@ $menu = array(
         "icon" => "nc-icon nc-single-02"
     ],
     "OfferedParking" => [
-        "link" => "/",
-        "route" => "/admin/offeredparking",
+        "link" => "/admin/offerlist/",
+        "route" => "/admin/offerlist",
         "title" => "Новые",
         "class=" => "user-item",
-        "icon" => "fa fa-plus-square-o"
+        "icon" => "fa fa-plus-square-o",
+        "count" => $count
     ],
 );
 

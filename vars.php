@@ -7,8 +7,10 @@ define("TEMPLATE",SITE_ROOT."/template/");
 define("UPLOADS",SITE_ROOT."/uploads/");
 define("SRC_TMP_PLACES",$_SERVER['DOCUMENT_ROOT']."/uploads/tmp_places/");
 define("PLACES",$_SERVER['DOCUMENT_ROOT']."/uploads/places/");
+define("OFFER_PLACES",$_SERVER['DOCUMENT_ROOT'].'uploads/offer_parking/');
 define("HTTP_PLACES",'http://'.$_SERVER['HTTP_HOST'].'/uploads/places/');
 define("TMP_PLACES",'http://'.$_SERVER['HTTP_HOST'].'/uploads/tmp_places/');
+define("HTTP_OFFER_PLACES",'http://'.$_SERVER['HTTP_HOST'].'/uploads/offer_parking/');
 
 define("LOCATION_JSON",'http://freegeoip.net/json/');
 

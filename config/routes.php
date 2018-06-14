@@ -9,6 +9,9 @@ return array(
     "admin/removeplace" => "admin/removeplace",
     "admin/signin" => "admin/signin",
     "admin/logout" => "admin/logout",
+    "admin/offerlist" => "admin/offerlist",
+    "admin/removeofferplace" => "admin/removeofferplace",
+    "admin/offerdetail/([0-9]+)" => "admin/offerdetail/$1",
     "admin" => "admin/list",
 
     "api/fastlist" => "api/fastlist",
@@ -18,6 +21,7 @@ return array(
     "api/location" => "api/location",
     "api/offerparking" => "api/offerparking",
 
+    "about" => "",
     "" => "site/index"
 );
 
