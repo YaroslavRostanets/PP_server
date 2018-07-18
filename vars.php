@@ -46,5 +46,5 @@ function intervalToSec($param){
         $param = preg_replace("/[^0-9]/", '', $param);
         return $param * 60 * 60;
     }
-
 }
+

@@ -22,7 +22,10 @@ return array(
     "api/offerparking" => "api/offerparking",
 
     "about" => "",
-    "" => "site/index"
+
+    "en" => "site/langdefinition",
+    "ru" => "site/langdefinition",
+    "" => "site/langdefinition"
 );
 
 /*

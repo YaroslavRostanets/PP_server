@@ -104,7 +104,7 @@ class Api {
             $arrResult[] = $row;
         }
         $jsonResult = json_encode($arrResult, JSON_UNESCAPED_UNICODE);
-        echo $jsonResult;
+        //echo $jsonResult;
         return $arrResult;
     }
 
@@ -287,8 +287,6 @@ class Api {
     public static function addOfferParking($lat, $lon, $photo_url, $from_user_id) {
         $db = Db::getConnection();
 
-
-
         $sql = "INSERT INTO offer_parking (from_user_id, photo_url, coordinates) VALUES (
         :from_user_id,
         :photo_url,
@@ -301,9 +299,29 @@ class Api {
         $result->bindParam(':photo_url', $photo_url, PDO::PARAM_STR);
         $result->bindParam(':lat', $lat, PDO::PARAM_STR);
         $result->bindParam(':lon', $lon, PDO::PARAM_STR);
-        $result->execute();
+        $requestStatus = $result->execute();
 
-        return TRUE;//
+        return $requestStatus;
+    }
+
+
+    public static function getCoordsByIp() {
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+
+        $geoplugin = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.$ip));
+
+        $coords = [
+            'lat' => $geoplugin['geoplugin_latitude'],
+            'lon' => $geoplugin['geoplugin_longitude']
+        ];
+
+        return $coords;
     }
 
 }
