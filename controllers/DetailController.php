@@ -9,12 +9,21 @@
 
 
 class DetailController {
-    function __construct($lang) {
-
+    private $lang;
+    function __construct($lang='fi') {
+        $this->lang = $lang;
+        $this->pageName = 'detail-page';
     }
 
-    public function actionIndex() {
-        echo "DETAIL";
+    public function actionIndex($id) {
+
+        $language = $this->lang;
+        $coords = Api::getCoordsByIp();
+        $place = ParkPlace::getPlaceById($id,$coords['lat'], $coords['lon']);
+
+        require_once ROOT."/views/site/detail.php";
+
+        //echo "DETAIL";
         return true;
     }
 }

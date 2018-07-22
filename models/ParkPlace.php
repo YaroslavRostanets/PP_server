@@ -17,6 +17,44 @@ class ParkPlace {
         return $result;
     }
 
+    public static function getPlaceById($id,$lat = 60.1700, $lon = 30.9359) {
+        $db = Db::getConnection();
+
+        $sql = "SELECT 
+              kind_of_place,
+              geodist_pt( Point($lat, $lon), coordinates ),
+              photo_url,
+              time_interval, 
+              weekday_from, 
+              weekday_to,
+              saturday_from,
+              saturday_to,
+              sunday_from,
+              sunday_to,
+              park_zone,
+              address_en,
+              address_fi,
+              address_ru,
+              address_uk,
+              X(coordinates), 
+              Y(coordinates)
+              FROM parking_place WHERE id=$id";
+
+        $result = $db->prepare($sql);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $result->execute();
+        $arrResult = $result->fetch();
+        foreach ($arrResult as $key => $value){
+            if( strripos($key,"geodist_pt") !== FALSE ){
+                $arrResult['geodist_pt'] = $arrResult[$key];
+                unset($arrResult[$key]);
+                break;
+            }
+        }
+
+        return $arrResult;
+    }
+
     public static function getCountPlaces() {
         $db = Db::getConnection();
         $sql = "SELECT COUNT(*) from parking_place;";
@@ -96,13 +134,13 @@ class ParkPlace {
 
     public static function addNewParkPlace(
         $kind_of_place,$photo_url,$weekday_from,$weekday_to,$saturday_from,$saturday_to,$sunday_from,$sunday_to,$time_interval,$park_zone,
-        $lat, $lon, $hasnt_table
+        $address_en, $address_fi, $address_ru, $address_uk, $lat, $lon, $hasnt_table
     ){
 
         $db = Db::getConnection();
         $sql = "INSERT INTO parking_place (
                     kind_of_place, photo_url, weekday_from, weekday_to, saturday_from, saturday_to, sunday_from, sunday_to,
-                    time_interval, park_zone, coordinates, hasnt_table)
+                    time_interval, park_zone, address_en, address_fi, address_ru, address_uk, coordinates, hasnt_table)
                 VALUES (
                     :kind_of_place,
                     :photo_url,
@@ -114,6 +152,10 @@ class ParkPlace {
                     :sunday_to, 
                     :time_interval,
                     :park_zone,
+                    :address_en,
+                    :address_fi,
+                    :address_ru,
+                    :address_uk,
                     Point(:lat, :lon),
                     :hasnt_table
                     )
@@ -133,6 +175,10 @@ class ParkPlace {
         $result->bindParam(':sunday_to', $sunday_to, PDO::PARAM_STR);
         $result->bindParam(':time_interval', $time_interval, PDO::PARAM_INT);
         $result->bindParam(':park_zone', $park_zone, PDO::PARAM_INT);
+        $result->bindParam(':address_en', $address_en, PDO::PARAM_STR);
+        $result->bindParam(':address_fi', $address_fi, PDO::PARAM_STR);
+        $result->bindParam(':address_ru', $address_ru, PDO::PARAM_STR);
+        $result->bindParam(':address_uk', $address_uk, PDO::PARAM_STR);
         $result->bindParam(':lat', $lat, PDO::PARAM_STR);
         $result->bindParam(':lon', $lon, PDO::PARAM_STR);
         $result->bindParam(':hasnt_table', $hasnt_table, PDO::PARAM_INT);

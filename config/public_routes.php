@@ -7,6 +7,9 @@
  */
 
 return array(
+    "signin/google" => "user/signingoogle",
+    "signin/facebook" => "user/signinfacebook",
+
     "detail/([0-9]+)" => "detail/index/$1",
     "" => "home/index"
 );

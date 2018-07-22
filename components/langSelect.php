@@ -8,6 +8,12 @@
 
     $languages = require ROOT."/config/languages.php";
 
+    $lang_url = ( isset($_SERVER['REDIRECT_URL']))? $_SERVER['REDIRECT_URL'] : '/';
+
+    foreach ($languages as $key => $value) {
+        $lang_url = str_replace("/$key", '', $lang_url);
+    }
+
 ?>
 
 <div class="dropdown">
@@ -21,7 +27,7 @@
         <? foreach ($languages as $key => $value) : ?>
             <? if($key == $language) continue; ?>
             <li>
-                <a href="#">
+                <a href="<?= "/$key" . $lang_url ?>">
                     <div class="flag-cont"
                          style="background-image: url(<?= TEMPLATE . $value['img'] ?>)">
                     </div>

@@ -1,5 +1,79 @@
+#signup {
+  /* Shared */
+  /* Facebook */
+  /* Google */ }
+  #signup body {
+    padding: 2em; }
+  #signup .loginBtn {
+    box-sizing: border-box;
+    position: relative;
+    /* width: 13em;  - apply for fixed size */
+    margin: 0.2em;
+    padding: 0 15px 0 46px;
+    border: none;
+    text-align: left;
+    line-height: 34px;
+    white-space: nowrap;
+    border-radius: 0.2em;
+    font-size: 16px;
+    color: #FFF;
+    display: block; }
+  #signup .loginBtn:before {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 34px;
+    height: 100%; }
+  #signup .loginBtn:focus {
+    outline: none; }
+  #signup .loginBtn:active {
+    box-shadow: inset 0 0 0 32px rgba(0, 0, 0, 0.1); }
+  #signup .loginBtn--facebook {
+    background-color: #4C69BA;
+    background-image: linear-gradient(#4C69BA, #3B55A0);
+    /*font-family: "Helvetica neue", Helvetica Neue, Helvetica, Arial, sans-serif;*/
+    text-shadow: 0 -1px 0 #354C8C; }
+  #signup .loginBtn--facebook:before {
+    border-right: #364e92 1px solid;
+    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/icon_facebook.png") 6px 6px no-repeat; }
+  #signup .loginBtn--facebook:hover,
+  #signup .loginBtn--facebook:focus {
+    background-color: #5B7BD5;
+    background-image: linear-gradient(#5B7BD5, #4864B1); }
+  #signup .loginBtn--google {
+    /*font-family: "Roboto", Roboto, arial, sans-serif;*/
+    background: #DD4B39; }
+  #signup .loginBtn--google:before {
+    border-right: #BB3F30 1px solid;
+    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/icon_google.png") 6px 6px no-repeat; }
+  #signup .loginBtn--google:hover,
+  #signup .loginBtn--google:focus {
+    background: #E74B37; }
+  #signup .no-ava-cont {
+    width: 150px;
+    margin: 20px auto 20px auto; }
+    #signup .no-ava-cont img {
+      display: block;
+      max-width: 100%;
+      height: auto; }
+  #signup .btns-cont {
+    padding: 0 25px; }
+  #signup .loginBtn--facebook {
+    margin-bottom: 10px; }
+  #signup .modal-content {
+    padding-bottom: 25px; }
+  #signup .modal-header {
+    padding: 10px; }
+  #signup .modal-title {
+    font-size: 18px;
+    font-weight: bolder;
+    font-family: 'Roboto';
+    text-align: center; }
+
 .home-map {
-  padding-top: 160px; }
+  padding-top: 60px; }
 
 .tab .tab-pane {
   height: 100%;
@@ -212,6 +286,15 @@
   top: -1px;
   right: -2px; }
 
+.gm-style .gm-style-iw {
+  width: auto !important; }
+  .gm-style .gm-style-iw > div {
+    width: 100% !important;
+    max-width: 130px !important; }
+  .gm-style .gm-style-iw + div {
+    right: 7px !important;
+    top: 7px !important; }
+
 .info-window {
   max-width: 130px;
   font-family: "Roboto"; }
@@ -297,5 +380,65 @@
     .no-pd .flag-cont img {
       display: block;
       width: 100%; }
+
+.detail-section {
+  height: 220px; }
+
+.img-detail {
+  padding: 0; }
+  .img-detail img {
+    display: block;
+    width: 100%; }
+  .img-detail .widget-boxed-body {
+    padding: 10px 20px 10px 20px; }
+
+.listing-address {
+  display: block;
+  margin-bottom: 15px; }
+
+#detail-map {
+  min-height: 350px; }
+
+.detail-section .listing-owner-detail {
+  height: 155px;
+  width: 155px;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 11px; }
+  .detail-section .listing-owner-detail .sign {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+    margin: 0; }
+.detail-section .listing-owner {
+  min-width: 155px;
+  bottom: -50px;
+  left: 8%; }
+.detail-section .get-direct, .detail-section .add-to-wishlist {
+  background: rgba(0, 0, 0, 0.5); }
+
+.list-detail .side-list ul li span {
+  font-weight: bold;
+  display: inline-block;
+  width: 70px;
+  text-align: center; }
+.list-detail .side-list ul li.sunday span {
+  color: #FF431E; }
+
+.right-part {
+  padding: 0; }
+  .right-part .widget-boxed-body {
+    padding: 15px 15px 15px 15px; }
+
+body.detail-page nav.navbar.bootsnav.navbar-transparent {
+  background-color: rgba(0, 0, 0, 0.4);
+  box-shadow: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3); }
+
+body.detail-page nav.navbar.bootsnav.navbar-transparent.white ul.nav > li > a {
+  color: #fff;
+  text-shadow: none; }
 
 /*# sourceMappingURL=fix.css.map */

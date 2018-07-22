@@ -1,5 +1,5 @@
 
-<? include_once ROOT."/layouts/header_site.php" ?>
+<? include_once ROOT . "/layouts/public/header_site.php" ?>
 
 <section class="home-map">
     <div id="map"></div>
@@ -26,6 +26,27 @@
         }
     }
 
+    function timeRightFormat(time){
+        return time.split(':').shift();
+    }
+
+    function signRender(sign){
+        switch(sign) {
+            case 'FREE':
+                return `<img src="http://1117158.kiray92.web.hosting-test.net/template/assets/img/thumb1.png" >`;
+            case 'PAY':
+                return `<img src="http://1117158.kiray92.web.hosting-test.net/template/assets/img/thumb2.png" >`;
+            case 'FORBIDDEN':
+                return `<img src="http://1117158.kiray92.web.hosting-test.net/template/assets/img/thumb3.png" >`;
+            case 'FORBIDDEN_YELLOW':
+                return `<img src="http://1117158.kiray92.web.hosting-test.net/template/assets/img/thumb4.png" >`;
+            case 'FORBIDDEN_PAY':
+                return `<img src="http://1117158.kiray92.web.hosting-test.net/template/assets/img/thumb5.png" >`;
+            default:
+                return '';
+        }
+    }
+
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: <?= $coords['lat'] ?>, lng: <?= $coords['lon'] ?>},
@@ -33,32 +54,6 @@
             mapTypeControl: false,
             fullscreenControl: false
         });
-
-            var template =  `<div class="info-window">
-                                <div class="top">
-                                    <div class="place-sign">
-                                        <img src="http://1117158.kiray92.web.hosting-test.net/template/assets/img/thumb1.png" >
-                                    </div>
-                                    <div class="time">
-                                        <div class="hours">14-18</div>
-                                        <div class="hours">(14-18)</div>
-                                        <div class="hours holiday">14-18</div>
-                                    </div>
-                                </div>
-                                <div class="btns">
-                                    <a href="#" class="std-btn">
-                                        <i class="fa fa-info-circle" aria-hidden="true"></i>
-                                    </a>
-                                    <a href="#" class="std-btn">
-                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                    </a>
-                                    <a href="#" class="std-btn gm">
-                                        <i class="fa fa-map-o" aria-hidden="true"></i>
-                                        Open in GM
-                                    </a>
-                                </div>
-                            </div>`;
-
 
         markersArr = markers.map(function(place, i) {
 
@@ -86,7 +81,40 @@
             });
 
             marker.addListener('click', function() {
-                infowindow.setContent(template);
+                var point = marker['placeInfo'];
+
+                var href = '<?= "/$language" ?>' + '/detail/' + point['id'];
+
+                infowindow.setContent(`<div class="info-window">
+                                <div class="top">
+                                    <div class="place-sign">
+                                        ${signRender(point['kind_of_place'])}
+                                    </div>
+                                    <div class="time">
+                                        <div class="hours">
+                                            ${timeRightFormat(point['weekday_from'])}-${timeRightFormat(point['weekday_to'])}
+                                        </div>
+                                        <div class="hours">
+                                            ( ${timeRightFormat(point['saturday_from'])}-${timeRightFormat(point['saturday_to'])} )
+                                        </div>
+                                        <div class="hours holiday">
+                                            ${timeRightFormat(point['sunday_from'])}-${timeRightFormat(point['sunday_to'])}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="btns">
+                                    <a href="${href}" class="std-btn">
+                                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="#" class="std-btn">
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="#" class="std-btn gm">
+                                        <i class="fa fa-map-o" aria-hidden="true"></i>
+                                        Open in GM2
+                                    </a>
+                                </div>
+                            </div>`);
                 infowindow.open(map, marker);
             });
 
@@ -96,7 +124,7 @@
 
         var infowindow = new google.maps.InfoWindow({
             content: '<div>TEST</div>',
-            maxWidth: 250
+            maxWidth: 110
         });
 
         var markerCluster = new MarkerClusterer(map, markersArr,
@@ -108,5 +136,5 @@
 
 </script>
 
-<? include_once ROOT."/layouts/footer_site.php" ?>
+<? include_once ROOT . "/layouts/public/footer_site.php" ?>
 

@@ -20,6 +20,8 @@ class HomeController {
         $coords = Api::getCoordsByIp();
         $places = Api::getPlacesListNearPoint($coords['lat'], $coords['lon']);
 
+        $isHomePage = TRUE;
+
         require_once ROOT."/views/site/index.php";
         return true;
     }

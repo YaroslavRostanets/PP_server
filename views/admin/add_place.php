@@ -166,6 +166,35 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label>Address EN</label>
+                                                <input type="text" id="address_en" class="form-control" name="address_en">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Address FI</label>
+                                                <input type="text" id="address_fi" class="form-control" name="address_fi">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Адрес RU</label>
+                                                <input type="text" id="address_ru" class="form-control" name="address_ru">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Адреса UA</label>
+                                                <input type="text" id="address_uk" class="form-control" name="address_uk">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <a href="javascript:void(0);"
+                                                   class="btn btn-warning btn-fill js-get-address">
+                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                    Получить адрес
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -277,6 +306,7 @@
 
 <script>
     function initMap(){
+        var geocoder = new google.maps.Geocoder;
         console.log('test');
 
         var center = new google.maps.LatLng( 60.16318816140338, 24.941539764404297);
@@ -312,6 +342,40 @@
                 Number(lat), Number(lng) ) );
 
         });
+
+        function setAddresValue(langCode, params){
+            params.language = langCode;
+
+            $.ajax({
+                url: '<?= GEOCODE_URI ?>' + $.param(params),
+            }).done(function(result) {
+                if(result.status == 'OK'){
+                    if(result.results[0]){
+                        $('#address_' + langCode).val( result.results[0].formatted_address );
+                    }
+                } else {
+                    window.alert('Geocoder failed due to: ' + status);
+                }
+            });
+        }
+
+        $('.js-get-address').on('click', function(){
+            var lat = $('.js-lat').val();
+            var lon = $('.js-lon').val();
+
+            var params = {
+                'latlng': lat + ',' + lon,
+                'language': 'en',
+                'key': '<?= GM_API_KEY ?>'
+            };
+
+            setAddresValue('en', params);
+            setAddresValue('fi', params);
+            setAddresValue('ru', params);
+            setAddresValue('uk', params);
+
+        });
+
     }
     $(document).ready(function(){
         $(".list-item").addClass("active");

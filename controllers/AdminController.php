@@ -84,6 +84,10 @@ class AdminController {
                 $_POST['sunday_to'],
                 $_POST['time_interval'],
                 $_POST['park_zone'],
+                $_POST['address_en'],
+                $_POST['address_fi'],
+                $_POST['address_ru'],
+                $_POST['address_uk'],
                 $_POST['X(coordinates)'],
                 $_POST['Y(coordinates)'],
                 (isset($_POST['hasnt_table'])) ? $_POST['hasnt_table'] : 0

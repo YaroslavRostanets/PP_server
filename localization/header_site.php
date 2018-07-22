@@ -21,10 +21,10 @@ $lang = [
         'sign_in' => 'Вход'
     ],
     'fi' => [
-        'home' => 'Главная',
-        'about' => 'О нас',
-        'favorites' => 'Избранное',
-        'add_place' => 'Добавить парковку',
-        'sign_in' => 'Вход'
+        'home' => 'Kotisivu',
+        'about' => 'Meistä',
+        'favorites' => 'Suosikkini',
+        'add_place' => 'Lisää pysäköinti',
+        'sign_in' => 'Kirjaudu sisään'
     ]
 ];
