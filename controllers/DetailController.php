@@ -16,6 +16,11 @@ class DetailController {
     }
 
     public function actionIndex($id) {
+        $userId = User::isLogged();
+
+        if($userId){
+            $user = User::getUserById($userId);
+        }
 
         $language = $this->lang;
         $coords = Api::getCoordsByIp();

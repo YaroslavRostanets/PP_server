@@ -77,23 +77,59 @@ class User {
 
     public static function isLogged(){
         session_start();
-        if( isset($_SESSION['adminId']) ){
-            return $_SESSION['adminId'];
+        if( isset($_SESSION['userId']) ){
+            return $_SESSION['userId'];
         }
         return false;
     }
 
-    public static function getAdminById($id){
+    public static function logout(){
+        session_start();
+        unset($_SESSION['userId']);
+        $redirectUrl = $_SERVER['REDIRECT_URL'];
+
+        header("Location: $redirectUrl");
+
+        return TRUE;
+    }
+
+    public static function getUserById($id){
         $db = Db::getConnection();
-        $sql = "SELECT * FROM admin WHERE id=:id;";
+        $sql = "SELECT * FROM user WHERE id=:id;";
         $result = $db->prepare($sql);
 
         $result->bindParam(':id', $id, PDO::PARAM_STR);
         $result->setFetchMode(PDO::FETCH_ASSOC);
         $result->execute();
-        $admin = $result->fetch();
+        $user = $result->fetch();
 
-        return $admin;
+        return $user;
+    }
+
+    public static function uploadAvatar(){
+        if( isset($_FILES) && isset($_FILES['avatar']) ){
+            if( $_FILES['avatar']['size'] > 1000000 ) {
+                return json_encode(
+                    array('error'=>'max size is 1mb')
+                );
+            }
+            if ( 0 < $_FILES['avatar']['error'] ) {
+                return json_encode(
+                    array('errorm'=>$_FILES['avatar']['error'])
+                );
+            }
+            else {
+                $timestamp = time();
+                $format = explode(".",$_FILES['avatar']['name']);
+                $format = array_pop( $format );
+                move_uploaded_file($_FILES['avatar']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . 'uploads/tmp_avatars/' . $timestamp . "." . $format);
+                $arrResult = array(
+                    "fileName" => $timestamp,
+                    "format" => $format
+                );
+                return json_encode($arrResult);
+            }
+        }
     }
 }
 

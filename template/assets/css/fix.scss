@@ -562,3 +562,60 @@ body.detail-page nav.navbar.bootsnav.navbar-transparent.white ul.nav>li>a {
   color: #fff;
   text-shadow: none;
 }
+.user-auth-wrap {
+  position: relative;
+  .avater-img {
+    max-width: 38px;
+    margin-right: 10px;
+    border: 2px solid rgba(255, 255, 255, .5);
+  }
+  strong {
+    font-weight: 700;
+    color: #FFF;
+    font-size: 15px;
+  }
+  .profile-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100%;
+    background: #FFFFFF;
+    min-width: 200px;
+    box-shadow: 0 0 15px 1px rgba(113, 106, 202, .2);
+    border-radius: 2px;
+    list-style: none;
+    display: none;
+    a {
+      display: block;
+      padding: 14px 12px;
+      clear: both;
+      line-height: 1.42857143;
+      color: #67757c;
+      border-bottom: 1px solid #f1f6f9;
+      font-weight: 400;
+      transition: all 0.1s ease-out;
+      font-size: 15px;
+      .fa {
+        font-size: 18px;
+        margin-right: 5px;
+      }
+      &:hover {
+        color: #ff431e;
+      }
+    }
+  }
+  .user-auth {
+    background: #FF431E;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px;
+    position: relative;
+    height: 61px;
+    cursor: pointer;
+    z-index: 9;
+  }
+}
+.listing-box-header p {
+  text-transform: none;
+}

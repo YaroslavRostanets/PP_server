@@ -62,4 +62,10 @@ $(document).ready(function(){
         $(this).addClass('active');
     });
 
+    $('.js-user-auth-wrap').hover(function () {
+        $(this).find('.profile-menu').fadeIn(100);
+    }, function () {
+        $(this).find('.profile-menu').fadeOut(100);
+    });
+
 });

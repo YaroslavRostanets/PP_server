@@ -9,6 +9,8 @@
 return array(
     "signin/google" => "user/signingoogle",
     "signin/facebook" => "user/signinfacebook",
+    "profile/ajax" => "user/ajax",
+    "profile" => "user/profile",
 
     "detail/([0-9]+)" => "detail/index/$1",
     "" => "home/index"

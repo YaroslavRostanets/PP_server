@@ -15,6 +15,11 @@ class HomeController {
     }
 
     public function actionIndex(){
+        $userId = User::isLogged();
+
+        if($userId){
+            $user = User::getUserById($userId);
+        }
 
         $language = $this->lang;
         $coords = Api::getCoordsByIp();

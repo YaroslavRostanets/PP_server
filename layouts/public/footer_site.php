@@ -134,10 +134,6 @@
 
 <script src="<?= TEMPLATE ?>assets/plugins/bootstrap-material-datetimepicker/bootstrap-material-datetimepicker.js"></script>
 
-<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBueyERw9S41n4lblw5fVPAc9UqpAiMgvM&callback=initMap"></script>
-
 <!-- Custom Js -->
 <script src="<?= TEMPLATE ?>assets/js/custom.js"></script>
 

@@ -97,9 +97,33 @@
 
                         <? include_once ROOT . "/components/langSelect.php"; ?>
 
-                        <a href="javascript:void(0)" class="addlist" data-toggle="modal" data-target="#signup">
-                            <i class="ti-user" aria-hidden="true"></i><?= $lang[$language]['sign_in'] ?>
-                        </a>
+                        <? if( isset($user) ): ?>
+                            <div class="user-auth-wrap js-user-auth-wrap">
+                                <div class="user-auth">
+                                    <img src="<?= $user['picture'] ?>" class="img-responsive img-circle avater-img" alt="avatar">
+                                    <strong><?= $user['givenName'] . ' ' . $user['familyName'] ?></strong>
+                                </div>
+                                <ul class="profile-menu">
+                                    <li>
+                                        <a href="/<?= $language ?>/profile">
+                                            <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                            Profile
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/<?= $language ?>/profile?logout">
+                                            <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                            Log Out
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        <? else : ?>
+                            <a href="javascript:void(0)" class="addlist" data-toggle="modal" data-target="#signup">
+                                <i class="ti-user" aria-hidden="true"></i><?= $lang[$language]['sign_in'] ?>
+                            </a>
+                        <? endif; ?>
+
                     </li>
 
                 </ul>
@@ -107,28 +131,3 @@
             <!-- /.navbar-collapse -->
         </div>
     </nav>
-
-<!--    <div class="info-window">-->
-<!--        <div class="top">-->
-<!--            <div class="place-sign">-->
-<!--                <img src="http://1117158.kiray92.web.hosting-test.net/template/assets/img/thumb1.png" >-->
-<!--            </div>-->
-<!--            <div class="time">-->
-<!--                <div class="hours">14-18</div>-->
-<!--                <div class="hours">(14-18)</div>-->
-<!--                <div class="hours holiday">14-18</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="btns">-->
-<!--            <a href="#" class="std-btn">-->
-<!--                <i class="fa fa-info-circle" aria-hidden="true"></i>-->
-<!--            </a>-->
-<!--            <a href="#" class="std-btn">-->
-<!--                <i class="fa fa-star-o" aria-hidden="true"></i>-->
-<!--            </a>-->
-<!--            <a href="#" class="std-btn gm">-->
-<!--                <i class="fa fa-map-o" aria-hidden="true"></i>-->
-<!--                Open in GM-->
-<!--            </a>-->
-<!--        </div>-->
-<!--    </div>-->

@@ -136,5 +136,9 @@
 
 </script>
 
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgSQwHIH_3nhcQsy2xLOKITaEK0WlfgoA&callback=initMap"></script>
+
 <? include_once ROOT . "/layouts/public/footer_site.php" ?>
 
