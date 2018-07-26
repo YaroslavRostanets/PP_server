@@ -88,7 +88,7 @@ class User {
         unset($_SESSION['userId']);
         $redirectUrl = $_SERVER['REDIRECT_URL'];
 
-        header("Location: $redirectUrl");
+        header("Location: /");
 
         return TRUE;
     }
@@ -131,6 +131,70 @@ class User {
             }
         }
     }
+
+    public static function updateProfile($id, $name, $surname, $filename){
+        $db = Db::getConnection();
+
+        if($filename != ''){
+            $user = self::getUserById($id);
+            $oldAvatarNameArr = explode('/', $user['picture']);
+            $oldAvatarName = array_pop($oldAvatarNameArr);
+            echo $oldAvatarName;
+
+            copy(TMP_AVATARS . $_POST['filename'], AVATARS . $_POST['filename']);
+            unlink(TMP_AVATARS . $_POST['filename']);
+            $avaPath = HTTP_AVATARS . $filename;
+
+            if(file_exists(AVATARS . $oldAvatarName)){
+                unlink(AVATARS . $oldAvatarName );     //Удаляем старую аватарку
+            }
+
+            $sql = "UPDATE user SET 
+                picture=:filename
+                WHERE id=:id";
+
+            $result = $db->prepare($sql);
+
+            $result->bindParam(':id', $id, PDO::PARAM_INT);
+            $result->bindParam(':filename', $avaPath, PDO::PARAM_STR);
+
+            echo $result->execute();
+        }
+
+        $sql = "UPDATE user SET 
+                givenName=:name,
+                familyName=:surname
+                WHERE id=:id";
+
+        echo $sql;
+        $result = $db->prepare($sql);
+
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(':name', $name, PDO::PARAM_STR);
+        $result->bindParam(':surname', $surname, PDO::PARAM_STR);
+
+        $result->execute();
+    }
+
+    public static function checkName($value){
+        $length = mb_strlen($value,'UTF-8');
+        if($length <= 2){
+            return json_encode(array(
+                'errors' => '1',
+                'textError' => 'Поле должно быть больше 2 символов'
+            ));
+        } elseif ($length > 32){
+            return json_encode(array(
+                'errors' => '1',
+                'textError' => 'Поле должно быть меньше 32 символов'
+            ));
+        } else {
+            return json_encode(array(
+                'errors' => '0',
+            ));
+        }
+    }
+
 }
 
 ?>

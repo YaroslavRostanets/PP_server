@@ -21,7 +21,7 @@ class UserController {
         $gClient->setClientId('215480803826-6g7j3t6hkjfi4uahfkhkdd5oml9n93ee.apps.googleusercontent.com');
         $gClient->setClientSecret('q0zf1hOn-wfZ-LQkkvmM58Aj');
         $gClient->setApplicationName('Park Panda');
-        $gClient->setRedirectUri('http://1117158.kiray92.web.hosting-test.net/signin/google');
+        $gClient->setRedirectUri('http://park-panda.com/signin/google');
 
         $gClient->addScope('profile email');
 
@@ -73,6 +73,22 @@ SCRIPT;
             return true;
         }
 
+        if(isset($_GET['profile-update'])){
+            session_start();
+
+            if(isset($_POST) && $_SESSION['userId']){
+                pri($_SESSION);
+                $result = User::updateProfile(
+                    $_SESSION['userId'],
+                    $_POST['name'],
+                    $_POST['surname'],
+                    $_POST['filename']
+                );
+            }
+
+            return true;
+        }
+
         $language = $this->lang;
 
         if(isset($_GET['logout'])){
@@ -95,7 +111,7 @@ SCRIPT;
         pri('FB');
         $id = '1590095447769249';
         $secret = '916d68a9feb7b52dd8b975192becf4ba';
-        $redirect_url = 'http://1117158.kiray92.web.hosting-test.net/';
+        $redirect_url = 'http://park-panda.com/';
 
         $api_url = "https://www.facebook.com/v3.0/dialog/oauth?
                   client_id={$id}
@@ -106,6 +122,17 @@ SCRIPT;
 
         //header( "Location: $loginUrl" );
 
+        return TRUE;
+    }
+
+    public function actionAjax(){
+
+        if(isset($_GET['name'])){
+            echo User::checkName($_GET['name']);
+        }
+        if(isset($_GET['surname'])){
+            echo User::checkName($_GET['surname']);
+        }
         return TRUE;
     }
 }

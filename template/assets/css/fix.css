@@ -444,7 +444,11 @@ body.detail-page nav.navbar.bootsnav.navbar-transparent.white ul.nav > li > a {
 .user-auth-wrap {
   position: relative; }
   .user-auth-wrap .avater-img {
-    max-width: 38px;
+    width: 38px;
+    height: 38px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
     margin-right: 10px;
     border: 2px solid rgba(255, 255, 255, 0.5); }
   .user-auth-wrap strong {
@@ -490,5 +494,17 @@ body.detail-page nav.navbar.bootsnav.navbar-transparent.white ul.nav > li > a {
 
 .listing-box-header p {
   text-transform: none; }
+
+.has-error .help-block {
+  color: #FF431E; }
+.has-error .form-control {
+  border-color: #FF431E;
+  margin-bottom: 0px; }
+
+.edit-avater {
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; }
 
 /*# sourceMappingURL=fix.css.map */

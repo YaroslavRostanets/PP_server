@@ -100,7 +100,9 @@
                         <? if( isset($user) ): ?>
                             <div class="user-auth-wrap js-user-auth-wrap">
                                 <div class="user-auth">
-                                    <img src="<?= $user['picture'] ?>" class="img-responsive img-circle avater-img" alt="avatar">
+                                    <div style="background-image: url(<?= $user['picture'] ?>)"
+                                         class="img-responsive img-circle avater-img js-avatar-img">
+                                    </div>
                                     <strong><?= $user['givenName'] . ' ' . $user['familyName'] ?></strong>
                                 </div>
                                 <ul class="profile-menu">

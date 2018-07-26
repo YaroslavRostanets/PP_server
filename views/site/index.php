@@ -31,17 +31,18 @@
     }
 
     function signRender(sign){
+        var origin = window.location.origin;
         switch(sign) {
             case 'FREE':
-                return `<img src="http://1117158.kiray92.web.hosting-test.net/template/assets/img/thumb1.png" >`;
+                return `<img src='${origin}/template/assets/img/thumb1.png' >`;
             case 'PAY':
-                return `<img src="http://1117158.kiray92.web.hosting-test.net/template/assets/img/thumb2.png" >`;
+                return `<img src="${origin}/template/assets/img/thumb2.png" >`;
             case 'FORBIDDEN':
-                return `<img src="http://1117158.kiray92.web.hosting-test.net/template/assets/img/thumb3.png" >`;
+                return `<img src="${origin}/template/assets/img/thumb3.png" >`;
             case 'FORBIDDEN_YELLOW':
-                return `<img src="http://1117158.kiray92.web.hosting-test.net/template/assets/img/thumb4.png" >`;
+                return `<img src="${origin}/template/assets/img/thumb4.png" >`;
             case 'FORBIDDEN_PAY':
-                return `<img src="http://1117158.kiray92.web.hosting-test.net/template/assets/img/thumb5.png" >`;
+                return `<img src="${origin}/template/assets/img/thumb5.png" >`;
             default:
                 return '';
         }

@@ -10,11 +10,15 @@ define("UPLOADS",SITE_ROOT."/uploads/");
 define("SRC_TMP_PLACES",$_SERVER['DOCUMENT_ROOT']."/uploads/tmp_places/");
 define("PLACES",$_SERVER['DOCUMENT_ROOT']."/uploads/places/");
 define("OFFER_PLACES",$_SERVER['DOCUMENT_ROOT'].'uploads/offer_parking/');
-define("HTTP_PLACES",'http://'.$_SERVER['HTTP_HOST'].'/uploads/places/');
-define("TMP_PLACES",'http://'.$_SERVER['HTTP_HOST'].'/uploads/tmp_places/');
-define("HTTP_OFFER_PLACES",'http://'.$_SERVER['HTTP_HOST'].'/uploads/offer_parking/');
+define("HTTP_PLACES",'https://'.$_SERVER['HTTP_HOST'].'/uploads/places/');
+define("TMP_PLACES",'https://'.$_SERVER['HTTP_HOST'].'/uploads/tmp_places/');
+define("HTTP_OFFER_PLACES",'https://'.$_SERVER['HTTP_HOST'].'/uploads/offer_parking/');
 
-define("LOCATION_JSON",'http://freegeoip.net/json/');
+define("TMP_AVATARS",$_SERVER['DOCUMENT_ROOT'].'/uploads/tmp_avatars/');
+define("AVATARS", $_SERVER['DOCUMENT_ROOT'].'/uploads/avatars/');
+define("HTTP_AVATARS",'https://'.$_SERVER['HTTP_HOST'].'/uploads/avatars/');
+
+define("LOCATION_JSON",'https://freegeoip.net/json/');
 
 function pri($obj){
     echo '<pre>';
