@@ -30,6 +30,13 @@ $menu = array(
         "icon" => "fa fa-plus-square-o",
         "count" => $count
     ],
+    "About" => [
+        "link" => "/admin/about/",
+        "route" => "/admin/about",
+        "title" => "О нас",
+        "class=" => "user-item",
+        "icon" => "fa-align-justify"
+    ],
 );
 
 ?>

@@ -1,12 +1,15 @@
 <?php
 
 return array(
+    "admin/ajax" => "admin/ajax",
+
     "admin/detail/([0-9]+)" => "admin/detail/$1",
     "admin/list" => "admin/list",
     "admin/addplace" => "admin/addplace",
     "admin/uploadplaceimg" => "admin/uploadplaceimg",
     "admin/replaceimg" => "admin/replaceimg",
     "admin/removeplace" => "admin/removeplace",
+    "admin/about" => "admin/about",
     "admin/signin" => "admin/signin",
     "admin/logout" => "admin/logout",
     "admin/offerlist" => "admin/offerlist",

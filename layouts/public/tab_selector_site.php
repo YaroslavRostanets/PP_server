@@ -35,7 +35,7 @@
 ?>
 
 <!-- Switcher -->
-<button class="w3-button w3-teal w3-xlarge w3-right" onclick="openRightMenu()"><i class="spin theme-cl fa fa-cog" aria-hidden="true"></i></button>
+<button class="w3-button w3-teal w3-xlarge w3-right js-fast-ajax" onclick="openRightMenu()"><i class="spin theme-cl fa fa-cog" aria-hidden="true"></i></button>
 <div class="w3-sidebar w3-bar-block w3-card-2 w3-animate-right" style="display:none;right:0;" id="rightMenu">
     <button onclick="closeRightMenu()" class="w3-bar-item w3-button w3-large theme-bg">Close &times;</button>
     <div class="tab style-2" role="tabpanel">
@@ -96,7 +96,7 @@
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane tab-sel" id="filter-tab">
-                <form>
+                <form class="filter-form">
                     <div class="filter-tab">
 
                         <div class="one-row">
@@ -108,7 +108,7 @@
                                     <div class="label">Day:</div>
                                     <div class="bot-row">
                                         <label>
-                                            <input data-styler type="checkbox" name="MON_FRY">
+                                            <input data-styler type="checkbox" name="MONFRY" checked="checked">
                                             Mon-Fry
                                         </label>
                                         <label>
@@ -116,7 +116,7 @@
                                             Sat
                                         </label>
                                         <label>
-                                            <input data-styler type="checkbox" name="SUN">
+                                            <input data-styler type="checkbox" name="SUN" checked="checked">
                                             Sun
                                         </label>
                                     </div>
@@ -136,11 +136,11 @@
                                             <div class="span">
                                                 from
                                             </div>
-                                            <input data-timepicker value="00:00" type="text">
+                                            <input data-timepicker value="00:00" type="text" name="filterFrom">
                                         </div>
                                         <div class="group">
                                             <div class="span">to</div>
-                                            <input data-timepicker value="23:59" type="text">
+                                            <input data-timepicker value="23:59" type="text" name="filterTo">
                                         </div>
                                     </div>
                                 </div>
@@ -167,6 +167,7 @@
 
                     </div>
                 </form>
+
             </div>
             <div role="tabpanel" class="tab-pane tab-sel" id="search-tab">
                 <form>
@@ -261,19 +262,19 @@
 
         <div class="nav nav-tabs">
             <ul class="tab-selector nav nav-tabs">
-                <li role="presentation" class="active js-tab-sel" data-tab="fast-parking-tab">
+                <li role="presentation" class="active js-tab-sel" data-tab="fast-parking-tab" data-act="FAST">
                     <a href="javascript:void(0);">
                         <i class="fa fa-rocket" aria-hidden="true"></i>
                         Fast parking
                     </a>
                 </li>
-                <li role="presentation" class="js-tab-sel" data-tab="filter-tab">
+                <li role="presentation" class="js-tab-sel" data-tab="filter-tab" data-act="FILTER">
                     <a href="javascript:void(0);">
                         <i class="fa fa-cogs" aria-hidden="true"></i>
                         Filter
                     </a>
                 </li>
-                <li role="presentation" class="js-tab-sel" data-tab="search-tab">
+                <li role="presentation" class="js-tab-sel" data-tab="search-tab" data-act="SEARCH">
                     <a href="javascript:void(0);">
                         <i class="fa fa-search" aria-hidden="true"></i>
                         Search
@@ -303,6 +304,24 @@
 <script src="<?= TEMPLATE ?>assets/plugins/nouislider/nouislider.min.js"></script>
 
 <script>
+
+
+
+    $('.js-tab-sel').on('click', function(){
+        var id = $(this).attr('data-tab');
+        var act = $(this).attr('data-act');
+        $('.tab-sel').hide();
+        $('#' + id).fadeIn(100);
+        $('.btn-contain').hide();
+        $('.js-red-btn').find('.' + id).fadeIn();
+        $('.js-red-btn').attr('data-active', act);
+
+        $(this).siblings().removeClass('active');
+        $(this).addClass('active');
+    });
+
+
+
     var intervalSlider = document.getElementById('js-interval-slider');
 
     noUiSlider.create(intervalSlider, {
@@ -389,5 +408,6 @@
         $('.js-search-distance').val( convertObj[index] );
         $('.js-search-distance-value').text( convertObj[index]);
     });
+
 
 </script>

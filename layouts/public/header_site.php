@@ -15,8 +15,15 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="robots" content="index,follow">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
 
-    <title>Listing Hub - Listing & Directory Template | ThemezHub</title>
+    <title>Поиск бесплатных парковок в Хельсинки</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="<?= TEMPLATE ?>assets/plugins/bootstrap/css/bootstrap.min.css">
@@ -88,7 +95,12 @@
                         <a href="/<?= $language . "/about" ?>"><?= $lang[$language]['about'] ?></a>
                     </li>
                     <li class="dropdown">
-                        <a href="/"><?= $lang[$language]['favorites'] ?></a>
+                        <a href="javascript:void(0);" class="js-show-favorites">
+                            <?= $lang[$language]['favorites'] ?>
+                            <? if( isset($_SESSION['userId']) && count(Favorites::getFavoritesByUserId($_SESSION['userId'])) ): ?>
+                                <span><?= count(Favorites::getFavoritesByUserId($_SESSION['userId'])) ?></span>
+                            <? endif; ?>
+                        </a>
                     </li>
                     <li><a href="#"><?= $lang[$language]['add_place'] ?></a></li>
                 </ul>
@@ -100,8 +112,10 @@
                         <? if( isset($user) ): ?>
                             <div class="user-auth-wrap js-user-auth-wrap">
                                 <div class="user-auth">
-                                    <div style="background-image: url(<?= $user['picture'] ?>)"
-                                         class="img-responsive img-circle avater-img js-avatar-img">
+                                    <div class="img-responsive img-circle avater-img">
+                                        <div style="background-image: url(<?= $user['picture'] ?>)"
+                                             class="js-avatar-img">
+                                        </div>
                                     </div>
                                     <strong><?= $user['givenName'] . ' ' . $user['familyName'] ?></strong>
                                 </div>

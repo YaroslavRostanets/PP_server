@@ -51,21 +51,53 @@ $(document).ready(function(){
        }
     });
 
-    $('.js-tab-sel').on('click', function(){
-        var id = $(this).attr('data-tab');
-        $('.tab-sel').hide();
-        $('#' + id).fadeIn(100);
-        $('.btn-contain').hide();
-        $('.js-red-btn').find('.' + id).fadeIn();
 
-        $(this).siblings().removeClass('active');
-        $(this).addClass('active');
-    });
 
     $('.js-user-auth-wrap').hover(function () {
         $(this).find('.profile-menu').fadeIn(100);
     }, function () {
         $(this).find('.profile-menu').fadeOut(100);
+    });
+
+    $('.js-show-favorites').on('click', function(){
+       console.log('favorites');
+        $.ajax({
+            url: "/favorites?get-list-modal",
+            type: 'GET',
+            cache: false,
+            dataType: 'html',
+            success: function(respond,status){
+                $('#favorites-modal').remove();
+                $('body').append(respond);
+                $('#favorites-modal').modal();
+
+                $('.js-remove-favorite').on('click', function(){
+                    var id = $(this).attr('data-id');
+                    var item =  $(this).closest('.item');
+                    $.ajax({
+                        url: "/favorites?remove_from_favorites=" + id,
+                        type: 'GET',
+                        cache: false,
+                        dataType: 'json',
+                        success: function(respond,status){
+                            console.log(respond);
+                            if(respond.countFavorites){
+                                item.fadeOut(300, function(){
+                                    $('.js-show-favorites span').text(respond.countFavorites);
+                                    $(this).remove();
+                                });
+
+                            } else {
+                                $('#favorites-modal .favorites-cont').remove();
+                                $('#favorites-modal .modal-body').html(respond.html);
+                                $('.js-show-favorites span').remove();
+                            }
+
+                        }
+                    });
+                });
+            }
+        });
     });
 
 });

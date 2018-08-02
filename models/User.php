@@ -14,8 +14,8 @@ class User {
         $db = Db::getConnection();
         if($social == 'GOOGLE'){
             $sql = "SELECT * FROM user WHERE googleId=:id;";
-        } elseif($social == 'FB'){
-            $sql = "SELECT * FROM user WHERE fbId=:id;";
+        } elseif($social == 'FACEBOOK'){
+            $sql = "SELECT * FROM user WHERE facebookId=:id;";
         }
         $result = $db->prepare($sql);
 
@@ -47,6 +47,22 @@ class User {
         return $user;
     }
 
+    public static function getUserByFacebookId($facebookId){
+        $db = Db::getConnection();
+
+        $sql = "SELECT * FROM user WHERE facebookId=:facebookId;";
+
+        $result = $db->prepare($sql);
+
+        $result->bindParam(':facebookId', $facebookId, PDO::PARAM_STR);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $result->execute();
+        $user = $result->fetch();
+
+        return $user;
+    }
+
+
     public static function  addGoogleUser($googleId,$familyName,$givenName,$email,$link,$picture){
         $db = Db::getConnection();
 
@@ -57,8 +73,7 @@ class User {
                     :givenName, 
                     :email, 
                     :link, 
-                    :picture)
-                    ;";
+                    :picture);";
 
         $result = $db->prepare($sql);
 
@@ -70,6 +85,51 @@ class User {
         $result->bindParam(':picture', $picture, PDO::PARAM_STR);
 
         $status = $result->execute();
+
+        echo "\nPDOStatement::errorInfo():\n";
+        $arr = $db->errorInfo();
+        print_r($arr);
+
+        echo $status;
+
+        return $status;
+
+    }
+
+    public static function  addFacebookUser($facebookId,$familyName,$givenName,$email,$link,$picture){
+        $db = Db::getConnection();
+
+        pri(array(
+            $facebookId,$familyName,$givenName,$email,$link,$picture
+        ));
+
+        echo gettype($link);
+
+        $sql = "INSERT INTO user (facebookId,familyName,givenName,email,link,picture)
+                VALUES (
+                    :facebookId,
+                    :familyName,
+                    :givenName, 
+                    :email, 
+                    :link, 
+                    :picture);";
+
+        $result = $db->prepare($sql);
+
+        $result->bindParam(':facebookId', $facebookId, PDO::PARAM_INT);
+        $result->bindParam(':familyName', $familyName, PDO::PARAM_STR);
+        $result->bindParam(':givenName', $givenName, PDO::PARAM_STR);
+        $result->bindParam(':email', $email, PDO::PARAM_STR);
+        $result->bindParam(':link', $link, PDO::PARAM_STR);
+        $result->bindParam(':picture', $picture, PDO::PARAM_STR);
+
+        $status = $result->execute();
+
+        echo "\nPDOStatement::errorInfo():\n";
+        $arr = $db->errorInfo();
+        print_r($arr);
+
+        echo $status;
 
         return $status;
 
@@ -110,7 +170,8 @@ class User {
         if( isset($_FILES) && isset($_FILES['avatar']) ){
             if( $_FILES['avatar']['size'] > 1000000 ) {
                 return json_encode(
-                    array('error'=>'max size is 1mb')
+                    array(  'errors'=>'1',
+                            'errorText'=>'max size 1 mb')
                 );
             }
             if ( 0 < $_FILES['avatar']['error'] ) {

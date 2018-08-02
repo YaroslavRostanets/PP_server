@@ -27,7 +27,7 @@
                             <input type="file" multiple="multiple" accept=".txt,image/*" class="js-upload-ava" name="avatar">
                         </div>
                     </div>
-
+                    <div class="js-avatar-help-block" style="display: none;"></div>
                     <h3><?= $user['givenName'] . ' ' . $user['familyName']?></h3>
                     <p><?= $user['email'] ?></p>
                 </div>
@@ -54,11 +54,34 @@
             <!-- End General Information -->
 
             <div class="text-center">
-                <a href="#" class="btn theme-btn js-update disabled" title="Submit Listing">Update Profile</a>
+                <a href="javaascript:void(0);" class="btn theme-btn js-update disabled" title="Submit Listing">Update Profile</a>
             </div>
         </div>
     </div>
 </section>
+
+<!-- Данные изменены Модалка -->
+    <div id="profile-update" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="color: transparent">.</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="booking-confirm padd-top-30 padd-bot-30">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        <h2 class="mrg-top-15">Готово!</h2>
+                        <p>Данные профиля изменены</p>
+                        <a href="<?= "/$language" ?>" class="btn theme-btn-trans mrg-top-20">На главную</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- конец Данные изменены -->
 
 <script>
     $(document).ready(function () {
@@ -122,14 +145,21 @@
                 contentType: false,
                 success: function (respond, status, jqXHR) {
                     if(status == 'success'){
-                        var imgSrc = window.location.origin + '/uploads/tmp_avatars/' +
-                            respond.fileName + '.' + respond.format;
+                        console.log(respond);
+                        if( Number(respond.errors) ){
+                            $('.js-avatar-help-block').text(respond.errorText).fadeIn(100);
+                        } else {
+                            var imgSrc = window.location.origin + '/uploads/tmp_avatars/' +
+                                respond.fileName + '.' + respond.format;
 
-                        $('.js-change-ava, .js-avatar-img').css({
-                            'background-image': 'url(' + imgSrc + ')'
-                        });
+                            $('.js-change-ava, .js-avatar-img').css({
+                                'background-image': 'url(' + imgSrc + ')'
+                            });
 
-                        $('.js-filename').val(respond.fileName + '.' + respond.format);
+                            $('.js-filename').val(respond.fileName + '.' + respond.format);
+
+                            $('.js-avatar-help-block').text('').fadeOut(100);
+                        }
                     }
 
                     $('.js-name, .js-surname').focusout();
@@ -152,7 +182,7 @@
                    data: $("#user-form-ajax").serialize(),
                    dataType: 'html',
                    success: function (respond, status, jqXHR) {
-                        console.log(respond);
+                       $('#profile-update').modal();
                    },
 
                    error: function (jqXHR, status, errorThrown) {
@@ -162,6 +192,7 @@
                });
            }
         });
+
     })
 </script>
 

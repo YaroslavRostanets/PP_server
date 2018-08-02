@@ -12,6 +12,12 @@ return array(
     "profile/ajax" => "user/ajax",
     "profile" => "user/profile",
 
+    "favorites/add" => "favorites/addfavoriteplace",
+    "favorites" => "favorites/index",
+
+    "about" => "about/index",
+    "ajax" => "ajax/index",
+
     "detail/([0-9]+)" => "detail/index/$1",
     "" => "home/index"
 );

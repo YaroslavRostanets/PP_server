@@ -154,6 +154,8 @@
 
 <script src="<?= TEMPLATE ?>assets/js/fix.js"></script>
 
+<script src="<?= TEMPLATE ?>assets/js/placeAjax.js"></script>
+
 </div>
 </body>
 </html>

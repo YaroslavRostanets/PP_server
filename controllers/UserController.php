@@ -31,10 +31,15 @@ class UserController {
             $token = $gClient->fetchAccessTokenWithAuthCode($_GET['code']);
             $oAuth = new Google_Service_Oauth2($gClient);
             $userData = $oAuth->userinfo_v2_me->get();
-            pri($userData);
+
+            foreach ($userData as $key => $value) {
+                if (is_null($value)) {
+                    $userData[$key] = "";
+                }
+            }
+
             require_once SITE_ROOT . 'models/User.php';
             $user = User::isUserRegistered($userData['id'], 'GOOGLE');
-
             if( $user == FALSE ){ //Если такого пользователя нет, то регистрируем нового
                 $status = User::addGoogleUser($userData['id'],$userData['familyName'],
                     $userData['givenName'],$userData['email'],$userData['link'],$userData['picture']);
@@ -108,19 +113,58 @@ SCRIPT;
     }
 
     public function actionSigninfacebook() {
-        pri('FB');
+
         $id = '1590095447769249';
         $secret = '916d68a9feb7b52dd8b975192becf4ba';
-        $redirect_url = 'http://park-panda.com/';
+        $redirect_url = 'https://park-panda.com/signin/facebook/';
+        $grant_type='client_credentials';
 
-        $api_url = "https://www.facebook.com/v3.0/dialog/oauth?
-                  client_id={$id}
-                  &redirect_uri={$redirect_url}
-                  &state={state-param}";
+        $api_url = "https://www.facebook.com/v2.9/dialog/oauth?client_id={$id}&redirect_uri={$redirect_url}&grant_type=$grant_type&scope=email,public_profile";
 
-        echo $api_url;
+        if(isset($_GET['code'])) {
+            $result = get_web_page( "https://graph.facebook.com/v2.9/oauth/access_token?client_id=$id&redirect_uri=$redirect_url&client_secret=$secret&code=$_GET[code]" );
 
-        //header( "Location: $loginUrl" );
+            if ( $result['http_code'] == 200 ){
+                $token = json_decode($result['content'], true);
+                pri($token);
+                if(TRUE){
+                    $userData = get_web_page( "https://graph.facebook.com/v3.1/me?access_token=$token[access_token]&fields=id,name,email,last_name,first_name,picture.type(large)" );
+                    $userData = json_decode($userData['content'], true);
+
+                    $picture = file_get_contents($userData['picture']['data']['url']);
+
+                    $pictureName = time() . '.jpg';
+                    file_put_contents (AVATARS . $pictureName, $picture);
+                    $pictureUrl = HTTP_AVATARS . $pictureName;
+
+                    $checkUser = User::isUserRegistered($userData['id'], 'FACEBOOK');
+
+                    if( $checkUser == FALSE ){ //Если такого пользователя нет, то регистрируем нового
+                        $status = User::addFacebookUser($userData['id'], $userData['last_name'],
+                            $userData['first_name'],$userData['email'], ( isset($userData['link']) )? $userData['link'] : ''  ,$pictureUrl);
+                    }
+
+                    $siteUser = User::getUserByFacebookId($userData['id']);
+                    User::auth($siteUser['id']);
+
+                    $redirectJS = <<<SCRIPT
+                        <script>
+                            if (sessionStorage.getItem("redirectUri")) {
+                              var redirectUri = sessionStorage.getItem("redirectUri");sessionStorage.removeItem("redirectUri"); window.location.href = redirectUri;
+                            }
+                        </script>
+SCRIPT;
+
+                    echo $redirectJS;
+
+                }
+            } else {
+                echo "error";
+            }
+
+            return TRUE;
+        }
+        header( "Location: $api_url" );
 
         return TRUE;
     }
@@ -135,6 +179,7 @@ SCRIPT;
         }
         return TRUE;
     }
+
 }
 
 ?>

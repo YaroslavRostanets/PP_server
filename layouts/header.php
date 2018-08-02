@@ -16,10 +16,15 @@
     <link href="<?= TEMPLATE ?>css/light-bootstrap-dashboard.css?v=2.0.1" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="<?= TEMPLATE ?>css/demo.css" rel="stylesheet" />
+    <link href="<?= TEMPLATE ?>css/style.css" rel="stylesheet" />
+    <link href="<?= TEMPLATE ?>assets/css/fix.css" rel="stylesheet" />
     <script src="<?= TEMPLATE ?>js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
     <script src="<?= TEMPLATE ?>js/core/popper.min.js" type="text/javascript"></script>
     <script src="<?= TEMPLATE ?>js/core/bootstrap.min.js" type="text/javascript"></script>
     <script src="<?= TEMPLATE ?>js/validator.min.js" type="text/javascript"></script>
+
+    <script src="<?= TEMPLATE ?>js/jquery.hotkeys.js"></script>
+    <script src="<?= TEMPLATE ?>js/bootstrap-wysiwyg.min.js"></script>
 </head>
 
 <body>

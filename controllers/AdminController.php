@@ -283,4 +283,26 @@ class AdminController {
         return TRUE;
     }
 
+    public function ActionAbout( ) {
+        $aboutContent = About::getContent();
+        //pri($aboutContent);
+
+        include_once ROOT."/views/admin/about.php";
+        return TRUE;
+    }
+
+    public function actionAjax(){
+
+        if(isset($_GET['about-update'])){
+            $title = $_POST['title'];
+            $text = $_POST['text'];
+            $lang = $_POST['lang'];
+
+            $status = About::updateAbout($title,$text,$lang);
+            echo $status;
+        }
+
+        return true;
+    }
+
 }
