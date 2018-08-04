@@ -84,10 +84,9 @@
                             </div>
                         </div>
                         <div class="small-list-action">
-                            <a href="#" class="light-gray-btn btn-square" data-placement="top" data-toggle="tooltip" title="" data-original-title="Edit Item">
+                            <a href="/<?= $language ?>/detail/<?= $place['id'] ?>" class="light-gray-btn btn-square" data-placement="top" data-toggle="tooltip" title="" data-original-title="Edit Item">
                                 <i class="fa fa-info-circle" aria-hidden="true"></i>
                             </a>
-                            <!--<a href="#" class="theme-btn btn-square" data-toggle="tooltip" title="" data-original-title="Delete Item"><i class="ti-trash"></i></a>-->
                         </div>
                     </div>
 
@@ -170,7 +169,7 @@
 
             </div>
             <div role="tabpanel" class="tab-pane tab-sel" id="search-tab">
-                <form>
+                <form class="search-tab-form">
                     <div class="search-tab">
                         <div class="one-row">
                             <div class="one-row-in">
@@ -181,7 +180,7 @@
                                     <div class="label">Day:</div>
                                     <div class="bot-row">
                                         <label>
-                                            <input data-styler type="checkbox" name="MON_FRY">
+                                            <input data-styler type="checkbox" name="MONFRY">
                                             Mon-Fry
                                         </label>
                                         <label>
@@ -208,11 +207,11 @@
                                             <div class="span">
                                                 from
                                             </div>
-                                            <input data-timepicker value="00:00" type="text">
+                                            <input data-timepicker value="00:00" type="text" name="filterFrom">
                                         </div>
                                         <div class="group">
                                             <div class="span">to</div>
-                                            <input data-timepicker value="23:59" type="text">
+                                            <input data-timepicker value="23:59" type="text" name="filterTo">
                                         </div>
                                     </div>
                                 </div>
@@ -258,6 +257,11 @@
                     </div>
                 </form>
             </div>
+
+            <div role="tabpanel" class="tab-pane tab-sel" id="search-tab-result">
+                <div class="search-result-list"></div>
+            </div>
+
         </div>
 
         <div class="nav nav-tabs">
@@ -280,10 +284,21 @@
                         Search
                     </a>
                 </li>
+
+                <li role="presentation" class="js-tab-sel"
+                    data-tab="search-tab-result"
+                    data-act="SEARCH_RESULT"
+                    style="display: none !important;">
+                    <a href="javascript:void(0);">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                        Search result
+                    </a>
+                </li>
+
             </ul>
         </div>
     </div>
-    <button class="js-red-btn">
+    <button class="js-red-btn" data-active="FAST">
         <div class="fast-parking-tab btn-contain">
             <i class="fa fa-refresh" aria-hidden="true"></i>
             Refresh
@@ -295,6 +310,10 @@
         <div class="search-tab btn-contain" style="display: none;">
             <i class="fa fa-search" aria-hidden="true"></i>
             Search
+        </div>
+        <div class="search-tab-result btn-contain" style="display: none;">
+            <i class="fa fa-sign-out" aria-hidden="true"></i>
+            New Search
         </div>
     </button>
 </div>
@@ -409,5 +428,6 @@
         $('.js-search-distance-value').text( convertObj[index]);
     });
 
+    $()
 
 </script>

@@ -7,7 +7,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html lang="zxx">
+<html lang="<?= $language ?>">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -80,7 +80,7 @@
 
             <!-- Start Header Navigation -->
             <div class="navbar-header">
-                <a class="navbar-brand" href="../../index.php">
+                <a class="navbar-brand" href="/<?= $language ?>">
                     <img src="<?= TEMPLATE ?>assets/img/logo.png" class="logo logo-display" alt="">
                     <img src="<?= TEMPLATE ?>assets/img/logo.png" class="logo logo-scrolled" alt="">
                 </a>

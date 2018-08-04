@@ -862,3 +862,33 @@ body.detail-page nav.navbar.bootsnav.navbar-transparent.white ul.nav>li>a {
     }
   }
 }
+.search-result-list {
+  .booking-confirm {
+    i {
+      margin-bottom: 10px;
+      color: #FF431E;
+      border: 1px solid #FF6040;
+      box-shadow: 0 0 10px 1px #FF775C;
+      -webkit-box-shadow: 0 0 10px 1px #FF775C;
+    }
+  }
+}
+.add-place {
+  .upload-btn-wrapper {
+    position: static;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    .img-cont {
+      width: 150px;
+      margin: 25px auto 10px auto;
+    }
+  }
+  #map {
+    height: 350px;
+    background: red;
+  }
+  .right-column {
+    padding-top: 35px;
+  }
+}

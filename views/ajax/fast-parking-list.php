@@ -34,7 +34,6 @@ function rightInterval($min) {
 ?>
 
 <div class="fast-parking-list">
-
                     <? foreach ($places as $place) :?>
 
     <div data-id=<?= $place['id'] ?> class="small-listing-box light-gray js-one-place">
@@ -75,13 +74,13 @@ function rightInterval($min) {
         </div>
     </div>
     <div class="small-list-action">
-        <a href="#" class="light-gray-btn btn-square" data-placement="top" data-toggle="tooltip" title="" data-original-title="Edit Item">
+        <a href="<?= $language ?>/detail/<?= $place['id'] ?>" class="light-gray-btn btn-square" data-placement="top" data-toggle="tooltip" title="" data-original-title="Edit Item">
             <i class="fa fa-info-circle" aria-hidden="true"></i>
         </a>
-        <!--<a href="#" class="theme-btn btn-square" data-toggle="tooltip" title="" data-original-title="Delete Item"><i class="ti-trash"></i></a>-->
     </div>
     </div>
 
 <? endforeach; ?>
 
 </div>
+

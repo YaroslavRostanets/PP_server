@@ -15,6 +15,8 @@ return array(
     "favorites/add" => "favorites/addfavoriteplace",
     "favorites" => "favorites/index",
 
+    "addplace" => "places/add",
+
     "about" => "about/index",
     "ajax" => "ajax/index",
 

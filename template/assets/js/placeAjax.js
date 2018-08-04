@@ -107,21 +107,50 @@ map.newMarkersResresh = function(markers){
             });
         });
 
-        markerCluster = new MarkerClusterer(map, markersArr,
-            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+        map.setZoom(11);
 
         return marker;
 
     });
+
+    markerCluster = new MarkerClusterer(map, markersArr,
+        {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+
 };
 
 $('.js-tab-sel[data-act=FAST]').on('click', function(){
+    console.log('test');
+    fastFunc();
+});
+
+$('.js-red-btn').on('click', function(){
+    var act = $(this).attr('data-active');
+    console.log(act);
+    switch(act) {
+        case 'FAST':
+            fastFunc();
+            break;
+        case 'FILTER':
+            filterFunc();
+            break;
+        case 'SEARCH':
+            searchFunc();
+            break;
+        case 'SEARCH_RESULT':
+            searchResultFunc();
+            break;
+    }
+});
+
+
+function fastFunc() {
     console.log('ajax');
     var lat = sessionStorage.getItem('lat');
     var lng = sessionStorage.getItem('lng');
+    var lang = $('html').attr('lang');
 
     $.ajax({
-        url: "/ajax?fast&lat=" + lat + '&lng=' + lng,
+        url: "/" + lang + "/ajax?fast&lat=" + lat + '&lng=' + lng,
         type: 'GET',
         cache: false,
         dataType: 'json',
@@ -141,31 +170,24 @@ $('.js-tab-sel[data-act=FAST]').on('click', function(){
             }
         }
     });
-});
 
-$('.js-red-btn').on('click', function(){
-    var act = $(this).attr('data-active');
-    console.log(act);
-    switch(act) {
-        case 'FAST':
-            fastFunc();
-            break;
-        case 'FILTER':
-            filterFunc();
-            break;
-        case 'SEARCH':
-            searchFunc();
-            break;
-    }
-});
+    $('.js-one-place').on('click', function(){
+        var markerId = $(this).attr('data-id');
 
-
-function fastFunc() {
+        for( var marker in markersArr ){
+            var selMarker = markersArr[marker];
+            if(markersArr[marker]['id'] == markerId){
+                google.maps.event.trigger(markersArr[marker], 'click');
+                map.setCenter(selMarker.position);
+                map.setZoom(16);
+                break;
+            }
+        }
+    });
 
 }
 
 function filterFunc() {
-    console.log('__log__');
     var lat = sessionStorage.getItem('lat');
     var lng = sessionStorage.getItem('lng');
 
@@ -177,28 +199,74 @@ function filterFunc() {
         url: "/ajax?filter&lat=" + lat + '&lng=' + lng,
         type: 'GET',
         cache: false,
-        dataType: 'text',
+        dataType: 'json',
         data: values,
         success: function(respond){
             console.log(respond);
-
+            for (var i = 0; i < markersArr.length; i++) {
+                markersArr[i].setMap(null);
+            }
+            markerCluster.clearMarkers();
+            markersArr = [];
+            map.newMarkersResresh(JSON.parse(respond.places));
         }
     });
 
     console.log(values);
 
-    state = {
-        MONFRY: false,
-        SAT: false,
-        SUN: false,
-        filterFrom: "00-00",
-        filterTo: "23-59",
-        filterTimeFrom: "30min",
-        sliderValues: [1],
-        loader: true
-    };
+
 }
 
 function searchFunc() {
+    var lat = sessionStorage.getItem('lat');
+    var lng = sessionStorage.getItem('lng');
+    var lang = $('html').attr('lang');
 
+    $('.search-tab-form').find(':checkbox:not(:checked)').attr('value', '0').prop('checked', true);
+    var values = $('.search-tab-form').serialize();
+    values = values.replace(/=on/g, "=true").replace(/=0/g, "=false");
+
+    console.log(values);
+
+    $.ajax({
+        url: "/" + lang + "/ajax?search&lat=" + lat + '&lng=' + lng,
+        type: 'GET',
+        cache: false,
+        dataType: 'json',
+        data: values,
+        success: function(respond, status){
+            console.log(respond);
+            if(status == 'success'){
+                $('.search-result-list').html(respond.template);
+                $('.js-tab-sel[data-tab=search-tab-result]').click();
+                $('.js-tab-sel[data-tab=search-tab]').addClass('active');
+
+                for (var i = 0; i < markersArr.length; i++) {
+                    markersArr[i].setMap(null);
+                }
+                markerCluster.clearMarkers();
+                markersArr = [];
+                map.newMarkersResresh(JSON.parse(respond.places));
+            }
+            console.log(respond);
+
+            $('.js-one-place').on('click', function(){
+                var markerId = $(this).attr('data-id');
+
+                for( var marker in markersArr ){
+                    var selMarker = markersArr[marker];
+                    if(markersArr[marker]['id'] == markerId){
+                        google.maps.event.trigger(markersArr[marker], 'click');
+                        map.setCenter(selMarker.position);
+                        map.setZoom(16);
+                        break;
+                    }
+                }
+            });
+        }
+    });
+}
+
+function searchResultFunc() {
+    $('.js-tab-sel[data-tab=search-tab]').click();
 }

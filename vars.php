@@ -101,7 +101,7 @@ function get_web_page( $url )
     return $header;
 }
 
-function requireToVar($places,$file){
+function requireToVar($places, $language, $file){
     ob_start();
     require_once($file);
     return ob_get_clean();

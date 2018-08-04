@@ -37,3 +37,6 @@
         <? endforeach; ?>
     </ul>
 </div>
+<script>
+    sessionStorage.setItem('language', '<?= $languages[$language]['title'] ?>');
+</script>

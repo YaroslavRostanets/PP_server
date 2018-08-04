@@ -52,11 +52,20 @@ $(document).ready(function(){
     });
 
 
+    $('.js-user-auth-wrap').on('click', function(){
+       if($(this).hasClass('open')){
+           $(this).find('.profile-menu').fadeOut(100);
+       } else {
+           $(this).find('.profile-menu').fadeIn(100);
+       }
+    });
 
-    $('.js-user-auth-wrap').hover(function () {
-        $(this).find('.profile-menu').fadeIn(100);
-    }, function () {
-        $(this).find('.profile-menu').fadeOut(100);
+    $(document).mouseup(function (e) {
+        var container = $('.js-user-auth-wrap');
+        if (container.has(e.target).length === 0){
+            container.removeClass('open');
+            container.find('.profile-menu').hide();
+        }
     });
 
     $('.js-show-favorites').on('click', function(){
