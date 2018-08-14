@@ -19,7 +19,7 @@
             return "~<b>$dist</b> km";
         } else {
             $dist = $dist * 1000;
-            return "~<b>$dist</b> min";
+            return "~<b>$dist</b> m";
         }
     }
 
@@ -84,7 +84,14 @@
                             </div>
                         </div>
                         <div class="small-list-action">
-                            <a href="/<?= $language ?>/detail/<?= $place['id'] ?>" class="light-gray-btn btn-square" data-placement="top" data-toggle="tooltip" title="" data-original-title="Edit Item">
+                            <?php
+                            if( $place['friendly_url'] != '' ){
+                                $href = $language . '/detail/' . $place['friendly_url'];
+                            } else {
+                                $href = $language . '/detail/' . $place['id'];
+                            }
+                            ?>
+                            <a href="<?= $href ?>" class="light-gray-btn btn-square" data-placement="top" data-toggle="tooltip" title="" data-original-title="Edit Item">
                                 <i class="fa fa-info-circle" aria-hidden="true"></i>
                             </a>
                         </div>
@@ -180,15 +187,15 @@
                                     <div class="label">Day:</div>
                                     <div class="bot-row">
                                         <label>
-                                            <input data-styler type="checkbox" name="MONFRY">
+                                            <input style="display: block;" type="checkbox" name="MONFRY">
                                             Mon-Fry
                                         </label>
                                         <label>
-                                            <input data-styler type="checkbox" name="SAT">
+                                            <input style="display: block;" type="checkbox" name="SAT">
                                             Sat
                                         </label>
                                         <label>
-                                            <input data-styler type="checkbox" name="SUN">
+                                            <input style="display: block;" type="checkbox" name="SUN">
                                             Sun
                                         </label>
                                     </div>

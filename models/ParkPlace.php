@@ -21,6 +21,7 @@ class ParkPlace {
         $db = Db::getConnection();
 
         $sql = "SELECT 
+              id,
               kind_of_place,
               geodist_pt( Point($lat, $lon), coordinates ),
               photo_url,
@@ -39,6 +40,45 @@ class ParkPlace {
               X(coordinates), 
               Y(coordinates)
               FROM parking_place WHERE id=$id";
+
+        $result = $db->prepare($sql);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $result->execute();
+        $arrResult = $result->fetch();
+        foreach ($arrResult as $key => $value){
+            if( strripos($key,"geodist_pt") !== FALSE ){
+                $arrResult['geodist_pt'] = $arrResult[$key];
+                unset($arrResult[$key]);
+                break;
+            }
+        }
+
+        return $arrResult;
+    }
+
+    public static function getPlaceByFriendlyUrl($url ,$lat = 60.1700, $lon = 30.9359){
+        $db = Db::getConnection();
+        $url = trim($url);
+        $sql = "SELECT 
+                  id,
+                  kind_of_place,
+                  geodist_pt( Point($lat, $lon), coordinates ),
+                  photo_url,
+                  time_interval, 
+                  weekday_from, 
+                  weekday_to,
+                  saturday_from,
+                  saturday_to,
+                  sunday_from,
+                  sunday_to,
+                  park_zone,
+                  address_en,
+                  address_fi,
+                  address_ru,
+                  address_uk,
+                  X(coordinates), 
+                  Y(coordinates)
+              FROM parking_place WHERE friendly_url='$url';";
 
         $result = $db->prepare($sql);
         $result->setFetchMode(PDO::FETCH_ASSOC);
@@ -134,13 +174,13 @@ class ParkPlace {
 
     public static function addNewParkPlace(
         $kind_of_place,$photo_url,$weekday_from,$weekday_to,$saturday_from,$saturday_to,$sunday_from,$sunday_to,$time_interval,$park_zone,
-        $address_en, $address_fi, $address_ru, $address_uk, $lat, $lon, $hasnt_table
+        $fliendly_url, $address_en, $address_fi, $address_ru, $address_uk, $lat, $lon, $hasnt_table
     ){
 
         $db = Db::getConnection();
         $sql = "INSERT INTO parking_place (
                     kind_of_place, photo_url, weekday_from, weekday_to, saturday_from, saturday_to, sunday_from, sunday_to,
-                    time_interval, park_zone, address_en, address_fi, address_ru, address_uk, coordinates, hasnt_table)
+                    time_interval, park_zone, friendly_url, address_en, address_fi, address_ru, address_uk, coordinates, hasnt_table)
                 VALUES (
                     :kind_of_place,
                     :photo_url,
@@ -152,6 +192,7 @@ class ParkPlace {
                     :sunday_to, 
                     :time_interval,
                     :park_zone,
+                    :friendly_url,
                     :address_en,
                     :address_fi,
                     :address_ru,
@@ -175,6 +216,7 @@ class ParkPlace {
         $result->bindParam(':sunday_to', $sunday_to, PDO::PARAM_STR);
         $result->bindParam(':time_interval', $time_interval, PDO::PARAM_INT);
         $result->bindParam(':park_zone', $park_zone, PDO::PARAM_INT);
+        $result->bindParam(':friendly_url', $fliendly_url, PDO::PARAM_STR);
         $result->bindParam(':address_en', $address_en, PDO::PARAM_STR);
         $result->bindParam(':address_fi', $address_fi, PDO::PARAM_STR);
         $result->bindParam(':address_ru', $address_ru, PDO::PARAM_STR);
@@ -186,6 +228,16 @@ class ParkPlace {
         $result->execute();
 
         return TRUE;
+
+    }
+
+    public static function getCurrentIdPlace(){
+        $db = Db::getConnection();
+        $sql = "SELECT MAX(id) FROM parking_place;";
+        $result = $db->prepare($sql);
+        $result->execute();
+
+        return $result->fetch();
 
     }
 

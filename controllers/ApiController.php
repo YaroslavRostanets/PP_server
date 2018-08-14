@@ -17,7 +17,7 @@ class ApiController {
 
     public function actionLocation(){
         function getLocationByIp($ip){
-            $locationJSON = file_get_contents(LOCATION_JSON . $ip);
+            $locationJSON = file_get_contents('http://api.ipstack.com/'.$ip.'?access_key=c7b2f24eb3a08f6b82ed5d683ff8c767');
             return $locationJSON;
         }
 

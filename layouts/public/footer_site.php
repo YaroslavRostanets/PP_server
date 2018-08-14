@@ -6,7 +6,10 @@
  * Time: 20:02
  */
 ?>
+<?php
+include_once ROOT . "/localization/footer_site.php";
 
+?>
 <!-- ================ Start Footer ======================= -->
 <footer class="footer dark-bg">
     <div class="row padd-0 mrg-0">
@@ -14,48 +17,75 @@
             <div class="col-md-3 col-sm-12 theme-bg">
                 <div class="footer-widget">
                     <div class="textwidget">
-                        <h3 class="widgettitle widget-title">Get In Touch</h3>
-                        <p>7744 North Park Place<br>
-                            San Francisco, CA 714258</p>
-                        <p><strong>Email:</strong> support@listinghub.com</p>
+                        <h3 class="widgettitle widget-title"><?= $lang[$language]['get_in_touch'] ?></h3>
+                        <p><?= $lang[$language]['address'] ?></p>
+                        <p style="text-transform: none;">
+                            <strong>Email:</strong> support@park-panda.com
+                        </p>
                         <p>
-                            <strong>Call:</strong> <a href="tel:+774422777">777-444-2222</a>
+                            <strong><?= $lang[$language]['call'] ?>:</strong>
+                            <a href="tel:+380634535415">(063) 453 54 15</a>
                         </p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-5 col-sm-4">
+            <div class="col-md-2 col-sm-4">
                 <div class="footer-widget">
-                    <h3 class="widgettitle widget-title">About Us</h3>
+                    <h3 class="widgettitle widget-title">
+                        <?= $lang[$language]['navigation'] ?>
+                    </h3>
                     <ul class="footer-navigation">
-                        <li><a href="#">Home Version 1</a></li>
-                        <li><a href="#">Home Version 2</a></li>
-                        <li><a href="#">Home Version 3</a></li>
-                        <li><a href="#">Home Version 4</a></li>
-                        <li><a href="#">Listing Detail</a></li>
-                        <li><a href="#">Listing Vertical</a></li>
-                        <li><a href="#">Listing Sidebar</a></li>
-                        <li><a href="#">Vertical Sidebar</a></li>
+                        <li><a href="/<?= $language ?>"><?= $lang[$language]['home'] ?></a></li>
+                        <li><a href="/<?= $language . "/about" ?>"><?= $lang[$language]['about'] ?></a></li>
+                        <li>
+                            <a href="javascript:void(0);" class="js-show-favorites">
+                                <?= $lang[$language]['favorites'] ?>
+                                <? if( isset($_SESSION['userId']) && count(Favorites::getFavoritesByUserId($_SESSION['userId'])) ): ?>
+                                    <span><?= count(Favorites::getFavoritesByUserId($_SESSION['userId'])) ?></span>
+                                <? endif; ?>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/<?= $language . "/addplace" ?>">
+                                <?= $lang[$language]['add_place'] ?>
+                            </a>
+                        </li>
                     </ul>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4">
+                <div class="footer-widget">
+                    <h3 class="widgettitle widget-title">
+                        <?= $lang[$language]['application'] ?>
+                    </h3>
+                    <div class="app-download">
+                        <a href="#" class="marker-app-download">
+                            <img src="<?= TEMPLATE . 'assets/img/google_play.png' ?>" alt="Google play button">
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="col-md-4 col-sm-6">
                 <div class="footer-widget">
-                    <h3 class="widgettitle widget-title">Connect Us</h3>
-                    <img src="assets/img/footer-logo.png" alt="Footer logo" class="img-responsive" />
+                    <h3 class="widgettitle widget-title">
+                        <?= $lang[$language]['connect_us'] ?>
+                    </h3>
+                    <img src="<?= TEMPLATE ?>assets/img/footer-logo.png" alt="Footer logo" class="img-responsive" />
                     <ul class="footer-social">
                         <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                         <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                        <!--
                         <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                         <li><a href="#"><i class="fa fa-instagram"></i></a></li>
                         <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                        -->
                     </ul>
                 </div>
             </div>
         </div>
     </div>
     <div class="footer-copyright">
-        <p>Copyright@ 2017 Listing Hub Design By <a href="http://www.themezhub.com/" title="Themezhub" target="_blank">Themezhub</a></p>
+        <p>Copyright@ <?= date("o"); ?>. Made with <i class="fa fa-heart-o" aria-hidden="true"></i> in Kyiv. Powered by Park Panda Team.</p>
     </div>
 </footer>
 <!-- ================ End Footer Section ======================= -->

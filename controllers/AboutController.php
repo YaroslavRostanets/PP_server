@@ -14,7 +14,14 @@ class AboutController {
     }
 
     public function actionIndex(){
+        $userId = User::isLogged();
+
+        if($userId){
+            $user = User::getUserById($userId);
+        }
+
         $language = $this->lang;
+        $seo = Seo::getMetaByPageName('About');
 
         $aboutContent = About::getContentByLang($language);
 

@@ -2,7 +2,7 @@
 
 define("ROOT",dirname(__FILE__));
 //define("SITE_ROOT","/php/cms/");
-define("GM_API_KEY","AIzaSyBueyERw9S41n4lblw5fVPAc9UqpAiMgvM");
+define("GM_API_KEY","AIzaSyBaVoLDDl1BcYSVmgOHRBWAiIo4GqDiSJo");
 define("GEOCODE_URI","https://maps.googleapis.com/maps/api/geocode/json?");
 define("SITE_ROOT","");
 define("TEMPLATE",SITE_ROOT."/template/");
@@ -12,6 +12,7 @@ define("PLACES",$_SERVER['DOCUMENT_ROOT']."/uploads/places/");
 define("OFFER_PLACES",$_SERVER['DOCUMENT_ROOT'].'uploads/offer_parking/');
 define("HTTP_PLACES",'https://'.$_SERVER['HTTP_HOST'].'/uploads/places/');
 define("TMP_PLACES",'https://'.$_SERVER['HTTP_HOST'].'/uploads/tmp_places/');
+define("TMP_OFFER_PARKING",$_SERVER['DOCUMENT_ROOT'] .'/uploads/tmp_offer_parking/');
 define("HTTP_OFFER_PLACES",'https://'.$_SERVER['HTTP_HOST'].'/uploads/offer_parking/');
 
 define("TMP_AVATARS",$_SERVER['DOCUMENT_ROOT'].'/uploads/tmp_avatars/');
@@ -101,7 +102,7 @@ function get_web_page( $url )
     return $header;
 }
 
-function requireToVar($places, $language, $file){
+function requireToVar($context, $file){
     ob_start();
     require_once($file);
     return ob_get_clean();

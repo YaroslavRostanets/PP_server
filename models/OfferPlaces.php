@@ -60,4 +60,24 @@ class OfferPlaces {
         }
         return $arrResult;
     }
+
+    public static function saveOfferPlace($lat, $lon, $photo_url, $from_user_id) {
+        $db = Db::getConnection();
+
+        $sql = "INSERT INTO offer_parking (from_user_id, photo_url, coordinates) VALUES (
+        :from_user_id,
+        :photo_url,
+        Point(:lat, :lon)
+        )";
+
+        $result = $db->prepare($sql);
+
+        $result->bindParam(':from_user_id', $from_user_id, PDO::PARAM_STR);
+        $result->bindParam(':photo_url', $photo_url, PDO::PARAM_STR);
+        $result->bindParam(':lat', $lat, PDO::PARAM_STR);
+        $result->bindParam(':lon', $lon, PDO::PARAM_STR);
+        $requestStatus = $result->execute();
+
+        return $requestStatus;
+    }
 }

@@ -12,9 +12,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta name="robots" content="index,follow">
+    <meta name="description " content="<?= isset($seo)? $seo['description_' . $language] : '' ?>">
+    <meta name="keywords" content="<?= isset($seo)? $seo['keywords_' . $language] : '' ?>">
+    <meta name="robots" content="<?
+        echo (isset($seo) && $seo['robots_index'] == 1)? 'index' : 'noindex';
+    ?>,<?
+        echo (isset($seo) && $seo['robots_follow'] == 1)? 'follow' : 'nofollow';
+    ?>">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -23,7 +27,7 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
-    <title>Поиск бесплатных парковок в Хельсинки</title>
+    <title><?= isset($seo)? $seo['title_' . $language] : '' ?></title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="<?= TEMPLATE ?>assets/plugins/bootstrap/css/bootstrap.min.css">
@@ -72,7 +76,8 @@
 <body class="<?= ( isset($this->pageName) )? $this->pageName : '' ?>" >
 <div class="wrapper">
     <!-- Start Navigation -->
-    <nav class="navbar navbar-default navbar-fixed navbar-transparent white bootsnav">
+    <nav class="navbar navbar-default navbar-fixed white bootsnav
+<?= isset($this->pageName) && $this->pageName == 'home-page' ? '' : 'navbar-transparent' ?>">
         <div class="container-fluid">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
                 <i class="ti-align-left"></i>
@@ -81,7 +86,8 @@
             <!-- Start Header Navigation -->
             <div class="navbar-header">
                 <a class="navbar-brand" href="/<?= $language ?>">
-                    <img src="<?= TEMPLATE ?>assets/img/logo.png" class="logo logo-display" alt="">
+
+                    <img src="<?= TEMPLATE ?>assets/img/<?= isset($isHomePage) ? 'logo.png' : 'logo-white.png' ?>" class="logo logo-display" alt="">
                     <img src="<?= TEMPLATE ?>assets/img/logo.png" class="logo logo-scrolled" alt="">
                 </a>
             </div>
@@ -102,7 +108,11 @@
                             <? endif; ?>
                         </a>
                     </li>
-                    <li><a href="#"><?= $lang[$language]['add_place'] ?></a></li>
+                    <li>
+                        <a href="/<?= $language . "/addplace" ?>">
+                            <?= $lang[$language]['add_place'] ?>
+                        </a>
+                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" >
                     <li class="no-pd">

@@ -23,7 +23,10 @@ class AjaxController {
             $places = Api::getPlacesListNearPoint($lat, $lng);
 
 
-            $template = requireToVar($places, $language, SITE_ROOT . 'views/ajax/fast-parking-list.php');
+            $template = requireToVar(
+                ['language' => $language,
+                   'places' => $places],
+                SITE_ROOT . 'views/ajax/fast-parking-list.php');
 
             $arrResult = array(
                 'places' => $places,
@@ -80,9 +83,12 @@ class AjaxController {
             );
 
             if( count(json_decode($places)) ){
-                $template = requireToVar(json_decode($places, TRUE),$language , SITE_ROOT . 'views/ajax/fast-parking-list.php');
+                $template = requireToVar(
+                    ['language' => $language,
+                    'places' => json_decode($places, TRUE)],
+                    SITE_ROOT . 'views/ajax/fast-parking-list.php');
             } else {
-                $template = requireToVar(null, null, SITE_ROOT . 'views/ajax/search-no-result.php');
+                $template = requireToVar(null, SITE_ROOT . 'views/ajax/search-no-result.php');
             }
 
             echo json_encode(

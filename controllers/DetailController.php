@@ -24,11 +24,19 @@ class DetailController {
 
         $language = $this->lang;
         $coords = Api::getCoordsByIp();
-        $place = ParkPlace::getPlaceById($id,$coords['lat'], $coords['lon']);
+        if( intval($id) ){
+            $place = ParkPlace::getPlaceById($id,$coords['lat'], $coords['lon']);
+        } else {
+            $place = ParkPlace::getPlaceByFriendlyUrl($id,$coords['lat'], $coords['lon']);
+        }
+
+        $seo = Seo::getMetaByPageName('Detail');
+        $seo['title_' . $language] = str_replace( '@address' , $place['address_' . $language], $seo['title_' . $language] );
+        $seo['description_' . $language] = str_replace( '@address' , $place['address_' . $language], $seo['description_' . $language] );
+        $seo['keywords_' . $language] = str_replace( '@address' , $place['address_' . $language], $seo['keywords_' . $language] );
 
         require_once ROOT."/views/site/detail.php";
 
-        //echo "DETAIL";
         return true;
     }
 }

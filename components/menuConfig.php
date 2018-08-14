@@ -37,6 +37,13 @@ $menu = array(
         "class=" => "user-item",
         "icon" => "fa-align-justify"
     ],
+    "SEO" => [
+        "link" => "/admin/seo/",
+        "route" => "/admin/seo",
+        "title" => "SEO",
+        "class=" => "user-item",
+        "icon" => "fa-align-justify"
+    ],
 );
 
 ?>

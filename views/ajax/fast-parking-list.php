@@ -17,7 +17,7 @@ function rightDistance($dist) {
         return "~<b>$dist</b> km";
     } else {
         $dist = $dist * 1000;
-        return "~<b>$dist</b> min";
+        return "~<b>$dist</b> m";
     }
 }
 
@@ -34,7 +34,7 @@ function rightInterval($min) {
 ?>
 
 <div class="fast-parking-list">
-                    <? foreach ($places as $place) :?>
+                    <? foreach ($context['places'] as $place) :?>
 
     <div data-id=<?= $place['id'] ?> class="small-listing-box light-gray js-one-place">
     <div class="small-list-img">
@@ -74,7 +74,14 @@ function rightInterval($min) {
         </div>
     </div>
     <div class="small-list-action">
-        <a href="<?= $language ?>/detail/<?= $place['id'] ?>" class="light-gray-btn btn-square" data-placement="top" data-toggle="tooltip" title="" data-original-title="Edit Item">
+        <?php
+            if( $place['friendly_url'] != '' ){
+                $href = $context['language'] . '/detail/' . $place['friendly_url'];
+            } else {
+                $href = $context['language'] . '/detail/' . $place['id'];
+            }
+        ?>
+        <a href="<?= $href ?>" class="light-gray-btn btn-square" data-placement="top" data-toggle="tooltip" title="" data-original-title="Edit Item">
             <i class="fa fa-info-circle" aria-hidden="true"></i>
         </a>
     </div>

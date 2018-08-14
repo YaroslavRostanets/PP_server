@@ -3,7 +3,15 @@
 
 <section class="home-map">
     <div id="map"></div>
+
+    <?
+    echo requireToVar('Чтобы уточнить свое расположение, просто перемещайте маркер по карте',
+        SITE_ROOT . 'views/modals/hint.php')
+    ?>
+
 </section>
+
+
 
 <style>
     #map {
@@ -13,6 +21,40 @@
 </style>
 
 <script>
+
+    function dragHeandler() {
+        google.maps.event.addListener(mark, 'dragend', function () {
+            sessionStorage.setItem('lat', mark.position.lat());
+            sessionStorage.setItem('lng', mark.position.lng());
+            var lang = "<?= $language ?>";
+
+            $('.js-hint').removeClass('animated fadeInDown').fadeOut('150', function(){
+                $(this).remove();
+            }) ;
+
+            $.ajax({
+                url: "/" + lang + "/ajax?fast&lat=" + mark.position.lat() + '&lng=' + mark.position.lng(),
+                type: 'GET',
+                cache: false,
+                dataType: 'json',
+                success: function(respond,status){
+
+                    if(status == 'success'){
+                        var markers = respond.places;
+                        $('#fast-parking-tab').html(respond.html);
+                        for (var i = 0; i < markersArr.length; i++) {
+                            markersArr[i].setMap(null);
+                        }
+                        markerCluster.clearMarkers();
+                        markersArr = [];
+                        map.newMarkersResresh(respond.places);
+                    }
+                }
+            });
+
+        });
+    }
+
     var options = {
         enableHighAccuracy: true,
         timeout: 10000,
@@ -36,16 +78,44 @@
         console.log(`More or less ${crd.accuracy} meters.`);
         sessionStorage.setItem('lat', crd.latitude);
         sessionStorage.setItem('lng', crd.longitude);
+
+        dragHeandler();
     };
 
     function error(err) {
         console.warn(`ERROR(${err.code}): ${err.message}`);
+        $.ajax({
+            url: "/api/location",
+            type: 'GET',
+            cache: false,
+            dataType: 'json',
+            success: function(respond,status){
+                if(status == 'success'){
+                    mark = new google.maps.Marker({
+                        position: {
+                            lat: +respond.latitude,
+                            lng: +respond.longitude
+                        },
+                        draggable:true,
+                        map: map
+                    });
+
+                    sessionStorage.setItem('lat', +respond.latitude);
+                    sessionStorage.setItem('lng', +respond.longitude);
+
+                    dragHeandler();
+
+                }
+                console.log(respond);
+            }
+        });
     };
 
     var markers = <?= json_encode($places) ?>;
     var map;
     var markersArr;
     var markerCluser;
+    var infoWindow;
 
     function intervalRightFormat(interval){
         var int = Number(interval);
@@ -190,8 +260,7 @@
 
         });
 
-        var infowindow = new google.maps.InfoWindow({
-            content: '<div>TEST</div>',
+        infowindow = new google.maps.InfoWindow({
             maxWidth: 110
         });
 

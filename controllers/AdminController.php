@@ -68,10 +68,15 @@ class AdminController {
             header("Location: "."/admin/signin/");
         }
 
+        $currentIdArr = ParkPlace::getCurrentIdPlace();
+        $currentId = $currentIdArr[0] + 1;
         if( isset($_POST['submit']) ){
-
             copy(SRC_TMP_PLACES . $_POST['photo_url'], PLACES . $_POST['photo_url']);
             clearDirectory(SRC_TMP_PLACES);
+
+            $friendly_url = mb_strtolower($_POST['friendly_url']);
+            $friendly_url = str_replace(' ','-',$friendly_url);
+            $friendly_url = str_replace("'","",$friendly_url);
 
             $result = ParkPlace::addNewParkPlace(
                 $_POST['kind_of_place'],
@@ -84,6 +89,7 @@ class AdminController {
                 $_POST['sunday_to'],
                 $_POST['time_interval'],
                 $_POST['park_zone'],
+                $friendly_url,
                 $_POST['address_en'],
                 $_POST['address_fi'],
                 $_POST['address_ru'],
@@ -288,6 +294,18 @@ class AdminController {
         //pri($aboutContent);
 
         include_once ROOT."/views/admin/about.php";
+        return TRUE;
+    }
+
+    public function ActionSeo( ) {
+        $pages = Seo::getAllTemplates();
+
+        if(isset($_POST['submit'])){
+            $status = Seo::updateSeoData($_POST);
+            header('Location: '.$_SERVER['SCRIPT_URI'].'?save');
+        }
+
+        include_once ROOT."/views/admin/seo.php";
         return TRUE;
     }
 

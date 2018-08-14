@@ -20,6 +20,6 @@ return array(
     "about" => "about/index",
     "ajax" => "ajax/index",
 
-    "detail/([0-9]+)" => "detail/index/$1",
+    "detail/([a-z0-9]+)" => "detail/index/$1",
     "" => "home/index"
 );

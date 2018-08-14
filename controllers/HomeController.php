@@ -12,6 +12,7 @@ class HomeController {
     private $lang;
     function __construct($lang='fi') {
         $this->lang = $lang;
+        $this->pageName = 'home-page';
     }
 
     public function actionIndex(){
@@ -24,6 +25,7 @@ class HomeController {
         $language = $this->lang;
         $coords = Api::getCoordsByIp();
         $places = Api::getPlacesListNearPoint($coords['lat'], $coords['lon']);
+        $seo = Seo::getMetaByPageName('Home');
 
         $isHomePage = TRUE;
 

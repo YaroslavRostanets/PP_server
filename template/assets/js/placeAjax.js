@@ -1,44 +1,43 @@
 /**
  * Created by Yaroslav on 01.08.2018.
  */
+if(typeof window.map !== 'undefined'){
+    map.newMarkersResresh = function(markers){
+        markersArr = markers.map(function(place, i) {
 
-map.newMarkersResresh = function(markers){
-    markersArr = markers.map(function(place, i) {
+            var marker = new google.maps.Marker({
+                position: {
+                    'lat': +place.lat,
+                    'lng': +place.lon
+                },
+                map: map,
+                icon: {
+                    url: window.location.origin + '/template/assets/img/marker.png', // url
+                    scaledSize: new google.maps.Size(34, 42), // scaled size
+                    origin: new google.maps.Point(0,0), // origin
+                    labelOrigin: new google.maps.Point(17, 15)
+                },
+                label: {
+                    text: intervalRightFormat( place['time_interval'] ),
+                    color: '#677782',
+                    fontSize: "12px",
+                    fontWeight: 'bolder'
+                },
+                placeInfo: place,
+                id: place.id
+            });
 
-        var marker = new google.maps.Marker({
-            position: {
-                'lat': +place.lat,
-                'lng': +place.lon
-            },
-            map: map,
-            icon: {
-                url: window.location.origin + '/template/assets/img/marker.png', // url
-                scaledSize: new google.maps.Size(34, 42), // scaled size
-                origin: new google.maps.Point(0,0), // origin
-                labelOrigin: new google.maps.Point(17, 15)
-            },
-            label: {
-                text: intervalRightFormat( place['time_interval'] ),
-                color: '#677782',
-                fontSize: "12px",
-                fontWeight: 'bolder'
-            },
-            placeInfo: place,
-            id: place.id
-        });
+            infowindow = new google.maps.InfoWindow({
+                maxWidth: 110
+            });
 
-        var infowindow = new google.maps.InfoWindow({
-            content: '<div>TEST</div>',
-            maxWidth: 110
-        });
+            marker.addListener('click', function() {
+                var point = marker['placeInfo'];
+                console.log(point);
 
-        marker.addListener('click', function() {
-            var point = marker['placeInfo'];
-            console.log(point);
+                var href = '';
 
-            var href = '';
-
-            infowindow.setContent(`<div class="info-window">
+                infowindow.setContent(`<div class="info-window">
                                 <div class="top">
                                     <div class="place-sign">
                                         ${signRender(point['kind_of_place'])}
@@ -70,53 +69,53 @@ map.newMarkersResresh = function(markers){
                                 </div>
                             </div>`);
 
+                infowindow.open(map, marker);
 
-            infowindow.open(map, marker);
+                $('.js-add-to-favorites').on('click', function(){
+                    console.log(marker.placeInfo.id);
+                    $.ajax({
+                        url: "/favorites/add?placeId=" + marker.placeInfo.id,
+                        type: 'GET',
+                        cache: false,
+                        dataType: 'html',
+                        success: function(respond,status){
+                            console.log(respond);
+                            $('#confirm-modal').remove();
+                            $('body').append(respond);
+                            $('#confirm-modal').modal();
 
-            $('.js-add-to-favorites').on('click', function(){
-                console.log(marker.placeInfo.id);
-                $.ajax({
-                    url: "/favorites/add?placeId=" + marker.placeInfo.id,
-                    type: 'GET',
-                    cache: false,
-                    dataType: 'html',
-                    success: function(respond,status){
-                        console.log(respond);
-                        $('#confirm-modal').remove();
-                        $('body').append(respond);
-                        $('#confirm-modal').modal();
-
-                        $.ajax({
-                            url: "/favorites/index?count",
-                            type: 'GET',
-                            cache: false,
-                            dataType: 'html',
-                            success: function(respond){
-                                console.log(respond);
-                                if($('.js-show-favorites span').length){
-                                    $('.js-show-favorites span').text(respond);
-                                } else {
-                                    $('.js-show-favorites').append('<span></span>');
-                                    $('.js-show-favorites span').text(respond);
+                            $.ajax({
+                                url: "/favorites/index?count",
+                                type: 'GET',
+                                cache: false,
+                                dataType: 'html',
+                                success: function(respond){
+                                    console.log(respond);
+                                    if($('.js-show-favorites span').length){
+                                        $('.js-show-favorites span').text(respond);
+                                    } else {
+                                        $('.js-show-favorites').append('<span></span>');
+                                        $('.js-show-favorites span').text(respond);
+                                    }
                                 }
-                            }
-                        })
-                    }
-                });
+                            })
+                        }
+                    });
 
+                });
             });
+
+            //map.setZoom(11);
+
+            return marker;
+
         });
 
-        map.setZoom(11);
+        markerCluster = new MarkerClusterer(map, markersArr,
+            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 
-        return marker;
-
-    });
-
-    markerCluster = new MarkerClusterer(map, markersArr,
-        {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-
-};
+    };
+}
 
 $('.js-tab-sel[data-act=FAST]').on('click', function(){
     console.log('test');
@@ -161,6 +160,7 @@ function fastFunc() {
                 var markers = respond.places;
                 $('#fast-parking-tab').html(respond.html);
                 for (var i = 0; i < markersArr.length; i++) {
+                    google.maps.event.clearListeners(markersArr[i], 'click');
                     markersArr[i].setMap(null);
                 }
                 markerCluster.clearMarkers();
@@ -226,6 +226,15 @@ function searchFunc() {
     var values = $('.search-tab-form').serialize();
     values = values.replace(/=on/g, "=true").replace(/=0/g, "=false");
 
+    $('.search-tab-form').find(':checkbox').each(function(i,item){
+        console.log(item);
+        if($(item).attr('value') === '0'){
+            $(item).removeAttr('value');
+            $(item).prop('checked', false);
+            $(item).trigger('refresh');
+        }
+
+    });
     console.log(values);
 
     $.ajax({

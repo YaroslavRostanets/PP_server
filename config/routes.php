@@ -15,6 +15,7 @@ return array(
     "admin/offerlist" => "admin/offerlist",
     "admin/removeofferplace" => "admin/removeofferplace",
     "admin/offerdetail/([0-9]+)" => "admin/offerdetail/$1",
+    "admin/seo" => "admin/seo",
     "admin" => "admin/list",
 
     "api/fastlist" => "api/fastlist",

@@ -169,6 +169,15 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="form-group">
+                                                <label>
+                                                    friendly_URL
+                                                </label>
+                                                <input type="text"
+                                                       class="form-control js-friendly-url"
+                                                       data-id="<?= $currentId ?>"
+                                                       name="friendly_url">
+                                            </div>
+                                            <div class="form-group">
                                                 <label>Address EN</label>
                                                 <input type="text" id="address_en" class="form-control" name="address_en">
                                             </div>
@@ -350,8 +359,17 @@
                 url: '<?= GEOCODE_URI ?>' + $.param(params),
             }).done(function(result) {
                 if(result.status == 'OK'){
+                    console.log(result.results);
                     if(result.results[0]){
                         $('#address_' + langCode).val( result.results[0].formatted_address );
+                        if(langCode == 'en'){
+                            var url = (result.results[0].address_components[1].long_name +
+                                '-' +
+                                + result.results[0].address_components[0].long_name + '-' +
+                                + $('.js-friendly-url').attr('data-id')).toLowerCase().replace( / /g, "-" ).replace( /'/g, "" );
+
+                            $('.js-friendly-url').val(url);
+                        }
                     }
                 } else {
                     window.alert('Geocoder failed due to: ' + status);
@@ -423,6 +441,6 @@
     /*--конец Валидация--*/
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDa557ija5pS08O4xsINwAEXTCyUzoB-js&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaVoLDDl1BcYSVmgOHRBWAiIo4GqDiSJo&callback=initMap" async defer></script>
 <? include_once ROOT."/layouts/footer.php" ?>
 
