@@ -35,7 +35,7 @@ include_once ROOT . "/localization/detail.php";
                 <ul>
                     <? if($place['address_'.$language] != '') :?>
                         <li>
-                            <div class="buttons medium button-plain ">
+                            <div class="buttons medium button-plain address-cont">
                                 <i class="fa fa-map-marker"></i><?= $place['address_'.$language] ?>
                             </div>
                         </li>
@@ -65,14 +65,13 @@ include_once ROOT . "/localization/detail.php";
                     </li>
                     <li>
                         <a href="#" class="buttons btn-outlined add-to-wishlist">
-                            <i class="fa fa-star-o"></i><span class="hidden-xs">
+                            <i class="fa fa-star-o"></i>
                                 <?= $lang[$language]['to_favorites'] ?>
-                            </span>
                         </a>
                     </li>
                 </ul>
             </div>
-            <div class="listing-owner hidden-xs hidden-sm">
+            <div class="listing-owner">
                 <div class="listing-owner-detail">
                     <?
                     switch ($place['kind_of_place']) {
@@ -100,8 +99,8 @@ include_once ROOT . "/localization/detail.php";
 </section>
 <section class="list-detail">
     <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-sm-8">
+        <div class="row detail-flex">
+            <div class="col-xs-12 col-sm-8 col-md-8">
                 <div class="detail-wrapper">
                     <div class="detail-wrapper-header">
                         <h4>Location</h4>
@@ -117,7 +116,7 @@ include_once ROOT . "/localization/detail.php";
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-12">
+            <div class="col-xs-12 col-sm-12 col-md-4">
 
                 <div class="widget-boxed right-part">
                     <div class="img-detail">
@@ -380,6 +379,6 @@ include_once ROOT . "/localization/detail.php";
 
 </script>
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaVoLDDl1BcYSVmgOHRBWAiIo4GqDiSJo&callback=initMap"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaVoLDDl1BcYSVmgOHRBWAiIo4GqDiSJo&callback=initMap" async defer></script>
 
 <? include_once ROOT . "/layouts/public/footer_site.php" ?>

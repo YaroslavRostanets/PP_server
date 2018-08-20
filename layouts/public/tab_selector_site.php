@@ -35,8 +35,8 @@
 ?>
 
 <!-- Switcher -->
-<button class="w3-button w3-teal w3-xlarge w3-right js-fast-ajax" onclick="openRightMenu()"><i class="spin theme-cl fa fa-cog" aria-hidden="true"></i></button>
-<div class="w3-sidebar w3-bar-block w3-card-2 w3-animate-right" style="display:none;right:0;" id="rightMenu">
+<button class="w3-button w3-teal w3-xlarge w3-right js-fast-ajax ripple" onclick="openRightMenu()"><i class="spin theme-cl fa fa-cog" aria-hidden="true"></i></button>
+<div class="w3-sidebar w3-bar-block w3-card-2 w3-animate-right app-bar" style="display:none;right:0;" id="rightMenu">
     <button onclick="closeRightMenu()" class="w3-bar-item w3-button w3-large theme-bg">Close &times;</button>
     <div class="tab style-2" role="tabpanel">
 
@@ -91,7 +91,7 @@
                                 $href = $language . '/detail/' . $place['id'];
                             }
                             ?>
-                            <a href="<?= $href ?>" class="light-gray-btn btn-square" data-placement="top" data-toggle="tooltip" title="" data-original-title="Edit Item">
+                            <a href="<?= $href ?>" class="light-gray-btn btn-square js-nice-transition" data-placement="top" data-toggle="tooltip" title="" data-original-title="Edit Item">
                                 <i class="fa fa-info-circle" aria-hidden="true"></i>
                             </a>
                         </div>
@@ -158,7 +158,7 @@
                                 <div class="icon-cont">
                                     <i class="fa fa-hourglass-half" aria-hidden="true"></i>
                                 </div>
-                                <div class="filt-block-info">
+                                <div class="filt-block-info slider-block-info">
                                     <div class="label">Hours:</div>
                                     <div class="bot">
                                         <div class="span">
@@ -187,15 +187,15 @@
                                     <div class="label">Day:</div>
                                     <div class="bot-row">
                                         <label>
-                                            <input style="display: block;" type="checkbox" name="MONFRY">
+                                            <input type="checkbox" data-styler name="MONFRY">
                                             Mon-Fry
                                         </label>
                                         <label>
-                                            <input style="display: block;" type="checkbox" name="SAT">
+                                            <input type="checkbox" data-styler name="SAT">
                                             Sat
                                         </label>
                                         <label>
-                                            <input style="display: block;" type="checkbox" name="SUN">
+                                            <input type="checkbox" data-styler name="SUN">
                                             Sun
                                         </label>
                                     </div>
@@ -230,7 +230,7 @@
                                 <div class="icon-cont">
                                     <i class="fa fa-hourglass-half" aria-hidden="true"></i>
                                 </div>
-                                <div class="filt-block-info">
+                                <div class="filt-block-info slider-block-info">
                                     <div class="label">Hours:</div>
                                     <div class="bot">
                                         <div class="span">
@@ -248,7 +248,7 @@
                                 <div class="icon-cont">
                                     <i class="fa fa-car" aria-hidden="true"></i>
                                 </div>
-                                <div class="filt-block-info">
+                                <div class="filt-block-info slider-block-info">
                                     <div class="label">Distance:</div>
                                     <div class="bot">
                                         <div class="span">
@@ -273,19 +273,19 @@
 
         <div class="nav nav-tabs">
             <ul class="tab-selector nav nav-tabs">
-                <li role="presentation" class="active js-tab-sel" data-tab="fast-parking-tab" data-act="FAST">
+                <li role="presentation" class="active js-tab-sel ripple" data-tab="fast-parking-tab" data-act="FAST">
                     <a href="javascript:void(0);">
                         <i class="fa fa-rocket" aria-hidden="true"></i>
                         Fast parking
                     </a>
                 </li>
-                <li role="presentation" class="js-tab-sel" data-tab="filter-tab" data-act="FILTER">
+                <li role="presentation" class="js-tab-sel ripple" data-tab="filter-tab" data-act="FILTER">
                     <a href="javascript:void(0);">
                         <i class="fa fa-cogs" aria-hidden="true"></i>
                         Filter
                     </a>
                 </li>
-                <li role="presentation" class="js-tab-sel" data-tab="search-tab" data-act="SEARCH">
+                <li role="presentation" class="js-tab-sel ripple" data-tab="search-tab" data-act="SEARCH">
                     <a href="javascript:void(0);">
                         <i class="fa fa-search" aria-hidden="true"></i>
                         Search
@@ -305,7 +305,7 @@
             </ul>
         </div>
     </div>
-    <button class="js-red-btn" data-active="FAST">
+    <button class="js-red-btn ripple" data-active="FAST">
         <div class="fast-parking-tab btn-contain">
             <i class="fa fa-refresh" aria-hidden="true"></i>
             Refresh

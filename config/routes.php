@@ -13,6 +13,8 @@ return array(
     "admin/signin" => "admin/signin",
     "admin/logout" => "admin/logout",
     "admin/offerlist" => "admin/offerlist",
+    "admin/userlist" => "admin/userlist",
+    "/admin/removeuser" => "/admin/removeuser",
     "admin/removeofferplace" => "admin/removeofferplace",
     "admin/offerdetail/([0-9]+)" => "admin/offerdetail/$1",
     "admin/seo" => "admin/seo",

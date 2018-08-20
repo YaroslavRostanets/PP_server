@@ -8,7 +8,9 @@
     echo requireToVar('Чтобы уточнить свое расположение, просто перемещайте маркер по карте',
         SITE_ROOT . 'views/modals/hint.php')
     ?>
-
+    <?php
+    require_once ROOT . "/layouts/public/tab_selector_site.php";
+    ?>
 </section>
 
 
@@ -183,9 +185,9 @@
 
             marker.addListener('click', function() {
                 var point = marker['placeInfo'];
-                console.log(point);
+                console.log(point['friendly_url']);
 
-                var href = '<?= "/$language" ?>' + '/detail/' + point['id'];
+                var href = '<?= "/$language" ?>' + '/detail/' + (point['friendly_url'] ? point['friendly_url'] : point['id']);
 
                 infowindow.setContent(`<div class="info-window">
                                 <div class="top">
@@ -205,14 +207,15 @@
                                     </div>
                                 </div>
                                 <div class="btns">
-                                    <a href="${href}" class="std-btn">
+                                    <a href="${href}" class="std-btn js-nice-transition">
                                         <i class="fa fa-info-circle" aria-hidden="true"></i>
                                     </a>
-                                    <a href="javascript:void(0);" class="std-btn js-add-to-favorites">
+                                    <a href="javascript:void(0);" class="std-btn js-add-to-favorites ripple">
                                         <i class="fa fa-star-o" aria-hidden="true"></i>
                                     </a>
                                     <a
-                                    href="http://maps.google.com/maps?q=${point['lat']},${point['lon']}&ll=${point['lat']},${point['lon']}&z=13" class="std-btn gm">
+                                    href="http://maps.google.com/maps?q=${point['lat']},${point['lon']}&ll=${point['lat']},${point['lon']}&z=13"
+                                    class="std-btn gm js-nice-transition">
                                         <i class="fa fa-map-o" aria-hidden="true"></i>
                                         Open in GM2
                                     </a>
@@ -221,6 +224,15 @@
 
 
                 infowindow.open(map, marker);
+
+                $('.info-window .js-nice-transition').on('click', function(e){
+                    e.preventDefault();
+                    var href = $(this).attr('href');
+                    $('body').addClass('leave');
+                    setTimeout(function(){
+                        window.location.href = href;
+                    },500);
+                });
 
                 $('.js-add-to-favorites').on('click', function(){
                     console.log(marker.placeInfo.id);

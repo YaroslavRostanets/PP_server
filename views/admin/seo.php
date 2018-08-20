@@ -121,6 +121,36 @@
                                                         rows="10"
                                                         class="form-control"><?= $value['keywords_en'] ?></textarea>
                                             </div>
+
+                                            <hr>
+
+                                            <div class="form-group">
+                                                <label>Заголовок страницы title_fi</label>
+                                                <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        name="title_fi"
+                                                        value="<?= $value['title_fi'] ?>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Описание страницы description_fi</label>
+                                                <textarea
+                                                        name="description_fi"
+                                                        id=""
+                                                        cols="30"
+                                                        rows="10"
+                                                        class="form-control"><?= $value['description_fi'] ?></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Ключевые слова keywords_fi</label>
+                                                <textarea
+                                                        name="keywords_fi"
+                                                        id=""
+                                                        cols="30"
+                                                        rows="10"
+                                                        class="form-control"><?= $value['keywords_fi'] ?></textarea>
+                                            </div>
+
                                         </div>
                                         <div style="padding: 10px 15px;">
                                             <button type="submit" name="submit" class="btn btn-primary">Submit</button>

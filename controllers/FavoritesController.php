@@ -36,7 +36,9 @@ class FavoritesController {
         $language = $this->lang;
         if(isset($_GET['get-list-modal']) && isset($_SESSION['userId'])){
             $userId = $_SESSION['userId'];
-            $list = Favorites::getFavoritesByUserId($userId);
+            $lat = $_GET['lat'];
+            $lng = $_GET['lng'];
+            $list = Favorites::getFavoritesByUserId($userId, $lat, $lng);
             include_once SITE_ROOT . "views/modals/favorites-list.php";
 
             return true;

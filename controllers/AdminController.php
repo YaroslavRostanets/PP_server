@@ -15,6 +15,12 @@ class AdminController {
         $filename = array_pop($photo_path_array);
 
         if( isset($_POST['submit']) ){
+
+            $friendly_url = mb_strtolower($_POST['friendly_url']);
+            $friendly_url = str_replace(' ','-',$friendly_url);
+            $friendly_url = str_replace("'","",$friendly_url);
+            $friendly_url = urlencode ( $friendly_url );
+
             ParkPlace::updateParkPlace(
                 $_POST['id'],
                 $_POST['filename'],
@@ -27,6 +33,11 @@ class AdminController {
                 $_POST['sunday_to'],
                 $_POST['time_interval'],
                 $_POST['park_zone'],
+                $friendly_url,
+                $_POST['address_en'],
+                $_POST['address_fi'],
+                $_POST['address_ru'],
+                $_POST['address_uk'],
                 $_POST['X(coordinates)'],
                 $_POST['Y(coordinates)'],
                 (isset($_POST['hasnt_table'])) ? $_POST['hasnt_table'] : 0
@@ -53,6 +64,7 @@ class AdminController {
         }
         $pages = ceil(ParkPlace::getCountPlaces() / ParkPlace::PLACES_ON_PAGE);
         $page = (isset($_GET['page']))? $_GET['page'] : 1;
+        $route = 'list';
 
         $parkPlaces = ParkPlace::getAllParks($page);
         include_once ROOT."/views/admin/list.php";
@@ -77,6 +89,7 @@ class AdminController {
             $friendly_url = mb_strtolower($_POST['friendly_url']);
             $friendly_url = str_replace(' ','-',$friendly_url);
             $friendly_url = str_replace("'","",$friendly_url);
+            $friendly_url = urlencode ( $friendly_url );
 
             $result = ParkPlace::addNewParkPlace(
                 $_POST['kind_of_place'],
@@ -219,12 +232,13 @@ class AdminController {
 
         $pages = ceil(OfferPlaces::getCountPlaces() / OfferPlaces::PLACES_ON_PAGE);
         $page = (isset($_GET['page']))? $_GET['page'] : 1;
+        $route = 'offerlist';
 
         $offerPlaces = OfferPlaces::getAllParks($page);
 
         include_once ROOT."/views/admin/offer_list.php";
 
-        pri($offerPlaces);
+
 
 
         return TRUE;
@@ -321,6 +335,43 @@ class AdminController {
         }
 
         return true;
+    }
+
+    public function ActionUserlist(){
+        $adminId = Admin::isLogged();
+        if( $adminId !== FALSE ){
+            $admin = Admin::getAdminById($adminId);
+            $adminName = $admin['name'];
+        } else {
+            header("Location: "."/");
+        }
+
+        $pages = ceil(User::getCountUsers() / User::PLACES_ON_PAGE);
+        $page = (isset($_GET['page']))? $_GET['page'] : 1;
+        $route = 'userlist';
+
+        $users = User::getAllUsers($page);
+
+        include_once ROOT."/views/admin/userlist.php";
+
+        return TRUE;
+    }
+
+    public function ActionRemoveoUser(){
+        /*if(isset($_GET['id'])){
+            $id = $_GET['id'];
+            $place = OfferPlaces::getOfferPlaceById($id);
+            $photo_path_array = explode("/",$place['photo_url']);
+
+            $img_name = array_pop($photo_path_array);
+            unlink( OFFER_PLACES . $img_name );
+
+            $result = OfferPlaces::removeOfferPlace($id);
+
+            if($result){
+                header("Location: ".$_SERVER['HTTP_REFERER']);
+            }
+        }*/
     }
 
 }

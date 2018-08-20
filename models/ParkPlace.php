@@ -124,8 +124,8 @@ class ParkPlace {
     }
 
     public static function updateParkPlace(
-        $id, $filename, $kind_of_place, $weekday_from,$weekday_to,$saturday_from,
-        $saturday_to,$sunday_from,$sunday_to,$time_interval, $park_zone, $lat, $lon,$hasnt_table
+        $id, $filename, $kind_of_place, $weekday_from,$weekday_to,$saturday_from, $saturday_to,$sunday_from,$sunday_to,$time_interval, $park_zone,
+        $fliendly_url, $address_en, $address_fi, $address_ru, $address_uk, $lat, $lon,$hasnt_table
     ) {
 
         if( file_exists(SRC_TMP_PLACES . $filename) ){
@@ -147,6 +147,11 @@ class ParkPlace {
                 sunday_to=:sunday_to, 
                 time_interval=:time_interval,
                 park_zone=:park_zone,
+                friendly_url=:friendly_url,
+                address_en=:address_en,
+                address_fi=:address_fi,
+                address_ru=:address_ru,
+                address_uk=:address_uk,
                 coordinates=Point(:lat, :lon),
                 hasnt_table=:hasnt_table
                  WHERE id=:id";
@@ -164,6 +169,11 @@ class ParkPlace {
         $result->bindParam(':sunday_to', $sunday_to, PDO::PARAM_STR);
         $result->bindParam(':time_interval', $time_interval, PDO::PARAM_INT);
         $result->bindParam(':park_zone', $park_zone, PDO::PARAM_INT);
+        $result->bindParam(':friendly_url', $fliendly_url, PDO::PARAM_STR);
+        $result->bindParam(':address_en', $address_en, PDO::PARAM_STR);
+        $result->bindParam(':address_fi', $address_fi, PDO::PARAM_STR);
+        $result->bindParam(':address_ru', $address_ru, PDO::PARAM_STR);
+        $result->bindParam(':address_uk', $address_uk, PDO::PARAM_STR);
         $result->bindParam(':lat', $lat, PDO::PARAM_STR);
         $result->bindParam(':lon', $lon, PDO::PARAM_STR);
         $result->bindParam(':hasnt_table', $hasnt_table, PDO::PARAM_STR);

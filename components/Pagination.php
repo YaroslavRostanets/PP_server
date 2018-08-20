@@ -7,10 +7,12 @@
  * Time: 19:13
  */
 class Pagination {
-    public static function rendPagination($page = NULL, $pages = NULL){
+    public static function rendPagination($page = NULL, $pages = NULL, $route=''){
         $siteRedirectURI = str_replace(SITE_ROOT,'',$_SERVER['REDIRECT_URL']);
         $pagination = include ROOT."/layouts/pagination.php";
-        return $pagination;
+        ob_start();
+        require_once(ROOT."/layouts/pagination.php");
+        return ob_get_clean();
     }
 
 }

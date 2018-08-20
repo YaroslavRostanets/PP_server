@@ -123,6 +123,7 @@ class Api {
               saturday_to,
               sunday_from,
               sunday_to,
+              friendly_url,
               park_zone,
               X(coordinates), 
               Y(coordinates)
@@ -169,6 +170,7 @@ class Api {
               saturday_to,
               sunday_from,
               sunday_to,
+              friendly_url,
               X(coordinates), 
               Y(coordinates)
               FROM parking_place WHERE $type )";

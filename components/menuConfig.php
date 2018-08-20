@@ -16,8 +16,8 @@ $menu = array(
         "icon" => "nc-icon nc-notes"
     ],
     "User" => [
-        "link" => "/",
-        "route" => "/admin/user",
+        "link" => "/admin/userlist/",
+        "route" => "/admin/userlist",
         "title" => "Пользователи",
         "class=" => "user-item",
         "icon" => "nc-icon nc-single-02"
@@ -35,14 +35,14 @@ $menu = array(
         "route" => "/admin/about",
         "title" => "О нас",
         "class=" => "user-item",
-        "icon" => "fa-align-justify"
+        "icon" => "fa fa-align-justify"
     ],
     "SEO" => [
         "link" => "/admin/seo/",
         "route" => "/admin/seo",
         "title" => "SEO",
         "class=" => "user-item",
-        "icon" => "fa-align-justify"
+        "icon" => "fa fa-cog"
     ],
 );
 

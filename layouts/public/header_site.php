@@ -72,8 +72,17 @@
     <![endif]-->
     <!-- Jquery js-->
     <script src="<?= TEMPLATE ?>assets/js/jquery.min.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-124208588-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-124208588-1');
+    </script>
 </head>
-<body class="<?= ( isset($this->pageName) )? $this->pageName : '' ?>" >
+<body class="<?= ( isset($this->pageName) )? $this->pageName : '' ?> showed" >
 <div class="wrapper">
     <!-- Start Navigation -->
     <nav class="navbar navbar-default navbar-fixed white bootsnav
@@ -91,28 +100,53 @@
                     <img src="<?= TEMPLATE ?>assets/img/logo.png" class="logo logo-scrolled" alt="">
                 </a>
             </div>
+
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="navbar-menu">
                 <ul class="nav navbar-nav navbar-center" data-in="fadeInDown" data-out="fadeOutUp">
                     <li>
-                        <a href="/<?= $language ?>"><?= $lang[$language]['home'] ?></a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="/<?= $language . "/about" ?>"><?= $lang[$language]['about'] ?></a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="js-show-favorites">
-                            <?= $lang[$language]['favorites'] ?>
-                            <? if( isset($_SESSION['userId']) && count(Favorites::getFavoritesByUserId($_SESSION['userId'])) ): ?>
-                                <span><?= count(Favorites::getFavoritesByUserId($_SESSION['userId'])) ?></span>
-                            <? endif; ?>
+                        <a href="/<?= $language ?>" class="js-nice-transition">
+                            <?= $lang[$language]['home'] ?>
                         </a>
                     </li>
-                    <li>
-                        <a href="/<?= $language . "/addplace" ?>">
-                            <?= $lang[$language]['add_place'] ?>
+                    <li class="dropdown">
+                        <a href="/<?= $language . "/about" ?>" class="js-nice-transition">
+                            <?= $lang[$language]['about'] ?>
                         </a>
                     </li>
+                    <? if($userId) : ?>
+                        <li class="dropdown">
+                            <a href="javascript:void(0);"
+                               class="js-show-favorites">
+                                <?= $lang[$language]['favorites'] ?>
+                                <? if( isset($_SESSION['userId']) && count(Favorites::getFavoritesByUserId($_SESSION['userId'])) ): ?>
+                                    <span><?= count(Favorites::getFavoritesByUserId($_SESSION['userId'])) ?></span>
+                                <? endif; ?>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/<?= $language . "/addplace" ?>" class="js-nice-transition">
+                                <?= $lang[$language]['add_place'] ?>
+                            </a>
+                        </li>
+                    <? else : ?>
+                        <li class="dropdown">
+                            <a href="javascript:void(0);"
+                               class="disabled"
+                               data-toggle="modal"
+                               data-target="#no-sign">
+                                <?= $lang[$language]['favorites'] ?>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);"
+                               class="disabled"
+                               data-toggle="modal"
+                               data-target="#no-sign">
+                                <?= $lang[$language]['add_place'] ?>
+                            </a>
+                        </li>
+                    <? endif; ?>
                 </ul>
                 <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" >
                     <li class="no-pd">
@@ -131,13 +165,13 @@
                                 </div>
                                 <ul class="profile-menu">
                                     <li>
-                                        <a href="/<?= $language ?>/profile">
+                                        <a href="/<?= $language ?>/profile" class="js-nice-transition">
                                             <i class="fa fa-user-circle-o" aria-hidden="true"></i>
                                             Profile
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/<?= $language ?>/profile?logout">
+                                        <a href="/<?= $language ?>/profile?logout" class="js-nice-transition">
                                             <i class="fa fa-sign-out" aria-hidden="true"></i>
                                             Log Out
                                         </a>
@@ -145,7 +179,7 @@
                                 </ul>
                             </div>
                         <? else : ?>
-                            <a href="javascript:void(0)" class="addlist" data-toggle="modal" data-target="#signup">
+                            <a href="javascript:void(0)" class="addlist desctop-sign" data-toggle="modal" data-target="#signup">
                                 <i class="ti-user" aria-hidden="true"></i><?= $lang[$language]['sign_in'] ?>
                             </a>
                         <? endif; ?>

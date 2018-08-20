@@ -85,7 +85,7 @@ $filename = array_pop( $arrUrl );
         <!-- End Navbar -->
         <div class="content">
             <div class="container-fluid">
-                <form action="#" method="post">
+                <form action="#" id="detail-park-form" method="post">
                     <div class="row">
                         <div class="col-md-8">
                             <div class="card" style="padding: 20px;">
@@ -242,7 +242,58 @@ $filename = array_pop( $arrUrl );
                                             </div>
                                         </div>
                                     </div>
-
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label>
+                                                    friendly_URL
+                                                </label>
+                                                <input type="text"
+                                                       class="form-control js-friendly-url"
+                                                       data-id="135"
+                                                       name="friendly_url"
+                                                       value="<?= $parkPlace['friendly_url'] ?>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Address EN</label>
+                                                <input type="text"
+                                                       id="address_en"
+                                                       class="form-control"
+                                                       name="address_en"
+                                                       value="<?= $parkPlace['address_en'] ?>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Address FI</label>
+                                                <input type="text"
+                                                       id="address_fi"
+                                                       class="form-control"
+                                                       name="address_fi"
+                                                       value="<?= $parkPlace['address_fi'] ?>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Адрес RU</label>
+                                                <input type="text"
+                                                       id="address_ru"
+                                                       class="form-control"
+                                                       name="address_ru"
+                                                       value="<?= $parkPlace['address_ru'] ?>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Адреса UA</label>
+                                                <input type="text"
+                                                       id="address_uk"
+                                                       class="form-control"
+                                                       name="address_uk"
+                                                       value="<?= $parkPlace['address_uk'] ?>">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="javascript:void(0);" class="btn btn-warning btn-fill js-get-address">
+                                                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                Получить адрес
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -377,7 +428,6 @@ $filename = array_pop( $arrUrl );
             var marker = new google.maps.Marker({
                 position: parkPlace,
                 map: map,
-                title: 'Hello World!'
             });
             google.maps.event.addListener(map, "click", function(event) {
                 $('.js-lat').val(event.latLng.lat());
@@ -423,8 +473,52 @@ $filename = array_pop( $arrUrl );
         /*--конец Загрузка картинки--*/
         $(document).ready(function(){
             $(".list-item").addClass("active");
-        })
+        });
+
+        function setAddresValue(langCode, params){
+            params.language = langCode;
+
+            $.ajax({
+                url: '<?= GEOCODE_URI ?>' + $.param(params),
+            }).done(function(result) {
+                if(result.status == 'OK'){
+                    console.log(result.results);
+                    if(result.results[0]){
+                        $('#address_' + langCode).val( result.results[0].formatted_address );
+                        if(langCode == 'en'){
+                            var url = (result.results[0].address_components[1].long_name +
+                            '-' +
+                            + result.results[0].address_components[0].long_name + '-' +
+                            + $('.js-friendly-url').attr('data-id')).toLowerCase().replace( / /g, "-" ).replace( /'/g, "" );
+
+                            console.log(url);
+                            $('.js-friendly-url').val(url);
+                        }
+                    }
+                } else {
+                    window.alert('Geocoder failed due to: ' + status);
+                }
+            });
+        }
+
+        $('.js-get-address').on('click', function(){
+            var lat = $('.js-lat').val();
+            var lon = $('.js-lon').val();
+
+            var params = {
+                'latlng': lat + ',' + lon,
+                'language': 'en',
+                'key': '<?= GM_API_KEY ?>'
+            };
+
+            setAddresValue('en', params);
+            setAddresValue('fi', params);
+            setAddresValue('ru', params);
+            setAddresValue('uk', params);
+
+        });
+
     </script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDa557ija5pS08O4xsINwAEXTCyUzoB-js&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaVoLDDl1BcYSVmgOHRBWAiIo4GqDiSJo&callback=initMap" async defer></script>
 <? include_once ROOT."/layouts/footer.php" ?>

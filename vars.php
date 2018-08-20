@@ -2,6 +2,7 @@
 
 define("ROOT",dirname(__FILE__));
 //define("SITE_ROOT","/php/cms/");
+define("SITE_URL",'https://'.$_SERVER['HTTP_HOST']);
 define("GM_API_KEY","AIzaSyBaVoLDDl1BcYSVmgOHRBWAiIo4GqDiSJo");
 define("GEOCODE_URI","https://maps.googleapis.com/maps/api/geocode/json?");
 define("SITE_ROOT","");

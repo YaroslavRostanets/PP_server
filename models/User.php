@@ -9,6 +9,8 @@ require_once SITE_ROOT . 'components/Db.php';
 
 class User {
 
+    const PLACES_ON_PAGE = 20;
+
     public static function  isUserRegistered($id, $social){
 
         $db = Db::getConnection();
@@ -254,6 +256,35 @@ class User {
                 'errors' => '0',
             ));
         }
+    }
+
+    public static function getCountUsers(){
+        $db = Db::getConnection();
+        $sql = "SELECT COUNT(*) from user;";
+        $result = $db->prepare($sql);
+        $result->setFetchMode(PDO::FETCH_NUM);
+        $result->execute();
+        $arrResult = $result->fetch();
+
+        return $arrResult[0];
+    }
+
+    public static function getAllUsers($page){
+
+        $offset = self::PLACES_ON_PAGE * (--$page);
+
+        $db = Db::getConnection();
+        $sql = "SELECT * FROM user LIMIT " . self::PLACES_ON_PAGE;
+        $result = $db->prepare($sql);
+
+        //$result->bindParam(':offset', $offset, PDO::PARAM_STR);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $result->execute();
+        $arrResult = array();
+        while($row = $result->fetch()){
+            $arrResult[] = $row;
+        }
+        return $arrResult;
     }
 
 }

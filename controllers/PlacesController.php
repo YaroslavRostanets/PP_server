@@ -11,6 +11,7 @@ class PlacesController {
     private $lang;
     function __construct($lang='fi') {
         $this->lang = $lang;
+        $this->pageName = 'addplace-page';
     }
 
     public function actionAdd() {
@@ -19,6 +20,9 @@ class PlacesController {
 
         if($userId){
             $user = User::getUserById($userId);
+        } else {
+            header( "Location: ". SITE_URL . '/' . $this->lang );
+
         }
 
         $language = $this->lang;

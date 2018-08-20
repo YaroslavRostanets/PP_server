@@ -81,7 +81,11 @@ function rightInterval($min) {
                 $href = $context['language'] . '/detail/' . $place['id'];
             }
         ?>
-        <a href="<?= $href ?>" class="light-gray-btn btn-square" data-placement="top" data-toggle="tooltip" title="" data-original-title="Edit Item">
+        <a href="<?= $href ?>" class="light-gray-btn btn-square js-nice-transition"
+           data-placement="top"
+           data-toggle="tooltip"
+           title=""
+           data-original-title="Edit Item">
             <i class="fa fa-info-circle" aria-hidden="true"></i>
         </a>
     </div>

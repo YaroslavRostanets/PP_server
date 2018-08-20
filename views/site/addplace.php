@@ -18,7 +18,7 @@
             <div class="col-md-10 translateY-60 col-sm-12 col-md-offset-1">
 
                 <div class="add-listing-box edit-info mrg-bot-25 padd-bot-30 padd-top-25">
-                    <div class="col-md-5">
+                    <div class="col-xs-5 col-sm-5 col-md-5">
                         <div class="upload-btn-wrapper">
                             <div class="img-cont">
                                 <img src="<?= TEMPLATE . "/assets/img/upload.svg" ?>" class="js-change-photo" alt="">
@@ -28,28 +28,28 @@
                         </div>
                         <div class="help-block js-photo-error"></div>
                     </div>
-                    <div class="col-md-7 right-column">
+                    <div class="col-xs-7 col-sm-7 col-md-7 right-column">
                         <form class="add-place">
                             <div class="row">
-                                <div class="col-sm-7">
+                                <div class="col-sm-12 col-md-7">
                                     <label>Latitude</label>
                                     <input type="text" class="form-control js-lat" readonly value="24.2323" name="latitude">
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-7">
+                                <div class="col-sm-12 col-md-7">
                                     <label>Longitude</label>
                                     <input type="text" class="form-control js-lng" readonly value="25.8888" name="longitude">
                                 </div>
                             </div>
                             <div class="row" style="display: none;">
-                                <div class="col-sm-7">
+                                <div class="col-sm-12 col-sm-7">
                                     <input type="text" class="js-place-photo" name="filename">
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <div class="col-md-12 map-contain">
+                    <div class="col-xs-12 col-sm-12 col-md-12 map-contain">
                         <div id="map"></div>
                     </div>
                 </div>

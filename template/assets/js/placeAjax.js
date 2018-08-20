@@ -55,14 +55,15 @@ if(typeof window.map !== 'undefined'){
                                     </div>
                                 </div>
                                 <div class="btns">
-                                    <a href="${href}" class="std-btn">
+                                    <a href="${href}" class="std-btn js-nice-transition">
                                         <i class="fa fa-info-circle" aria-hidden="true"></i>
                                     </a>
-                                    <a href="javascript:void(0);" class="std-btn js-add-to-favorites">
+                                    <a href="javascript:void(0);" class="std-btn js-add-to-favorites ripple">
                                         <i class="fa fa-star-o" aria-hidden="true"></i>
                                     </a>
                                     <a
-                                    href="http://maps.google.com/maps?q=${point['lat']},${point['lon']}&ll=${point['lat']},${point['lon']}&z=13" class="std-btn gm">
+                                    href="http://maps.google.com/maps?q=${point['lat']},${point['lon']}&ll=${point['lat']},${point['lon']}&z=13" 
+                                    class="std-btn gm js-nice-transition">
                                         <i class="fa fa-map-o" aria-hidden="true"></i>
                                         Open in GM2
                                     </a>
@@ -70,6 +71,15 @@ if(typeof window.map !== 'undefined'){
                             </div>`);
 
                 infowindow.open(map, marker);
+
+                $('.info-window .js-nice-transition').on('click', function(e){
+                    e.preventDefault();
+                    var href = $(this).attr('href');
+                    $('body').addClass('leave');
+                    setTimeout(function(){
+                        window.location.href = href;
+                    },500);
+                });
 
                 $('.js-add-to-favorites').on('click', function(){
                     console.log(marker.placeInfo.id);
@@ -166,7 +176,14 @@ function fastFunc() {
                 markerCluster.clearMarkers();
                 markersArr = [];
                 map.newMarkersResresh(respond.places);
-
+                $('.fast-parking-list .js-nice-transition').on('click', function(e){
+                    e.preventDefault();
+                    var href = $(this).attr('href');
+                    $('body').addClass('leave');
+                    setTimeout(function(){
+                        window.location.href = href;
+                    },500);
+                });
             }
         }
     });
@@ -256,6 +273,14 @@ function searchFunc() {
                 markerCluster.clearMarkers();
                 markersArr = [];
                 map.newMarkersResresh(JSON.parse(respond.places));
+                $('.fast-parking-list .js-nice-transition').on('click', function(e){
+                    e.preventDefault();
+                    var href = $(this).attr('href');
+                    $('body').addClass('leave');
+                    setTimeout(function(){
+                        window.location.href = href;
+                    },500);
+                });
             }
             console.log(respond);
 

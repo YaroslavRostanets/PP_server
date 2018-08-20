@@ -50,6 +50,9 @@ class Seo {
                 title_en = :title_en,
                 description_en = :description_en,
                 keywords_en = :keywords_en,
+                title_fi = :title_fi,
+                description_fi = :description_fi,
+                keywords_fi = :keywords_fi,
                 robots_index = :robots_index,
                 robots_follow = :robots_follow
                 WHERE template_name = :template_name;";
@@ -65,6 +68,10 @@ class Seo {
         $result->bindParam(':title_en', $_POST['title_en'], PDO::PARAM_STR);
         $result->bindParam(':description_en', $_POST['description_en'], PDO::PARAM_STR);
         $result->bindParam(':keywords_en', $_POST['keywords_en'], PDO::PARAM_STR);
+
+        $result->bindParam(':title_fi', $_POST['title_fi'], PDO::PARAM_STR);
+        $result->bindParam(':description_fi', $_POST['description_fi'], PDO::PARAM_STR);
+        $result->bindParam(':keywords_fi', $_POST['keywords_fi'], PDO::PARAM_STR);
 
         $result->bindParam(':template_name', $_POST['template_name'], PDO::PARAM_STR);
 

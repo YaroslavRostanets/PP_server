@@ -82,7 +82,6 @@ SCRIPT;
             session_start();
 
             if(isset($_POST) && $_SESSION['userId']){
-                pri($_SESSION);
                 $result = User::updateProfile(
                     $_SESSION['userId'],
                     $_POST['name'],
@@ -126,7 +125,6 @@ SCRIPT;
 
             if ( $result['http_code'] == 200 ){
                 $token = json_decode($result['content'], true);
-                pri($token);
                 if(TRUE){
                     $userData = get_web_page( "https://graph.facebook.com/v3.1/me?access_token=$token[access_token]&fields=id,name,email,last_name,first_name,picture.type(large)" );
                     $userData = json_decode($userData['content'], true);

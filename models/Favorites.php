@@ -64,7 +64,7 @@ class Favorites {
 
     }
 
-    public static function getFavoritesByUserId($userId){
+    public static function getFavoritesByUserId($userId,$lat = 60.172852,$lng = 4.9381472){
         $db = Db::getConnection();
         $sql = "SELECT * FROM favorites WHERE user_id = :userId;";
         $result = $db->prepare($sql);
@@ -75,7 +75,7 @@ class Favorites {
 
         $arrResult = [];
         while($row = $result->fetch()) {
-            $elem = json_decode(Api::getPlaceById($row['place_id']), true);
+            $elem = json_decode(Api::getPlaceById($row['place_id'], $lat, $lng), true);
             $elem['place_id'] = $row['place_id'];
             $elem['id'] = $row['id'];
             $arrResult[] = $elem;

@@ -11,6 +11,7 @@ class AboutController {
     private $lang;
     function __construct($lang='fi') {
         $this->lang = $lang;
+        $this->pageName = 'about-page';
     }
 
     public function actionIndex(){

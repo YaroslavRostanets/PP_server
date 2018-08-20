@@ -70,8 +70,10 @@ $(document).ready(function(){
 
     $('.js-show-favorites').on('click', function(){
        console.log('favorites');
+       var lat = sessionStorage.getItem('lat');
+       var lng = sessionStorage.getItem('lng');
         $.ajax({
-            url: "/favorites?get-list-modal",
+            url: "/favorites?get-list-modal&lat=" + lat + '&lng=' + lng,
             type: 'GET',
             cache: false,
             dataType: 'html',
@@ -107,6 +109,19 @@ $(document).ready(function(){
                 });
             }
         });
+    });
+
+    $('.js-disabled-auth').on('')
+
+    $('body').removeClass('showed');
+
+    $('.js-nice-transition').on('click', function(e){
+        e.preventDefault();
+        var href = $(this).attr('href');
+        $('body').addClass('leave');
+        setTimeout(function(){
+            window.location.href = href;
+        },500);
     });
 
 });

@@ -44,7 +44,10 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <?= $place['from_user_id'] ?>
+                                            <?
+                                                $userInfo = User::getUserById($place['from_user_id']);
+                                                echo $userInfo['givenName'] . ' ' . $userInfo['familyName']
+                                            ?>
                                         </td>
                                         <td class="controlls" style="width: 140px;">
                                             <button class="btn btn-info btn-fill js-edit-place" data-id="<?=  $place['id'] ?>">

@@ -14,7 +14,7 @@ include_once ROOT . "/localization/footer_site.php";
 <footer class="footer dark-bg">
     <div class="row padd-0 mrg-0">
         <div class="footer-text">
-            <div class="col-md-3 col-sm-12 theme-bg">
+            <div class="col-sm-6 col-md-3 col-sm-12 theme-bg">
                 <div class="footer-widget">
                     <div class="textwidget">
                         <h3 class="widgettitle widget-title"><?= $lang[$language]['get_in_touch'] ?></h3>
@@ -29,31 +29,53 @@ include_once ROOT . "/localization/footer_site.php";
                     </div>
                 </div>
             </div>
-            <div class="col-md-2 col-sm-4">
+            <div class="col-sm-6 col-md-2 col-sm-4">
                 <div class="footer-widget">
                     <h3 class="widgettitle widget-title">
                         <?= $lang[$language]['navigation'] ?>
                     </h3>
                     <ul class="footer-navigation">
-                        <li><a href="/<?= $language ?>"><?= $lang[$language]['home'] ?></a></li>
-                        <li><a href="/<?= $language . "/about" ?>"><?= $lang[$language]['about'] ?></a></li>
                         <li>
-                            <a href="javascript:void(0);" class="js-show-favorites">
-                                <?= $lang[$language]['favorites'] ?>
-                                <? if( isset($_SESSION['userId']) && count(Favorites::getFavoritesByUserId($_SESSION['userId'])) ): ?>
-                                    <span><?= count(Favorites::getFavoritesByUserId($_SESSION['userId'])) ?></span>
-                                <? endif; ?>
+                            <a href="/<?= $language ?>">
+                                <?= $lang[$language]['home'] ?>
                             </a>
                         </li>
                         <li>
-                            <a href="/<?= $language . "/addplace" ?>">
-                                <?= $lang[$language]['add_place'] ?>
+                            <a href="/<?= $language . "/about" ?>">
+                                <?= $lang[$language]['about'] ?>
                             </a>
                         </li>
+                        <? if($userId) : ?>
+                            <li>
+                                <a href="javascript:void(0);" class="js-show-favorites">
+                                    <?= $lang[$language]['favorites'] ?>
+                                    <? if( isset($_SESSION['userId']) && count(Favorites::getFavoritesByUserId($_SESSION['userId'])) ): ?>
+                                        <span><?= count(Favorites::getFavoritesByUserId($_SESSION['userId'])) ?></span>
+                                    <? endif; ?>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/<?= $language . "/addplace" ?>">
+                                    <?= $lang[$language]['add_place'] ?>
+                                </a>
+                            </li>
+                        <? else : ?>
+                            <li>
+                                <a href="javascript:void(0);" class="disabled" data-toggle="modal" data-target="#no-sign">
+                                    <?= $lang[$language]['favorites'] ?>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="disabled" data-toggle="modal" data-target="#no-sign">
+                                    <?= $lang[$language]['add_place'] ?>
+                                </a>
+                            </li>
+                        <? endif; ?>
+
                     </ul>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-4">
+            <div class="col-sm-6 col-md-3 app-part">
                 <div class="footer-widget">
                     <h3 class="widgettitle widget-title">
                         <?= $lang[$language]['application'] ?>
@@ -65,7 +87,7 @@ include_once ROOT . "/localization/footer_site.php";
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-sm-6 col-md-4 social-part">
                 <div class="footer-widget">
                     <h3 class="widgettitle widget-title">
                         <?= $lang[$language]['connect_us'] ?>
@@ -104,7 +126,7 @@ include_once ROOT . "/localization/footer_site.php";
                     </div>
                     <div class="btns-cont" id="login">
 
-                        <a href="<?= "/$language/signin/facebook" ?>" class="loginBtn loginBtn--facebook">
+                        <a href="<?= "/$language/signin/facebook" ?>" class="js-login-btn loginBtn loginBtn--facebook">
                             Login with Facebook
                         </a>
 
@@ -129,14 +151,14 @@ include_once ROOT . "/localization/footer_site.php";
     })
 </script>
 <!-- ===================== End Login & Sign Up Window =========================== -->
-<?php
-    if( isset($isHomePage) ){
-        require_once ROOT . "/layouts/public/tab_selector_site.php";
-    }
-?>
 
 <a id="back2Top" class="theme-bg" title="Back to top" href="#"><i class="ti-arrow-up"></i></a>
 
+<?
+    if(!isset($userId) || $userId == ''){
+        include_once ROOT."/views/modals/no-sign.php";
+    }
+?>
 
 <!-- START JAVASCRIPT -->
 
@@ -172,7 +194,7 @@ include_once ROOT . "/localization/footer_site.php";
         document.getElementById("rightMenu").style.display = "block";
     }
     function closeRightMenu() {
-        document.getElementById("rightMenu").style.display = "none";
+        $('#rightMenu').fadeOut(200);
     }
 </script>
 
