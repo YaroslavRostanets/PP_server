@@ -219,13 +219,13 @@ function filterFunc() {
         dataType: 'json',
         data: values,
         success: function(respond){
-            console.log(respond);
             for (var i = 0; i < markersArr.length; i++) {
                 markersArr[i].setMap(null);
             }
             markerCluster.clearMarkers();
             markersArr = [];
             map.newMarkersResresh(JSON.parse(respond.places));
+            closeRightMenu();
         }
     });
 

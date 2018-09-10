@@ -71,6 +71,9 @@ function rightDistance($dist) {
                                     case "FORBIDDEN_PAY":
                                         echo '<img class="img-responsive" src="' . TEMPLATE .'img/thumb5.png" >';
                                         break;
+                                    case "FORBIDDEN_YELLOW_PAY":
+                                        echo '<img class="img-responsive" src="' . TEMPLATE .'img/thumb6.png" >';
+                                        break;
                                 }
                                 ?>
                             </div>
@@ -84,11 +87,13 @@ function rightDistance($dist) {
                                     Distance: <?= rightDistance($value['geodist_pt']) ?>
                                 </span>
                                     </div>
-                                    <div class="bot-info">
-                                        <span><?= rightTimeFormat($value['weekday_from']) ?> - <?= rightTimeFormat($value['weekday_to']) ?></span>
-                                        <span>(<?= rightTimeFormat($value['saturday_from']) ?> - <?= rightTimeFormat($value['saturday_to']) ?>)</span>
-                                        <span class="holiday"><?= rightTimeFormat($value['sunday_from']) ?> - <?= rightTimeFormat($value['sunday_to']) ?></span>
-                                    </div>
+                                    <table width="90%" class="bot-info">
+                                        <tr>
+                                            <td width="30%"><?= rightTimeFormat($place['weekday_from']) ?> - <?= rightTimeFormat($place['weekday_to']) ?></td>
+                                            <td width="40%">(<?= rightTimeFormat($place['saturday_from']) ?> - <?= rightTimeFormat($place['saturday_to']) ?>)</td>
+                                            <td width="30%" class="holiday"><?= rightTimeFormat($place['sunday_from']) ?> - <?= rightTimeFormat($place['sunday_to']) ?></td>
+                                        </tr>
+                                    </table>
 
                                     <? if(isset ($value['address_' + $language]) ) :?>
                                         <div class="address">

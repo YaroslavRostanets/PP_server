@@ -14,100 +14,50 @@ include_once ROOT . "/localization/footer_site.php";
 <footer class="footer dark-bg">
     <div class="row padd-0 mrg-0">
         <div class="footer-text">
-            <div class="col-sm-6 col-md-3 col-sm-12 theme-bg">
+            <div class="left-footer-part theme-bg">
                 <div class="footer-widget">
                     <div class="textwidget">
                         <h3 class="widgettitle widget-title"><?= $lang[$language]['get_in_touch'] ?></h3>
-                        <p><?= $lang[$language]['address'] ?></p>
                         <p style="text-transform: none;">
                             <strong>Email:</strong> support@park-panda.com
                         </p>
-                        <p>
-                            <strong><?= $lang[$language]['call'] ?>:</strong>
-                            <a href="tel:+380634535415">(063) 453 54 15</a>
-                        </p>
+                        <a href="/<?= $language . "/about" ?>" class="about-link">
+                            <?= $lang[$language]['about'] ?>
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-md-2 col-sm-4">
-                <div class="footer-widget">
-                    <h3 class="widgettitle widget-title">
-                        <?= $lang[$language]['navigation'] ?>
-                    </h3>
-                    <ul class="footer-navigation">
-                        <li>
-                            <a href="/<?= $language ?>">
-                                <?= $lang[$language]['home'] ?>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/<?= $language . "/about" ?>">
-                                <?= $lang[$language]['about'] ?>
-                            </a>
-                        </li>
-                        <? if($userId) : ?>
-                            <li>
-                                <a href="javascript:void(0);" class="js-show-favorites">
-                                    <?= $lang[$language]['favorites'] ?>
-                                    <? if( isset($_SESSION['userId']) && count(Favorites::getFavoritesByUserId($_SESSION['userId'])) ): ?>
-                                        <span><?= count(Favorites::getFavoritesByUserId($_SESSION['userId'])) ?></span>
-                                    <? endif; ?>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/<?= $language . "/addplace" ?>">
-                                    <?= $lang[$language]['add_place'] ?>
-                                </a>
-                            </li>
-                        <? else : ?>
-                            <li>
-                                <a href="javascript:void(0);" class="disabled" data-toggle="modal" data-target="#no-sign">
-                                    <?= $lang[$language]['favorites'] ?>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);" class="disabled" data-toggle="modal" data-target="#no-sign">
-                                    <?= $lang[$language]['add_place'] ?>
-                                </a>
-                            </li>
-                        <? endif; ?>
-
-                    </ul>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-3 app-part">
-                <div class="footer-widget">
-                    <h3 class="widgettitle widget-title">
+            <div class="right-footer-part gray-flex">
+                <div class="footer-widget gray-footer-widget">
+                    <h3 class="widget-title">
                         <?= $lang[$language]['application'] ?>
                     </h3>
                     <div class="app-download">
                         <a href="#" class="marker-app-download">
                             <img src="<?= TEMPLATE . 'assets/img/google_play.png' ?>" alt="Google play button">
                         </a>
+                        <a href="#" class="marker-app-download">
+                            <img src="<?= TEMPLATE . 'assets/img/app_store.png' ?>" alt="Google play button">
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-widget gray-footer-widget">
+                    <div class="powered">
+                        <div class="img-cont">
+                            <img src="<?= TEMPLATE . 'assets/img/l.png' ?>" alt="">
+                        </div>
+                        <div class="txt">
+                            <div>Powered by</div>
+                            <a href="<?= $language ?>">ParkPanda</a>
+                            <div class="copyr">Copyright@ 2018</div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-md-4 social-part">
-                <div class="footer-widget">
-                    <h3 class="widgettitle widget-title">
-                        <?= $lang[$language]['connect_us'] ?>
-                    </h3>
-                    <img src="<?= TEMPLATE ?>assets/img/footer-logo.png" alt="Footer logo" class="img-responsive" />
-                    <ul class="footer-social">
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                        <!--
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                        <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                        -->
-                    </ul>
-                </div>
-            </div>
+
+
+
         </div>
-    </div>
-    <div class="footer-copyright">
-        <p>Copyright@ <?= date("o"); ?>. Made with <i class="fa fa-heart-o" aria-hidden="true"></i> in Kyiv. Powered by Park Panda Team.</p>
     </div>
 </footer>
 <!-- ================ End Footer Section ======================= -->
@@ -140,6 +90,7 @@ include_once ROOT . "/localization/footer_site.php";
         </div>
     </div>
 </div>
+
 <script>
     $(document).ready(function () {
         $('.js-login-btn').on('click', function(e){
@@ -152,7 +103,7 @@ include_once ROOT . "/localization/footer_site.php";
 </script>
 <!-- ===================== End Login & Sign Up Window =========================== -->
 
-<a id="back2Top" class="theme-bg" title="Back to top" href="#"><i class="ti-arrow-up"></i></a>
+<!--<a id="back2Top" class="theme-bg" title="Back to top" href="#"><i class="ti-arrow-up"></i></a>-->
 
 <?
     if(!isset($userId) || $userId == ''){
@@ -182,7 +133,7 @@ include_once ROOT . "/localization/footer_site.php";
 
 <script src="<?= TEMPLATE ?>assets/plugins/form-styler/jquery.formstyler.min.js"></script>
 
-<script src="<?= TEMPLATE ?>assets/plugins/moment/moment.js"></script>
+<script src="<?= TEMPLATE ?>assets/plugins/moment/moment.min.js"></script>
 
 <script src="<?= TEMPLATE ?>assets/plugins/bootstrap-material-datetimepicker/bootstrap-material-datetimepicker.js"></script>
 

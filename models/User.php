@@ -168,6 +168,19 @@ class User {
         return $user;
     }
 
+    public static function removeUserById($id){
+        $db = Db::getConnection();
+        $sql = "DELETE FROM user WHERE id=:id;";
+        $result = $db->prepare($sql);
+
+        $result->bindParam(':id', $id, PDO::PARAM_STR);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $result->execute();
+        $user = $result->fetch();
+
+        return $result->rowCount();
+    }
+
     public static function uploadAvatar(){
         if( isset($_FILES) && isset($_FILES['avatar']) ){
             if( $_FILES['avatar']['size'] > 1000000 ) {
@@ -182,6 +195,8 @@ class User {
                 );
             }
             else {
+
+
                 $timestamp = time();
                 $format = explode(".",$_FILES['avatar']['name']);
                 $format = array_pop( $format );

@@ -22,6 +22,10 @@ class DetailController {
             $user = User::getUserById($userId);
         }
 
+        if(isset($_SESSION['lang']) && $_SESSION['lang'] != 'fi'){
+            header( "Location: /". $_SESSION['lang'] . $_SERVER['REDIRECT_URL']  );
+        }
+
         $language = $this->lang;
         $coords = Api::getCoordsByIp();
         if( intval($id) ){
@@ -32,7 +36,7 @@ class DetailController {
 
         $seo = Seo::getMetaByPageName('Detail');
         $seo['title_' . $language] = str_replace( '@address' , $place['address_' . $language], $seo['title_' . $language] );
-        $seo['description_' . $language] = str_replace( '@address' , $place['address_' . $language], $seo['description_' . $language] );
+        $seo['description_' . $language] = str_replace( '@address' , '<b>' . $place['address_' . $language] . '</b>', $seo['description_' . $language] );
         $seo['keywords_' . $language] = str_replace( '@address' , $place['address_' . $language], $seo['keywords_' . $language] );
 
         require_once ROOT."/views/site/detail.php";

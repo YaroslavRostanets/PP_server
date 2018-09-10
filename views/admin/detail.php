@@ -16,72 +16,7 @@ $filename = array_pop( $arrUrl );
 
     <div class="main-panel">
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg " color-on-scroll="500">
-            <div class=" container-fluid  ">
-                <a class="navbar-brand" href="#pablo"> Парковки </a>
-                <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-bar burger-lines"></span>
-                    <span class="navbar-toggler-bar burger-lines"></span>
-                    <span class="navbar-toggler-bar burger-lines"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-end" id="navigation">
-                    <ul class="nav navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-toggle="dropdown">
-                                <i class="nc-icon nc-palette"></i>
-                                <span class="d-lg-none">Dashboard</span>
-                            </a>
-                        </li>
-                        <li class="dropdown nav-item">
-                            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                                <i class="nc-icon nc-planet"></i>
-                                <span class="notification">5</span>
-                                <span class="d-lg-none">Notification</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Notification 1</a>
-                                <a class="dropdown-item" href="#">Notification 2</a>
-                                <a class="dropdown-item" href="#">Notification 3</a>
-                                <a class="dropdown-item" href="#">Notification 4</a>
-                                <a class="dropdown-item" href="#">Another notification</a>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nc-icon nc-zoom-split"></i>
-                                <span class="d-lg-block">&nbsp;Search</span>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#pablo">
-                                <span class="no-icon">Account</span>
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="http://example.com"
-                               id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="no-icon">Dropdown</span>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                                <div class="divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#pablo">
-                                <span class="no-icon">Log out</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        <? include_once ROOT."/layouts/navbar.php" ?>
         <!-- End Navbar -->
         <div class="content">
             <div class="container-fluid">
@@ -110,7 +45,8 @@ $filename = array_pop( $arrUrl );
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>От</label>
-                                                        <input type="time"
+                                                        <input type="text"
+                                                               data-time
                                                                class="form-control"
                                                                name="weekday_from"
                                                                value="<?= $parkPlace['weekday_from'] ?>">
@@ -119,7 +55,8 @@ $filename = array_pop( $arrUrl );
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>До</label>
-                                                        <input type="time"
+                                                        <input type="text"
+                                                               data-time
                                                                class="form-control"
                                                                name="weekday_to"
                                                                value="<?= $parkPlace['weekday_to'] ?>">
@@ -133,7 +70,8 @@ $filename = array_pop( $arrUrl );
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>От</label>
-                                                        <input type="time"
+                                                        <input type="text"
+                                                               data-time
                                                                class="form-control"
                                                                name="saturday_from"
                                                                value="<?= $parkPlace['saturday_from'] ?>">
@@ -142,7 +80,8 @@ $filename = array_pop( $arrUrl );
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>До</label>
-                                                        <input type="time"
+                                                        <input type="text"
+                                                               data-time
                                                                class="form-control"
                                                                name="saturday_to"
                                                                value="<?= $parkPlace['saturday_to'] ?>">
@@ -158,7 +97,8 @@ $filename = array_pop( $arrUrl );
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>От</label>
-                                                        <input type="time"
+                                                        <input type="text"
+                                                               data-time
                                                                class="form-control"
                                                                name="sunday_from"
                                                                value="<?= $parkPlace['sunday_from'] ?>">
@@ -167,7 +107,8 @@ $filename = array_pop( $arrUrl );
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">До</label>
-                                                        <input type="time"
+                                                        <input type="text"
+                                                               data-time
                                                                class="form-control"
                                                                name="sunday_to"
                                                                value="<?= $parkPlace['sunday_to'] ?>">
@@ -191,7 +132,7 @@ $filename = array_pop( $arrUrl );
                                                     <option value="240">4h</option>
                                                     <option value="360">6h</option>
                                                     <option value="720">12h</option>
-                                                    <option value="1140">24h</option>
+                                                    <option value="1440">24h</option>
                                                 </select>
                                                 <script>
                                                     $(".time-interval").val(
@@ -360,6 +301,16 @@ $filename = array_pop( $arrUrl );
                                                        name="kind_of_place">
                                             </label>
                                         </div>
+                                        <div class="radio">
+                                            <label>
+                                                <img src="<?= TEMPLATE ?>img/thumb6.png" alt="">
+                                                <input type="radio"
+                                                       value="FORBIDDEN_YELLOW_PAY"
+                                                    <?= ($parkPlace['kind_of_place'] === 'FORBIDDEN_YELLOW_PAY')? "checked" : "" ?>
+                                                       required
+                                                       name="kind_of_place">
+                                            </label>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -491,7 +442,8 @@ $filename = array_pop( $arrUrl );
                             + result.results[0].address_components[0].long_name + '-' +
                             + $('.js-friendly-url').attr('data-id')).toLowerCase().replace( / /g, "-" ).replace( /'/g, "" );
 
-                            console.log(url);
+                            url = url.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+
                             $('.js-friendly-url').val(url);
                         }
                     }
@@ -522,3 +474,6 @@ $filename = array_pop( $arrUrl );
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaVoLDDl1BcYSVmgOHRBWAiIo4GqDiSJo&callback=initMap" async defer></script>
 <? include_once ROOT."/layouts/footer.php" ?>
+<script>
+    $('[data-time]').mask('00:00');
+</script>

@@ -1,5 +1,18 @@
 
 <? include_once ROOT . "/layouts/public/header_site.php" ?>
+<section class="tag-sec s-text" style="display: none; background-image: url(<?= TEMPLATE ?>assets/img/helsinki-bg.jpg)">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="tag-content">
+                    <img src="<?= TEMPLATE ?>assets/img/marker-text.png" class="img-responsive" alt="">
+                    <h1><?= $seo['title_'.$language] ?></h1>
+                    <p><?= $seo['description_'.$language] ?></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <section class="home-map">
     <div id="map"></div>
@@ -119,12 +132,18 @@
     var markerCluser;
     var infoWindow;
 
-    function intervalRightFormat(interval){
-        var int = Number(interval);
-        if( int >= 60 ){
-            return (int / 60) + 'h';
+    function intervalRightFormat(place){
+        var int = Number(place["time_interval"]);
+        if (place["kind_of_place"] == 'FREE'){
+            if( int >= 60 ){
+                return (int / 60) + 'h';
+            } else if (int == 0) {
+                return 'P';
+            } else {
+                return int + 'm';
+            }
         } else {
-            return int + 'm';
+            return 'P'
         }
     }
 
@@ -145,6 +164,8 @@
                 return `<img src="${origin}/template/assets/img/thumb4.png" >`;
             case 'FORBIDDEN_PAY':
                 return `<img src="${origin}/template/assets/img/thumb5.png" >`;
+            case 'FORBIDDEN_YELLOW_PAY':
+                return `<img src="${origin}/template/assets/img/thumb6.png" >`;
             default:
                 return '';
         }
@@ -155,7 +176,8 @@
             center: {lat: <?= $coords['lat'] ?>, lng: <?= $coords['lon'] ?>},
             zoom: 11,
             mapTypeControl: false,
-            fullscreenControl: false
+            fullscreenControl: false,
+            gestureHandling: 'greedy'
         });
 
         markersArr = markers.map(function(place, i) {
@@ -168,13 +190,13 @@
                 map: map,
                 icon: {
                     url: '<?= TEMPLATE."assets/img/marker.png" ?>', // url
-                    scaledSize: new google.maps.Size(34, 42), // scaled size
+                    scaledSize: new google.maps.Size(30, 42), // scaled size
                     origin: new google.maps.Point(0,0), // origin
-                    labelOrigin: new google.maps.Point(17, 15)
+                    labelOrigin: new google.maps.Point(15, 16)
                     //anchor: new google.maps.Point(0, 10) // anchor
                 },
                 label: {
-                    text: intervalRightFormat( place['time_interval'] ),
+                    text: intervalRightFormat( place ),
                     color: '#677782',
                     fontSize: "12px",
                     fontWeight: 'bolder'
@@ -277,7 +299,10 @@
         });
 
         markerCluster = new MarkerClusterer(map, markersArr,
-            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+            {
+                imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
+                minimumClusterSize: 3
+            });
 
         map.clearMap = function(){
             for (var i = 0; i < markersArr.length; i++) {

@@ -21,6 +21,10 @@ class AboutController {
             $user = User::getUserById($userId);
         }
 
+        if(isset($_SESSION['lang']) && $_SESSION['lang'] != 'fi'){
+            header( "Location: /". $_SESSION['lang'] . $_SERVER['REDIRECT_URL']  );
+        }
+
         $language = $this->lang;
         $seo = Seo::getMetaByPageName('About');
 

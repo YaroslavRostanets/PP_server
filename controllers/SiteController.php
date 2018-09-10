@@ -37,14 +37,23 @@ class SiteController {
 
             if( self::setLangTest($lang, $langArr) ){ // Если в УРЛ задан язык
                 $lang = array_shift($uri_arr);
+                session_start();
+                $_SESSION['lang'] = $lang;
             } else {
-                $lang = 'fi';
+                session_start();
+                $lang = $_SESSION['lang'];
+                if(isset($_SESSION['lang']) && $_SESSION['lang'] != 'fi'){
+                    //header( "Location: /". $_SESSION['lang'] . $_SERVER['REDIRECT_URL']  );
+                }
             }
 
             $public_router = new Public_Router($public_routes);
             $public_router->run( implode('/', $uri_arr), $lang );
         } else {
-
+            session_start();
+            if(isset($_SESSION['lang']) && $_SESSION['lang'] != 'fi'){
+                header( "Location: /". $_SESSION['lang'] . $_SERVER['REDIRECT_URL']  );
+            }
             $public_router = new Public_Router($public_routes);
             $public_router->run( implode('/', []), 'fi' );
         }

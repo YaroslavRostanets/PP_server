@@ -40,23 +40,7 @@ include_once ROOT . "/localization/detail.php";
                             </div>
                         </li>
                     <? endif; ?>
-                    <li>
-                        <div class="inside-rating buttons listing-rating theme-btn button-plain js-distance-duration">
-                            <span class="value js-distance">
-                                <?= $place['geodist_pt'] ?>
-                            </span>
-                            <sup class="out-of js-distance-sup">
-                                km
-                            </sup>
-                            <span class="js-duration-wrap">
-                                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                <span class="js-duration">
-                                    -
-                                </span>
-                            </span>
 
-                        </div>
-                    </li>
                     <li>
                         <a href="http://maps.google.com/maps?q=<?= $place['X(coordinates)'] ?>,<?= $place['Y(coordinates)'] ?>&ll=<?= $place['X(coordinates)'] ?>,<?= $place['Y(coordinates)'] ?>&z=13" class="buttons btn-outlined medium get-direct">
                             <i class="fa fa-map-o" aria-hidden="true"></i>
@@ -103,13 +87,26 @@ include_once ROOT . "/localization/detail.php";
             <div class="col-xs-12 col-sm-8 col-md-8">
                 <div class="detail-wrapper">
                     <div class="detail-wrapper-header">
-                        <h4>Location</h4>
+                        <div class="inside-rating listing-rating button-plain js-distance-duration">
+                            <span class="value js-distance">
+                                <?= $place['geodist_pt'] ?>
+                            </span>
+                            <sup class="out-of js-distance-sup">
+                                km
+                            </sup>
+                            <span class="js-duration-wrap">
+                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                <span class="js-duration">
+                                    -
+                                </span>
+                            </span>
+
+                        </div>
                     </div>
                     <div class="detail-wrapper-body">
                         <? if( $place['address_'.$language] != '') : ?>
                             <a href="#listing-location" class="listing-address">
-                                <i class="ti-location-pin mrg-r-5"></i>
-                                <?= $place['address_'.$language] ?>
+                                <?= $seo['description_' . $language] ?>
                             </a>
                         <? endif; ?>
                         <div id="detail-map"></div>
@@ -124,29 +121,109 @@ include_once ROOT . "/localization/detail.php";
                     </div>
                     <div class="widget-boxed-body">
                         <div class="side-list">
-                            <ul>
-                                <li>
-                                    Time interval
-                                    <span>
-                                        <?= rightInterval($place['time_interval'])  ?>
-                                    </span>
-                                </li>
-                                <li>Mon-Fry
-                                    <span>
-                                        <?= rightTimeFormat($place['weekday_from']) ?> - <?= rightTimeFormat($place['weekday_to']) ?>
-                                    </span>
-                                </li>
-                                <li>Saturday
-                                    <span>
-                                        (<?= rightTimeFormat($place['saturday_from']) ?> - <?= rightTimeFormat($place['saturday_to']) ?>)
-                                    </span>
-                                </li>
-                                <li class="sunday">Sunday
-                                    <span>
-                                        <?= rightTimeFormat($place['sunday_from']) ?> - <?= rightTimeFormat($place['sunday_to']) ?>
-                                    </span>
-                                </li>
-                            </ul>
+                            <div class="place-aviable">
+                                Парковка доступна безкоштовно:
+                            </div>
+                            <? if( $place['kind_of_place'] == 'FREE' ) : ?>
+                                <ul>
+
+                                    <? if($place['weekday_from'] == '') : ?>
+                                        <li>Mon-Fry
+                                            <span>
+                                                <?= ($place['hasnt_table']) ? '00-24' : '-' ?>
+                                            </span>
+                                        </li>
+                                    <? else : ?>
+                                        <li>Mon-Fry
+                                            <span>
+                                                <?= rightTimeFormat($place['weekday_from']) ?>-<?= rightTimeFormat($place['weekday_to']) ?>
+                                            </span>
+                                        </li>
+                                    <? endif; ?>
+
+                                    <? if($place['saturday_from'] == '') : ?>
+                                        <li>Saturday
+                                            <span>
+                                                <?= ($place['hasnt_table']) ? '00-24' : '-' ?>
+                                            </span>
+                                        </li>
+                                    <? else : ?>
+                                        <li>Saturday
+                                            <span>
+                                                <?= rightTimeFormat($place['saturday_from']) ?> - <?= rightTimeFormat($place['saturday_from']) ?>
+                                            </span>
+                                        </li>
+                                    <? endif; ?>
+
+                                    <? if($place['sunday_from'] == '') : ?>
+                                        <li class="sunday">Sunday
+                                            <span>
+                                                <?= ($place['hasnt_table']) ? '00-24' : '-' ?>
+                                            </span>
+                                        </li>
+                                    <? else: ?>
+                                        <li class="sunday">Sunday
+                                            <span>
+                                                <?= rightTimeFormat($place['sunday_from']) ?> - <?= rightTimeFormat($place['sunday_to']) ?>
+                                            </span>
+                                        </li>
+                                    <? endif; ?>
+
+                                </ul>
+                            <? else: ?>
+                                <ul>
+
+                                    <? if($place['weekday_from'] == '') : ?>
+                                        <li>Mon-Fry
+                                            <span>
+                                                (00 - 24)
+                                            </span>
+                                        </li>
+                                    <? else : ?>
+                                        <li>Mon-Fry
+                                            <span>
+                                                00 - <?= rightTimeFormat($place['weekday_from']) ?>
+                                                <span class="span">AND</span>
+                                                <?= rightTimeFormat($place['weekday_to']) ?> - 24
+                                            </span>
+                                        </li>
+                                    <? endif; ?>
+
+                                    <? if($place['saturday_from'] == '') : ?>
+                                        <li>Saturday
+                                            <span>
+                                                (00 - 24)
+                                            </span>
+                                        </li>
+                                    <? else : ?>
+                                        <li>Saturday
+                                            <span>
+                                                from 00 to <?= rightTimeFormat($place['saturday_from']) ?>
+                                                <span class="span">AND</span>
+                                                from <?= rightTimeFormat($place['saturday_from']) ?> to 24
+                                            </span>
+                                        </li>
+                                    <? endif; ?>
+
+                                    <? if($place['sunday_from'] == '') : ?>
+                                        <li class="sunday">Sunday
+                                            <span>
+                                                00 - 24
+                                            </span>
+                                        </li>
+                                    <? else: ?>
+                                        <li class="sunday">Sunday
+                                            <span>
+                                                from 00 to <?= rightTimeFormat($place['sunday_from']) ?>
+                                                <span class="span">AND</span>
+                                                from <?= rightTimeFormat($place['sunday_to']) ?> to 24
+                                            </span>
+                                        </li>
+                                    <? endif; ?>
+
+                                </ul>
+                            <? endif; ?>
+
                         </div>
                     </div>
                 </div>
@@ -191,9 +268,18 @@ include_once ROOT . "/localization/detail.php";
     var directionsDisplay;
 
     function intervalRightFormat(interval){
+
+        if ("<?=$place['kind_of_place']?>" == 'FREE' && "<?=$place['time_interval']?>" == 0 ){
+            return 'P';
+        } else {
+            return 'P'
+        }
+
         var int = Number(interval);
         if( int >= 60 ){
             return (int / 60) + 'h';
+        } else if (int == 0) {
+            return ' ';
         } else {
             return int + 'm';
         }
@@ -242,9 +328,9 @@ include_once ROOT . "/localization/detail.php";
             map: map,
             icon: {
                 url: '<?= TEMPLATE."assets/img/marker.png" ?>', // url
-                scaledSize: new google.maps.Size(34, 42), // scaled size
+                scaledSize: new google.maps.Size(30, 42), // scaled size
                 origin: new google.maps.Point(0,0), // origin
-                labelOrigin: new google.maps.Point(17, 15)
+                labelOrigin: new google.maps.Point(15, 16)
                 //anchor: new google.maps.Point(0, 10) // anchor
             },
             label: {

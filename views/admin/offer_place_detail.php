@@ -112,7 +112,7 @@
                                                 <option value="240">4h</option>
                                                 <option value="360">6h</option>
                                                 <option value="720">12h</option>
-                                                <option value="1140">24h</option>
+                                                <option value="1440">24h</option>
                                             </select>
                                         </div>
                                     </div>
@@ -214,6 +214,12 @@
                                         <label>
                                             <img src="<?= TEMPLATE ?>img/thumb5.png" alt="">
                                             <input type="radio"  value="FORBIDDEN_PAY" required name="kind_of_place">
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <img src="<?= TEMPLATE ?>img/thumb6.png" alt="">
+                                            <input type="radio"  value="FORBIDDEN_YELLOW_PAY" required name="kind_of_place">
                                         </label>
                                     </div>
                                 </div>

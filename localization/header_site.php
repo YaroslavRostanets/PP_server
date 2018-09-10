@@ -20,6 +20,13 @@ $lang = [
         'add_place' => 'Добавить парковку',
         'sign_in' => 'Вход'
     ],
+    'uk' => [
+        'home' => 'Головна',
+        'about' => 'Про нас',
+        'favorites' => 'Вибране',
+        'add_place' => 'Додати парковку',
+        'sign_in' => 'Авторизуватись'
+    ],
     'fi' => [
         'home' => 'Kotisivu',
         'about' => 'Meistä',

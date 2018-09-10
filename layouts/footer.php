@@ -20,6 +20,7 @@
     <script src="<?= TEMPLATE ?>js/light-bootstrap-dashboard.js?v=2.0.1" type="text/javascript"></script>
     <!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
     <script src="<?= TEMPLATE ?>js/demo.js"></script>
+    <script src="<?= TEMPLATE ?>js/jquery.mask.min.js"></script>
 
 </body>
 </html>

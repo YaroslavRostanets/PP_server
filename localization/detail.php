@@ -23,6 +23,14 @@ $lang = [
         'min' => 'мин.',
         'h' => 'ч.'
     ],
+    'uk' => [
+        'open_in_google_maps' => 'Відкрити в Google Maps',
+        'to_favorites' => 'В вибрані',
+        'm' => 'м',
+        'km' => 'км',
+        'min' => 'хв.',
+        'h' => 'год.'
+    ],
     'fi' => [
         'open_in_google_maps' => 'avaa Google Maps',
         'to_favorites' => 'Lisää suosikkeihin',

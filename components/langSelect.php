@@ -27,7 +27,7 @@
         <? foreach ($languages as $key => $value) : ?>
             <? if($key == $language) continue; ?>
             <li>
-                <a href="<?= "/$key" . $lang_url ?>">
+                <a href="<?= "/$key" . $lang_url ?>" hreflang="<?= $lang_url ?>">
                     <div class="flag-cont"
                          style="background-image: url(<?= TEMPLATE . $value['img'] ?>)">
                     </div>

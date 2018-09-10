@@ -5,9 +5,9 @@ RewriteBase /
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond $1 !(\.css)|(\.js)|(\.ico)|(\.swf)|(\.jpg)|(\.png)|(\.gif)|(\.xml)|(\.txt)$ [NC]
 
 RewriteRule ^(.*)$ index.php
-
 
 #RewriteRule api/(.*)$ api.php
 #RewriteRule ^(.*)$ index.php

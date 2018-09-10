@@ -22,13 +22,18 @@ class Api {
                  OR ( sunday_from = '' AND kind_of_place = 'PAY' )
                  OR ( TIME_TO_SEC(sunday_from) > $time_now_hour AND kind_of_place = 'PAY' ) 
                  OR ( TIME_TO_SEC(sunday_to) < $time_now_hour AND kind_of_place = 'PAY')
+                 OR ( sunday_from = '' AND kind_of_place = 'FORBIDDEN' )
                  OR ( TIME_TO_SEC(sunday_from) > $time_now_hour AND kind_of_place = 'FORBIDDEN' )
                  OR ( TIME_TO_SEC(sunday_to) < $time_now_hour AND kind_of_place = 'FORBIDDEN')
+                 OR ( sunday_from = '' AND kind_of_place = 'FORBIDDEN_YELLOW' )
                  OR ( TIME_TO_SEC(sunday_from) > $time_now_hour AND kind_of_place = 'FORBIDDEN_YELLOW' )
                  OR ( TIME_TO_SEC(sunday_to) < $time_now_hour AND kind_of_place = 'FORBIDDEN_YELLOW')
                  OR ( sunday_from = '' AND kind_of_place = 'FORBIDDEN_PAY' )
                  OR ( TIME_TO_SEC(sunday_from) > $time_now_hour AND kind_of_place = 'FORBIDDEN_PAY' ) 
                  OR ( TIME_TO_SEC(sunday_to) < $time_now_hour AND kind_of_place = 'FORBIDDEN_PAY')
+                 OR ( sunday_from = '' AND kind_of_place = 'FORBIDDEN_YELLOW_PAY' )
+                 OR ( TIME_TO_SEC(sunday_from) > $time_now_hour AND kind_of_place = 'FORBIDDEN_YELLOW_PAY' ) 
+                 OR ( TIME_TO_SEC(sunday_to) < $time_now_hour AND kind_of_place = 'FORBIDDEN_YELLOW_PAY')
                  ";
                 break;
             case 6: //СБ
@@ -37,13 +42,18 @@ class Api {
                  OR ( saturday_from = '' AND kind_of_place = 'PAY' )
                  OR ( TIME_TO_SEC(saturday_from) > $time_now_hour AND kind_of_place = 'PAY' ) 
                  OR ( TIME_TO_SEC(saturday_to) < $time_now_hour AND kind_of_place = 'PAY')
+                 OR ( saturday_from = '' AND kind_of_place = 'FORBIDDEN' )
                  OR ( TIME_TO_SEC(saturday_from) > $time_now_hour AND kind_of_place = 'FORBIDDEN' )
                  OR ( TIME_TO_SEC(saturday_to) < $time_now_hour AND kind_of_place = 'FORBIDDEN')
+                 OR ( saturday_from = '' AND kind_of_place = 'FORBIDDEN_YELLOW' )
                  OR ( TIME_TO_SEC(saturday_from) > $time_now_hour AND kind_of_place = 'FORBIDDEN_YELLOW' )
                  OR ( TIME_TO_SEC(saturday_to) < $time_now_hour AND kind_of_place = 'FORBIDDEN_YELLOW')
                  OR ( saturday_from = '' AND kind_of_place = 'FORBIDDEN_PAY' )
                  OR ( TIME_TO_SEC(saturday_from) > $time_now_hour AND kind_of_place = 'FORBIDDEN_PAY' ) 
                  OR ( TIME_TO_SEC(saturday_to) < $time_now_hour AND kind_of_place = 'FORBIDDEN_PAY')
+                 OR ( saturday_from = '' AND kind_of_place = 'FORBIDDEN_YELLOW_PAY' )
+                 OR ( TIME_TO_SEC(saturday_from) > $time_now_hour AND kind_of_place = 'FORBIDDEN_YELLOW_PAY' ) 
+                 OR ( TIME_TO_SEC(saturday_to) < $time_now_hour AND kind_of_place = 'FORBIDDEN_YELLOW_PAY')
                  ";
                 break;
             default:
@@ -52,13 +62,18 @@ class Api {
                  OR ( weekday_from = '' AND kind_of_place = 'PAY' )
                  OR ( TIME_TO_SEC(weekday_from) > $time_now_hour AND kind_of_place = 'PAY' ) 
                  OR ( TIME_TO_SEC(weekday_to) < $time_now_hour AND kind_of_place = 'PAY')
+                 OR ( weekday_from = '' AND kind_of_place = 'FORBIDDEN' )
                  OR ( TIME_TO_SEC(weekday_from) > $time_now_hour AND kind_of_place = 'FORBIDDEN' )
                  OR ( TIME_TO_SEC(weekday_to) < $time_now_hour AND kind_of_place = 'FORBIDDEN')
+                 OR ( weekday_from = '' AND kind_of_place = 'FORBIDDEN_YELLOW' )
                  OR ( TIME_TO_SEC(weekday_from) > $time_now_hour AND kind_of_place = 'FORBIDDEN_YELLOW' )
                  OR ( TIME_TO_SEC(weekday_to) < $time_now_hour AND kind_of_place = 'FORBIDDEN_YELLOW')
                  OR ( weekday_from = '' AND kind_of_place = 'FORBIDDEN_PAY' )
                  OR ( TIME_TO_SEC(weekday_from) > $time_now_hour AND kind_of_place = 'FORBIDDEN_PAY' ) 
                  OR ( TIME_TO_SEC(weekday_to) < $time_now_hour AND kind_of_place = 'FORBIDDEN_PAY')
+                 OR ( weekday_from = '' AND kind_of_place = 'FORBIDDEN_YELLOW_PAY' )
+                 OR ( TIME_TO_SEC(weekday_from) > $time_now_hour AND kind_of_place = 'FORBIDDEN_YELLOW_PAY' ) 
+                 OR ( TIME_TO_SEC(weekday_to) < $time_now_hour AND kind_of_place = 'FORBIDDEN_YELLOW_PAY')
                  ";
                 break;
         }
@@ -183,6 +198,7 @@ class Api {
         $forbidden = "(FALSE)";
         $forbidden_yellow = "(FALSE)";
         $forbidden_pay = "(FALSE)";
+        $forbidden_yellow_pay = "(FALSE)";
 
         if ($MONFRY == 'true') {
             $free .= " 
@@ -204,6 +220,10 @@ class Api {
 
             $forbidden_pay .= " OR ( 0 <= $FilterFromSec AND $FilterToSec <= time_to_sec(weekday_from) AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_PAY' )
             OR ( time_to_sec(weekday_to) <= $FilterFromSec AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_PAY' )
+            ";
+
+            $forbidden_yellow_pay .= " OR ( 0 <= $FilterFromSec AND $FilterToSec <= time_to_sec(weekday_from) AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_YELLOW_PAY' )
+            OR ( time_to_sec(weekday_to) <= $FilterFromSec AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_YELLOW_PAY' )
             ";
 
         }
@@ -229,6 +249,10 @@ class Api {
             OR ( time_to_sec(saturday_to) <= $FilterFromSec AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_PAY' )
             ";
 
+            $forbidden_yellow_pay .= " OR ( 0 <= $FilterFromSec AND $FilterToSec <= time_to_sec(saturday_from) AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_YELLOW_PAY' )
+            OR ( time_to_sec(saturday_to) <= $FilterFromSec AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_YELLOW_PAY' )
+            ";
+
         }
         if ($SUN == 'true') {
             $free .= "
@@ -251,6 +275,10 @@ class Api {
             $forbidden_pay .= " OR ( 0 <= $FilterFromSec AND $FilterToSec <= time_to_sec(sunday_from) AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_PAY' )
             OR ( time_to_sec(sunday_to) <= $FilterFromSec AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_PAY' )
             ";
+
+            $forbidden_yellow_pay .= " OR ( 0 <= $FilterFromSec AND $FilterToSec <= time_to_sec(sunday_from) AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_YELLOW_PAY' )
+            OR ( time_to_sec(sunday_to) <= $FilterFromSec AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_YELLOW_PAY' )
+            ";
         }
 
 
@@ -260,8 +288,8 @@ class Api {
             ' UNION ' . sql_template($lat, $lon,$pay) .
             ' UNION ' . sql_template($lat, $lon, $forbidden) .
             ' UNION ' . sql_template($lat, $lon, $forbidden_yellow) .
-            ' UNION ' . sql_template($lat, $lon, $forbidden_pay);
-
+            ' UNION ' . sql_template($lat, $lon, $forbidden_pay).
+            ' UNION ' . sql_template($lat, $lon, $forbidden_yellow_pay);
         //echo $sql;
 
         $result = $db->prepare($sql);

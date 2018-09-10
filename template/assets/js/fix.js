@@ -5,16 +5,45 @@
 $(document).ready(function(){
    $('[data-styler]').styler();
 
-   $('[data-timepicker]').bootstrapMaterialDatePicker({
+   var timepicker = $('[data-timepicker]').bootstrapMaterialDatePicker({
        date: false,
-       format : 'HH:mm',
-       change: function(event, date){
-          console.log(event,date);
-       },
-       dateSelected: function(event, date){
-           console.log(event,date);
-       }
+       format : 'HH:mm'
    });
+
+
+    timepicker.on('open', function(event, date){
+        console.log(event, date);
+        var selectedTime = $('.dtp:not(.hidden) .dtp-actual-maxtime').text() == '00:00' ? '24:00' : $('.dtp:not(.hidden) .dtp-actual-maxtime').text();
+        var el = $(this);
+
+        if(el.attr('name') == 'filterTo'){
+            console.log('+');
+            setTimeout(function(){
+                $('#th-0').text('24');
+                $('.dtp:not(.hidden) .dtp-actual-maxtime').text(selectedTime);
+            },100);
+        };
+
+        $('.dtp-picker').on('click', function(){
+            selectedTime = $('.dtp:not(.hidden) .dtp-actual-maxtime').text();
+            if(el.attr('name') == 'filterTo' && selectedTime == '00:00'){
+                selectedTime = '24:00';
+                setTimeout(function(){
+                    $('.dtp:not(.hidden) .dtp-actual-maxtime').text('24:00');
+                },10);
+
+            };
+        });
+        $('.dtp:not(.hidden) .dtp-btn-ok').on('click', function(){
+            console.log(selectedTime);
+
+            el.val(selectedTime);
+            $('.dtp:not(.hidden)').addClass('hidden');
+        });
+    });
+
+
+
 
     $('.js-toggle-lang').on('click', function(){
         var wrap = $(this).closest('.dropdown');

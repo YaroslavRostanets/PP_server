@@ -33,7 +33,8 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>От</label>
-                                                        <input type="time"
+                                                        <input type="text"
+                                                               data-time
                                                                class="form-control"
                                                                name="weekday_from"
                                                                value="">
@@ -42,7 +43,8 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>До</label>
-                                                        <input type="time"
+                                                        <input type="text"
+                                                               data-time
                                                                class="form-control"
                                                                name="weekday_to"
                                                                value="">
@@ -56,7 +58,8 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>От</label>
-                                                        <input type="time"
+                                                        <input type="text"
+                                                               data-time
                                                                class="form-control"
                                                                name="saturday_from"
                                                                value="">
@@ -65,7 +68,8 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>До</label>
-                                                        <input type="time"
+                                                        <input type="text"
+                                                               data-time
                                                                class="form-control"
                                                                name="saturday_to"
                                                                value="">
@@ -81,7 +85,8 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>От</label>
-                                                        <input type="time"
+                                                        <input type="text"
+                                                               data-time
                                                                class="form-control"
                                                                name="sunday_from"
                                                                value="">
@@ -90,7 +95,8 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">До</label>
-                                                        <input type="time"
+                                                        <input type="text"
+                                                               data-time
                                                                class="form-control"
                                                                name="sunday_to"
                                                                value="">
@@ -114,7 +120,7 @@
                                                     <option value="240">4h</option>
                                                     <option value="360">6h</option>
                                                     <option value="720">12h</option>
-                                                    <option value="1140">24h</option>
+                                                    <option value="1440">24h</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -255,6 +261,12 @@
                                             <input type="radio"  value="FORBIDDEN_PAY" required name="kind_of_place">
                                         </label>
                                     </div>
+                                    <div class="radio">
+                                        <label>
+                                            <img src="<?= TEMPLATE ?>img/thumb6.png" alt="">
+                                            <input type="radio"  value="FORBIDDEN_YELLOW_PAY" required name="kind_of_place">
+                                        </label>
+                                    </div>
                                 </div>
 
                             </div>
@@ -320,9 +332,9 @@
 
         var center = new google.maps.LatLng( 60.16318816140338, 24.941539764404297);
 
-        var parkPlace = {lat: 60.16318816140338, lng: 24.941539764404297};
-        $('.js-lat').val(60.16318816140338);
-        $('.js-lon').val(24.941539764404297);
+        var parkPlace = {lat: <?= $previous['X(coordinates)'] ?>, lng: <?= $previous['Y(coordinates)'] ?>};
+        $('.js-lat').val(<?= $previous['X(coordinates)'] ?>);
+        $('.js-lon').val(<?= $previous['Y(coordinates)'] ?>);
         var map = new google.maps.Map(document.getElementById('map'), {
             center: center,
             zoom: 13,
@@ -331,8 +343,7 @@
 
         var marker = new google.maps.Marker({
             position: parkPlace,
-            map: map,
-            title: 'Hello World!'
+            map: map
         });
 
         google.maps.event.addListener(map, "click", function(event) {
@@ -367,6 +378,8 @@
                                 '-' +
                                 + result.results[0].address_components[0].long_name + '-' +
                                 + $('.js-friendly-url').attr('data-id')).toLowerCase().replace( / /g, "-" ).replace( /'/g, "" );
+
+                            url = url.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
 
                             $('.js-friendly-url').val(url);
                         }
@@ -444,3 +457,6 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaVoLDDl1BcYSVmgOHRBWAiIo4GqDiSJo&callback=initMap" async defer></script>
 <? include_once ROOT."/layouts/footer.php" ?>
 
+<script>
+    $('[data-time]').mask('00:00');
+</script>

@@ -125,6 +125,35 @@
                                             <hr>
 
                                             <div class="form-group">
+                                                <label>Заголовок страницы title_uk</label>
+                                                <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        name="title_uk"
+                                                        value="<?= $value['title_uk'] ?>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Описание страницы description_uk</label>
+                                                <textarea
+                                                        name="description_uk"
+                                                        id=""
+                                                        cols="30"
+                                                        rows="10"
+                                                        class="form-control"><?= $value['description_uk'] ?></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Ключевые слова keywords_uk</label>
+                                                <textarea
+                                                        name="keywords_uk"
+                                                        id=""
+                                                        cols="30"
+                                                        rows="10"
+                                                        class="form-control"><?= $value['keywords_uk'] ?></textarea>
+                                            </div>
+
+                                            <hr>
+
+                                            <div class="form-group">
                                                 <label>Заголовок страницы title_fi</label>
                                                 <input
                                                         type="text"

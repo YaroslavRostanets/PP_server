@@ -25,6 +25,19 @@
                         </div>
                         <div class="card-body table-full-width table-responsive">
                             <table class="table table-hover table-striped">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>
+                                        Фото
+                                    </th>
+                                    <th>
+                                        Координаты
+                                    </th>
+                                    <th>
+                                        От пользователя
+                                    </th>
+                                    <th></th>
+                                </tr>
                                 <?php foreach ($offerPlaces as $place): ?>
                                     <tr>
                                         <td><?= $place['id'] ?></td>

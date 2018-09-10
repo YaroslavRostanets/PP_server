@@ -1,5 +1,6 @@
 <?php
     include_once ROOT . "/localization/header_site.php";
+    $languages = require ROOT."/config/languages.php";
 
 ?>
 <!DOCTYPE html>
@@ -19,6 +20,21 @@
     ?>,<?
         echo (isset($seo) && $seo['robots_follow'] == 1)? 'follow' : 'nofollow';
     ?>">
+    <?
+    $lang_url = ( isset($_SERVER['REDIRECT_URL']))? $_SERVER['REDIRECT_URL'] : '/';
+
+    foreach ($languages as $key => $value) {
+        $lang_url = str_replace("/$key", '', $lang_url);
+    }
+
+    ?>
+    <? foreach ($languages as $lng => $value ) : ?>
+        <link rel="alternate" hreflang="<?= $lng ?>" href="<?= SITE_URL . "/$lng" . "$lang_url" ?>" />
+        <? if($language != $lng) : ?>
+            
+        <? endif; ?>
+    <? endforeach; ?>
+
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -41,10 +57,10 @@
     <link href="<?= TEMPLATE ?>assets/plugins/line-icons/css/line-font.css" rel="stylesheet">
 
     <!-- Animate -->
-    <link href="<?= TEMPLATE ?>assets/plugins/animate/animate.css" rel="stylesheet">
+    <link href="<?= TEMPLATE ?>assets/plugins/animate/animate.min.css" rel="stylesheet">
 
     <!-- Bootsnav -->
-    <link href="<?= TEMPLATE ?>assets/plugins/bootstrap/css/bootsnav.css" rel="stylesheet">
+    <link href="<?= TEMPLATE ?>assets/plugins/bootstrap/css/bootsnav.min.css" rel="stylesheet">
 
     <!-- Slick Slider -->
     <link href="<?= TEMPLATE ?>assets/plugins/slick-slider/slick.css" rel="stylesheet">
@@ -59,9 +75,9 @@
     <link href="<?= TEMPLATE ?>assets/plugins/bootstrap-material-datetimepicker/bootstrap-material-datetimepicker.css" rel="stylesheet">
 
     <!-- Custom style -->
-    <link href="<?= TEMPLATE ?>assets/css/style.css" rel="stylesheet">
+    <link href="<?= TEMPLATE ?>assets/css/style.min.css" rel="stylesheet">
     <link href="<?= TEMPLATE ?>assets/css/responsiveness.css" rel="stylesheet">
-    <link  type="text/css" rel="stylesheet" id="jssDefault" href="<?= TEMPLATE ?>assets/css/colors/main.css">
+    <link  type="text/css" rel="stylesheet" id="jssDefault" href="<?= TEMPLATE ?>assets/css/colors/main.min.css">
     
     <link href="<?= TEMPLATE ?>assets/css/fix.css" rel="stylesheet">
 
@@ -105,12 +121,12 @@
             <div class="collapse navbar-collapse" id="navbar-menu">
                 <ul class="nav navbar-nav navbar-center" data-in="fadeInDown" data-out="fadeOutUp">
                     <li>
-                        <a href="/<?= $language ?>" class="js-nice-transition">
+                        <a href="/<?= $language ?>" hreflang="<?= $language ?>" class="js-nice-transition">
                             <?= $lang[$language]['home'] ?>
                         </a>
                     </li>
                     <li class="dropdown">
-                        <a href="/<?= $language . "/about" ?>" class="js-nice-transition">
+                        <a href="/<?= $language . "/about" ?>" hreflang="<?= $language ?>" class="js-nice-transition">
                             <?= $lang[$language]['about'] ?>
                         </a>
                     </li>
@@ -125,7 +141,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/<?= $language . "/addplace" ?>" class="js-nice-transition">
+                            <a href="/<?= $language . "/addplace" ?>" hreflang="<?= $language ?>" class="js-nice-transition">
                                 <?= $lang[$language]['add_place'] ?>
                             </a>
                         </li>
@@ -165,13 +181,13 @@
                                 </div>
                                 <ul class="profile-menu">
                                     <li>
-                                        <a href="/<?= $language ?>/profile" class="js-nice-transition">
+                                        <a href="/<?= $language ?>/profile" hreflang="<?= $language ?>" class="js-nice-transition">
                                             <i class="fa fa-user-circle-o" aria-hidden="true"></i>
                                             Profile
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/<?= $language ?>/profile?logout" class="js-nice-transition">
+                                        <a href="/<?= $language ?>/profile?logout" hreflang="<?= $language ?>" class="js-nice-transition">
                                             <i class="fa fa-sign-out" aria-hidden="true"></i>
                                             Log Out
                                         </a>

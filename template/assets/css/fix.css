@@ -134,46 +134,56 @@ nav.navbar.bootsnav ul.nav > li > a.disabled {
   min-height: 340px;
   padding: 0;
   margin-bottom: 10px; }
-.tab .fast-parking-list {
+.tab .fast-parking-list, .tab .all-places-list {
   height: 100%;
   overflow: auto; }
-  .tab .fast-parking-list .small-listing-box {
+  .tab .fast-parking-list .small-listing-box, .tab .all-places-list .small-listing-box {
     padding: 10px 0;
     border-bottom: 1px solid #FFFFFF;
     display: flex;
     align-items: stretch; }
-    .tab .fast-parking-list .small-listing-box:last-child {
+    .tab .fast-parking-list .small-listing-box:last-child, .tab .all-places-list .small-listing-box:last-child {
       border-bottom: none; }
-    .tab .fast-parking-list .small-listing-box:hover {
+    .tab .fast-parking-list .small-listing-box:hover, .tab .all-places-list .small-listing-box:hover {
       z-index: 10;
       background: #FFFFFF; }
-  .tab .fast-parking-list .small-list-img {
+  .tab .fast-parking-list .small-list-img, .tab .all-places-list .small-list-img {
     margin-right: 10px;
     max-width: 65px;
     height: 100%; }
-    .tab .fast-parking-list .small-list-img img {
+    .tab .fast-parking-list .small-list-img img, .tab .all-places-list .small-list-img img {
       max-width: 100%;
       margin: 0; }
-  .tab .fast-parking-list .snall-list-info {
+  .tab .fast-parking-list .snall-list-info, .tab .all-places-list .snall-list-info {
     flex-grow: 1;
     height: 100%; }
-  .tab .fast-parking-list .small-list-action {
+  .tab .fast-parking-list .small-list-action, .tab .all-places-list .small-list-action {
     padding-top: 0;
     margin-right: 0;
     float: none;
     height: 100%; }
-  .tab .fast-parking-list .top-info {
+  .tab .fast-parking-list .top-info, .tab .all-places-list .top-info {
     display: flex;
     justify-content: space-between;
     padding-right: 14px; }
-  .tab .fast-parking-list .bot-info {
-    display: flex;
+  .tab .fast-parking-list .bot-info, .tab .all-places-list .bot-info {
     font-size: 14px;
-    font-family: Roboto; }
-    .tab .fast-parking-list .bot-info span:last-child:after {
+    font-family: Roboto;
+    margin-top: 3px; }
+    .tab .fast-parking-list .bot-info td, .tab .all-places-list .bot-info td {
+      border-right: 1px solid #E5E5E5;
+      padding: 2px 10px;
+      text-align: center; }
+      .tab .fast-parking-list .bot-info td:first-child, .tab .all-places-list .bot-info td:first-child {
+        padding-left: 0;
+        text-align: left; }
+      .tab .fast-parking-list .bot-info td:last-child, .tab .all-places-list .bot-info td:last-child {
+        border-right: none;
+        padding-right: 0; }
+    .tab .fast-parking-list .bot-info span:last-child:after, .tab .all-places-list .bot-info span:last-child:after {
       margin: 0;
       background: transparent; }
-    .tab .fast-parking-list .bot-info span:after {
+    .tab .fast-parking-list .bot-info span:after, .tab .all-places-list .bot-info span:after {
       content: "";
       width: 1px;
       height: 23px;
@@ -183,7 +193,7 @@ nav.navbar.bootsnav ul.nav > li > a.disabled {
       margin-right: 11px;
       position: relative;
       top: 6px; }
-  .tab .fast-parking-list .holiday {
+  .tab .fast-parking-list .holiday, .tab .all-places-list .holiday {
     color: #FF0000; }
 
 .filter-tab .one-row, .search-tab .one-row {
@@ -433,6 +443,9 @@ nav.navbar.bootsnav ul.nav > li > a.disabled {
 .listing-address {
   display: block;
   margin-bottom: 15px; }
+  .listing-address b:before {
+    content: "\e693";
+    font-family: 'themify'; }
 
 #detail-map {
   min-height: 350px; }
@@ -460,8 +473,15 @@ nav.navbar.bootsnav ul.nav > li > a.disabled {
 .list-detail .side-list ul li span {
   font-weight: bold;
   display: inline-block;
-  width: 70px;
+  width: 170px;
   text-align: center; }
+.list-detail .side-list ul li .span {
+  width: auto;
+  display: inline;
+  font-weight: normal;
+  float: none;
+  margin: 0 4px;
+  font-size: 0.8em; }
 .list-detail .side-list ul li.sunday span {
   color: #FF431E; }
 
@@ -881,18 +901,118 @@ ul.footer-navigation li {
 .detail-page .address-cont {
   display: none; }
 
+.footer .footer-text {
+  display: flex; }
+.footer .theme-bg .widget-title {
+  margin-bottom: 5px; }
+.footer .theme-bg .footer-widget {
+  text-align: center; }
 .footer .disabled {
   color: #4D5E75; }
+.footer .footer-widget {
+  padding: 0; }
+  .footer .footer-widget p {
+    font-size: 20px;
+    margin-bottom: 0; }
+.footer .gray-footer-widget {
+  width: auto; }
+  .footer .gray-footer-widget .widget-title {
+    margin-bottom: 12px; }
+  .footer .gray-footer-widget:last-child {
+    display: flex;
+    padding-bottom: 10px; }
+.footer .widget-title {
+  font-size: 24px;
+  margin: 0; }
+.footer .about-link {
+  color: #FFFFFF;
+  font-size: 22px;
+  font-weight: bold; }
+.footer .app-download {
+  display: flex; }
+  .footer .app-download .marker-app-download {
+    opacity: 0.4; }
+.footer .gray-flex {
+  padding-top: 10px;
+  padding-left: 40px;
+  display: flex;
+  justify-content: space-between; }
+  .footer .gray-flex a {
+    margin-right: 30px; }
+    .footer .gray-flex a:last-child {
+      margin-right: 0; }
+.footer .powered {
+  display: flex;
+  align-items: center; }
+.footer .txt {
+  text-align: center;
+  color: #868b93;
+  font-size: 16px;
+  line-height: 23px; }
+  .footer .txt a {
+    display: block;
+    color: #ffffff;
+    font-weight: bolder;
+    font-size: 21px;
+    margin: 0;
+    margin-right: 0 !important; }
+  .footer .txt .copyr {
+    font-size: 13px; }
+.footer .img-cont {
+  width: 45px;
+  margin-right: 15px;
+  display: flex;
+  align-items: center; }
+  .footer .img-cont img {
+    width: 100%;
+    display: block;
+    margin-bottom: 0; }
+.footer .left-footer-part {
+  width: 380px;
+  padding: 10px 15px; }
+.footer .right-footer-part {
+  flex-grow: 1;
+  padding-right: 15px; }
+
+.s-text {
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed; }
+  .s-text .tag-content {
+    padding: 0; }
+    .s-text .tag-content h2 {
+      text-transform: none; }
+    .s-text .tag-content p {
+      text-transform: none; }
 
 @media (min-width: 992px) {
   nav.navbar.bootsnav.navbar-fixed .logo-display {
     display: none; } }
 @media (max-width: 1200px) {
   .widget-title {
-    font-size: 23px; }
+    font-size: 22px; }
 
   .footer-widget {
-    padding: 1em 3%; } }
+    padding: 1em 3%; }
+
+  .footer .theme-bg .widget-title {
+    font-size: 22px; }
+  .footer .footer-widget p {
+    font-size: 18px; }
+  .footer .about-link {
+    font-size: 18px; }
+  .footer .left-footer-part {
+    width: 350px; }
+  .footer .gray-flex {
+    padding-left: 30px; }
+    .footer .gray-flex a {
+      width: 140px; }
+  .footer .img-cont {
+    width: 40px;
+    margin-right: 11px; }
+
+  .marker-app-download {
+    width: 140px; } }
 @media (max-width: 1100px) {
   nav.navbar.bootsnav ul.nav > li {
     padding: 4px 5px; }
@@ -1017,7 +1137,10 @@ ul.footer-navigation li {
     .detail-page .img-detail img {
       width: auto;
       height: auto;
-      max-height: 100%; } }
+      max-height: 100%; }
+
+  .footer .gray-footer-widget:last-child {
+    display: none; } }
 @media (max-width: 768px) {
   .footer .col-sm-6 {
     width: 50%;
@@ -1072,14 +1195,14 @@ ul.footer-navigation li {
       background: #FFFFFF;
       padding-left: 2px;
       padding-right: 2px; }
-    .app-bar .tab .fast-parking-list .small-listing-box {
+    .app-bar .tab .fast-parking-list .small-listing-box, .app-bar .tab .all-places-list .small-listing-box {
       padding: 4px 0;
       background: none;
       border-bottom: 1px solid #F2F6F7;
       font-family: 'Roboto', sans-serif; }
-      .app-bar .tab .fast-parking-list .small-listing-box:hover {
+      .app-bar .tab .fast-parking-list .small-listing-box:hover, .app-bar .tab .all-places-list .small-listing-box:hover {
         box-shadow: none; }
-    .app-bar .tab .fast-parking-list .small-list-img {
+    .app-bar .tab .fast-parking-list .small-list-img, .app-bar .tab .all-places-list .small-list-img {
       margin-right: 5px; }
     .app-bar .tab .bot-info span:after {
       margin-left: 8px;
@@ -1136,7 +1259,27 @@ ul.footer-navigation li {
     font-size: 37px; }
 
   .search-tab .filt-block-info {
-    padding-top: 5px; } }
+    padding-top: 5px; }
+
+  .footer .footer-text {
+    flex-direction: column; }
+  .footer .left-footer-part {
+    width: 100%; }
+  .footer .gray-footer-widget {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px; }
+    .footer .gray-footer-widget:last-child {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 0; }
+  .footer .app-download {
+    justify-content: center; }
+  .footer .gray-flex a {
+    margin-right: 20px; }
+  .footer .gray-flex {
+    flex-direction: column;
+    padding-left: 15px; } }
 @media (max-width: 680px) {
   nav.navbar.bootsnav ul.nav > li > a {
     padding: 10.5px 7px; } }
@@ -1200,9 +1343,6 @@ ul.footer-navigation li {
   .widget-title {
     display: none; }
 
-  .marker-app-download {
-    margin: 0 auto; }
-
   .theme-bg {
     padding-bottom: 0; }
 
@@ -1235,7 +1375,10 @@ ul.footer-navigation li {
   .detail-page .detail-wrapper-body {
     padding-top: 10px; }
   .detail-page .listing-address {
-    margin-bottom: 8px; } }
+    margin-bottom: 8px; }
+
+  .footer .footer-widget p {
+    font-size: 16px; } }
 @media (max-width: 480px) {
   .no-pd {
     flex-direction: column-reverse;
@@ -1303,15 +1446,15 @@ ul.footer-navigation li {
   .app-bar {
     width: calc( 100% - 10px );
     height: 365px; }
-    .app-bar .tab .fast-parking-list .small-list-img {
+    .app-bar .tab .fast-parking-list .small-list-img, .app-bar .tab .all-places-list .small-list-img {
       padding: 3px;
       max-width: 55px; }
-    .app-bar .tab .fast-parking-list .bot-info {
+    .app-bar .tab .fast-parking-list .bot-info, .app-bar .tab .all-places-list .bot-info {
       font-size: 14px;
       margin-top: -4px; }
-    .app-bar .tab .fast-parking-list .top-info {
+    .app-bar .tab .fast-parking-list .top-info, .app-bar .tab .all-places-list .top-info {
       font-size: 13px; }
-    .app-bar .tab .fast-parking-list .small-list-action {
+    .app-bar .tab .fast-parking-list .small-list-action, .app-bar .tab .all-places-list .small-list-action {
       margin-bottom: 5px; }
     .app-bar .tab .nav-tabs li a {
       font-size: 12px;

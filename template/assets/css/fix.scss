@@ -167,7 +167,7 @@ nav.navbar.bootsnav ul.nav>li>a {
     padding: 0;
     margin-bottom: 10px;
   }
-  .fast-parking-list {
+  .fast-parking-list, .all-places-list {
     height: 100%;
     overflow: auto;
     .small-listing-box {
@@ -208,9 +208,22 @@ nav.navbar.bootsnav ul.nav>li>a {
       padding-right: 14px;
     }
     .bot-info {
-      display: flex;
       font-size: 14px;
       font-family: Roboto;
+      margin-top: 3px;
+      td {
+        border-right: 1px solid #E5E5E5;
+        padding: 2px 10px;
+        text-align: center;
+        &:first-child {
+          padding-left: 0;
+          text-align: left;
+        }
+        &:last-child {
+          border-right: none;
+          padding-right: 0;
+        }
+      }
       span {
         &:last-child {
           &:after {
@@ -549,6 +562,12 @@ nav.navbar.bootsnav ul.nav>li>a {
 .listing-address {
   display: block;
   margin-bottom: 15px;
+  b {
+    &:before {
+      content: "\e693";
+      font-family: 'themify';
+    }
+  }
 }
 #detail-map {
   min-height: 350px;
@@ -583,8 +602,16 @@ nav.navbar.bootsnav ul.nav>li>a {
     span {
       font-weight: bold;
       display: inline-block;
-      width: 70px;
+      width: 170px;
       text-align: center;
+    }
+    .span {
+      width: auto;
+      display: inline;
+      font-weight: normal;
+      float: none;
+      margin: 0 4px;
+      font-size: 0.8em;
     }
     &.sunday {
       span {
@@ -1104,8 +1131,117 @@ ul.footer-navigation li {
   }
 }
 .footer {
+  .footer-text {
+    display: flex;
+  }
+  .theme-bg {
+    .widget-title {
+      margin-bottom: 5px;
+    }
+    .footer-widget {
+      text-align: center;
+    }
+  }
   .disabled {
     color: #4D5E75;
+  }
+  .footer-widget {
+    padding: 0;
+    p {
+      font-size: 20px;
+      margin-bottom: 0;
+    }
+  }
+  .gray-footer-widget {
+    width: auto;
+    .widget-title {
+      margin-bottom: 12px;
+    }
+    &:last-child {
+      display: flex;
+      padding-bottom: 10px;
+    }
+  }
+  .widget-title {
+    font-size: 24px;
+    margin: 0;
+  }
+  .about-link {
+    color: #FFFFFF;
+    font-size: 22px;
+    font-weight: bold;
+  }
+  .app-download {
+    display: flex;
+    .marker-app-download {
+      opacity: 0.4;
+    }
+  }
+  .gray-flex {
+    padding-top: 10px;
+    padding-left: 40px;
+    display: flex;
+    justify-content: space-between;
+    a {
+      margin-right: 30px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+  .powered {
+    display: flex;
+    align-items: center;
+  }
+  .txt {
+    text-align: center;
+    color: #868b93;
+    font-size: 16px;
+    line-height: 23px;
+    a {
+      display: block;
+      color: #ffffff;
+      font-weight: bolder;
+      font-size: 21px;
+      margin: 0;
+      margin-right: 0 !important;
+    }
+    .copyr {
+      font-size: 13px;
+    }
+  }
+  .img-cont {
+    width: 45px;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    img {
+      width: 100%;
+      display: block;
+      margin-bottom: 0;
+    }
+  }
+  .left-footer-part {
+    width: 380px;
+    padding: 10px 15px;
+  }
+  .right-footer-part {
+    flex-grow: 1;
+    padding-right: 15px;
+  }
+}
+.s-text {
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  .tag-content {
+    padding: 0;
+    h2 {
+      text-transform: none;
+    }
+    p {
+      text-transform: none;
+    }
   }
 }
 @media (min-width: 992px) {
@@ -1115,10 +1251,41 @@ ul.footer-navigation li {
 }
 @media (max-width: 1200px) {
   .widget-title {
-    font-size: 23px;
+    font-size: 22px;
   }
   .footer-widget {
     padding: 1em 3%;
+  }
+  .footer {
+    .theme-bg {
+      .widget-title {
+        font-size: 22px;
+      }
+    }
+    .footer-widget {
+      p {
+        font-size: 18px;
+      }
+    }
+    .about-link {
+      font-size: 18px;
+    }
+    .left-footer-part {
+      width: 350px;
+    }
+    .gray-flex {
+      padding-left: 30px;
+      a {
+        width: 140px;
+      }
+    }
+    .img-cont {
+      width: 40px;
+      margin-right: 11px;
+    }
+  }
+  .marker-app-download {
+    width: 140px;
   }
 }
 @media (max-width: 1100px) {
@@ -1301,7 +1468,13 @@ ul.footer-navigation li {
       }
     }
   }
-
+  .footer {
+    .gray-footer-widget {
+      &:last-child {
+        display: none;
+      }
+    }
+  }
 }
 @media (max-width: 768px) {
   .footer {
@@ -1378,7 +1551,7 @@ ul.footer-navigation li {
         padding-left: 2px;
         padding-right: 2px;
       }
-      .fast-parking-list {
+      .fast-parking-list, .all-places-list {
         .small-listing-box {
           padding: 4px 0;
           background: none;
@@ -1471,6 +1644,37 @@ ul.footer-navigation li {
     .filt-block-info {
       padding-top: 5px;
     }
+  }
+  .footer {
+    .footer-text {
+      flex-direction: column;
+    }
+    .left-footer-part {
+      width: 100%;
+    }
+    .gray-footer-widget {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 10px;
+      &:last-child {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 0;
+      }
+    }
+    .app-download {
+      justify-content: center;
+    }
+    .gray-flex {
+      a {
+        margin-right: 20px;
+      }
+    }
+    .gray-flex {
+      flex-direction: column;
+      padding-left: 15px;
+    }
+
   }
 }
 
@@ -1565,9 +1769,6 @@ ul.footer-navigation li {
   .widget-title {
     display: none;
   }
-  .marker-app-download {
-    margin: 0 auto;
-  }
   .theme-bg {
     padding-bottom: 0;
   }
@@ -1625,6 +1826,13 @@ ul.footer-navigation li {
     }
     .listing-address {
       margin-bottom: 8px;
+    }
+  }
+  .footer {
+    .footer-widget {
+      p {
+        font-size: 16px;
+      }
     }
   }
 }
@@ -1730,7 +1938,7 @@ ul.footer-navigation li {
   .app-bar {
     width: calc( 100% - 10px );
     height: 365px;
-    .tab .fast-parking-list {
+    .tab .fast-parking-list, .tab .all-places-list {
       .small-list-img {
         padding: 3px;
         max-width: 55px;

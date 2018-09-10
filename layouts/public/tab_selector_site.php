@@ -8,6 +8,10 @@
 ?>
 
 <?php
+include_once ROOT . "/localization/localization.php";
+
+?>
+<?php
     function rightTimeFormat($time){
         $arr = explode(":", $time);
         return $arr[0]; //Возвращает часы
@@ -16,10 +20,10 @@
     function rightDistance($dist) {
         $dist = floatval($dist);
         if($dist > 1){
-            return "~<b>$dist</b> km";
+            return "~<b>$dist</b> ";
         } else {
             $dist = $dist * 1000;
-            return "~<b>$dist</b> m";
+            return "~<b>$dist</b> ";
         }
     }
 
@@ -37,7 +41,7 @@
 <!-- Switcher -->
 <button class="w3-button w3-teal w3-xlarge w3-right js-fast-ajax ripple" onclick="openRightMenu()"><i class="spin theme-cl fa fa-cog" aria-hidden="true"></i></button>
 <div class="w3-sidebar w3-bar-block w3-card-2 w3-animate-right app-bar" style="display:none;right:0;" id="rightMenu">
-    <button onclick="closeRightMenu()" class="w3-bar-item w3-button w3-large theme-bg">Close &times;</button>
+    <button onclick="closeRightMenu()" class="w3-bar-item w3-button w3-large theme-bg"> <?= $lang[$language]['close'] ?> &times;</button>
     <div class="tab style-2" role="tabpanel">
 
         <div class="tab-content tabs">
@@ -65,6 +69,9 @@
                                 case 'FORBIDDEN_PAY':
                                     echo '<img src='. TEMPLATE . 'assets/img/thumb5.png >';
                                     break;
+                                case 'FORBIDDEN_YELLOW_PAY':
+                                    echo '<img src='. TEMPLATE . 'assets/img/thumb6.png >';
+                                    break;
                             }
                             ?>
                         </div>
@@ -74,14 +81,17 @@
                                     <?= rightInterval($place['time_interval']) ?>
                                 </span>
                                 <span>
-                                    Distance: <?= rightDistance($place['geodist_pt']) ?>
+                                    <?= $lang[$language]['distance'] ?>:
+                                    <?= rightDistance($place['geodist_pt']) ?>
                                 </span>
                             </div>
-                            <div class="bot-info">
-                                <span><?= rightTimeFormat($place['weekday_from']) ?> - <?= rightTimeFormat($place['weekday_to']) ?></span>
-                                <span>(<?= rightTimeFormat($place['saturday_from']) ?> - <?= rightTimeFormat($place['saturday_to']) ?>)</span>
-                                <span class="holiday"><?= rightTimeFormat($place['sunday_from']) ?> - <?= rightTimeFormat($place['sunday_to']) ?></span>
-                            </div>
+                            <table width="90%" class="bot-info">
+                                <tr>
+                                    <td width="30%"><?= rightTimeFormat($place['weekday_from']) ?> - <?= rightTimeFormat($place['weekday_to']) ?></td>
+                                    <td width="40%">(<?= rightTimeFormat($place['saturday_from']) ?> - <?= rightTimeFormat($place['saturday_to']) ?>)</td>
+                                    <td width="30%" class="holiday"><?= rightTimeFormat($place['sunday_from']) ?> - <?= rightTimeFormat($place['sunday_to']) ?></td>
+                                </tr>
+                            </table>
                         </div>
                         <div class="small-list-action">
                             <?php
@@ -91,7 +101,7 @@
                                 $href = $language . '/detail/' . $place['id'];
                             }
                             ?>
-                            <a href="<?= $href ?>" class="light-gray-btn btn-square js-nice-transition" data-placement="top" data-toggle="tooltip" title="" data-original-title="Edit Item">
+                            <a href="/<?= $href ?>" hreflang="<?= $language ?>" class="light-gray-btn btn-square js-nice-transition" data-placement="top" data-toggle="tooltip" title="" data-original-title="Edit Item">
                                 <i class="fa fa-info-circle" aria-hidden="true"></i>
                             </a>
                         </div>
@@ -111,19 +121,19 @@
                                     <i class="fa fa-calendar" aria-hidden="true"></i>
                                 </div>
                                 <div class="filt-block-info">
-                                    <div class="label">Day:</div>
+                                    <div class="label"><?= $lang[$language]['day'] ?>:</div>
                                     <div class="bot-row">
                                         <label>
                                             <input data-styler type="checkbox" name="MONFRY" checked="checked">
-                                            Mon-Fry
+                                            <?= $lang[$language]['mon-fry'] ?>
                                         </label>
                                         <label>
                                             <input data-styler type="checkbox" name="SAT">
-                                            Sat
+                                            <?= $lang[$language]['sat'] ?>
                                         </label>
                                         <label>
                                             <input data-styler type="checkbox" name="SUN" checked="checked">
-                                            Sun
+                                            <?= $lang[$language]['sun'] ?>
                                         </label>
                                     </div>
                                 </div>
@@ -136,17 +146,17 @@
                                     <i class="fa fa-clock-o" aria-hidden="true"></i>
                                 </div>
                                 <div class="filt-block-info">
-                                    <div class="label">Time:</div>
+                                    <div class="label"><?= $lang[$language]['time'] ?>:</div>
                                     <div class="bot-row">
                                         <div class="group">
                                             <div class="span">
-                                                from
+                                                <?= $lang[$language]['from_time'] ?>
                                             </div>
                                             <input data-timepicker value="00:00" type="text" name="filterFrom">
                                         </div>
                                         <div class="group">
-                                            <div class="span">to</div>
-                                            <input data-timepicker value="23:59" type="text" name="filterTo">
+                                            <div class="span"><?= $lang[$language]['to'] ?></div>
+                                            <input data-timepicker value="24:00" type="text" name="filterTo">
                                         </div>
                                     </div>
                                 </div>
@@ -159,10 +169,10 @@
                                     <i class="fa fa-hourglass-half" aria-hidden="true"></i>
                                 </div>
                                 <div class="filt-block-info slider-block-info">
-                                    <div class="label">Hours:</div>
+                                    <div class="label"><?= $lang[$language]['hours'] ?>:</div>
                                     <div class="bot">
                                         <div class="span">
-                                            from <b class="js-filter-time-from-value">30m</b>
+                                            <?= $lang[$language]['from'] ?> <b class="js-filter-time-from-value">30m</b>
                                         </div>
                                         <div id="js-interval-slider"></div>
                                     </div>
@@ -184,19 +194,19 @@
                                     <i class="fa fa-calendar" aria-hidden="true"></i>
                                 </div>
                                 <div class="filt-block-info">
-                                    <div class="label">Day:</div>
+                                    <div class="label"><?= $lang[$language]['day'] ?>:</div>
                                     <div class="bot-row">
                                         <label>
-                                            <input type="checkbox" data-styler name="MONFRY">
-                                            Mon-Fry
+                                            <input type="checkbox" data-styler name="MONFRY" checked="checked">
+                                            <?= $lang[$language]['mon-fry'] ?>
                                         </label>
                                         <label>
-                                            <input type="checkbox" data-styler name="SAT">
-                                            Sat
+                                            <input type="checkbox" data-styler name="SAT" checked="checked">
+                                            <?= $lang[$language]['sat'] ?>
                                         </label>
                                         <label>
-                                            <input type="checkbox" data-styler name="SUN">
-                                            Sun
+                                            <input type="checkbox" data-styler name="SUN" checked="checked">
+                                            <?= $lang[$language]['sun'] ?>
                                         </label>
                                     </div>
                                 </div>
@@ -208,17 +218,17 @@
                                     <i class="fa fa-clock-o" aria-hidden="true"></i>
                                 </div>
                                 <div class="filt-block-info">
-                                    <div class="label">Time:</div>
+                                    <div class="label"><?= $lang[$language]['time'] ?>:</div>
                                     <div class="bot-row">
                                         <div class="group">
                                             <div class="span">
-                                                from
+                                                <?= $lang[$language]['from_time'] ?>
                                             </div>
                                             <input data-timepicker value="00:00" type="text" name="filterFrom">
                                         </div>
                                         <div class="group">
-                                            <div class="span">to</div>
-                                            <input data-timepicker value="23:59" type="text" name="filterTo">
+                                            <div class="span"><?= $lang[$language]['to'] ?></div>
+                                            <input data-timepicker value="24:00" type="text" name="filterTo">
                                         </div>
                                     </div>
                                 </div>
@@ -231,10 +241,10 @@
                                     <i class="fa fa-hourglass-half" aria-hidden="true"></i>
                                 </div>
                                 <div class="filt-block-info slider-block-info">
-                                    <div class="label">Hours:</div>
+                                    <div class="label"><?= $lang[$language]['hours'] ?>:</div>
                                     <div class="bot">
                                         <div class="span">
-                                            from <b class="js-search-time-from-value">30m</b>
+                                            <?= $lang[$language]['from'] ?> <b class="js-search-time-from-value">30m</b>
                                         </div>
                                         <div id="js-search-interval-slider"></div>
                                     </div>
@@ -249,10 +259,10 @@
                                     <i class="fa fa-car" aria-hidden="true"></i>
                                 </div>
                                 <div class="filt-block-info slider-block-info">
-                                    <div class="label">Distance:</div>
+                                    <div class="label"><?= $lang[$language]['distance'] ?>:</div>
                                     <div class="bot">
                                         <div class="span">
-                                            from <b class="js-search-distance-value">2</b><b>km</b>
+                                            <?= $lang[$language]['from'] ?> <b class="js-search-distance-value">2</b><b><?= $lang[$language]['km'] ?></b>
                                         </div>
                                         <div id="js-search-distance-slider"></div>
                                     </div>
@@ -269,6 +279,64 @@
                 <div class="search-result-list"></div>
             </div>
 
+            <div role="tabpanel" class="tab-pane tab-sel" id="all-tab-places" style="display: none !important;">
+                <div class="all-places-list">
+
+                    <? foreach ($allPlacesForSEO as $place) :?>
+
+                    <div data-id=<?= $place['id'] ?> class="small-listing-box light-gray js-one-place">
+                    <div class="small-list-img">
+                        <?
+                        switch ($place['kind_of_place']) {
+                            case 'FREE':
+                                echo '<img src='. TEMPLATE . 'assets/img/thumb1.png >';
+                                break;
+                            case 'PAY':
+                                echo '<img src='. TEMPLATE . 'assets/img/thumb2.png >';
+                                break;
+                            case 'FORBIDDEN':
+                                echo '<img src='. TEMPLATE . 'assets/img/thumb3.png >';
+                                break;
+                            case 'FORBIDDEN_YELLOW':
+                                echo '<img src='. TEMPLATE . 'assets/img/thumb4.png >';
+                                break;
+                            case 'FORBIDDEN_PAY':
+                                echo '<img src='. TEMPLATE . 'assets/img/thumb5.png >';
+                                break;
+                            case 'FORBIDDEN_YELLOW_PAY':
+                                echo '<img src='. TEMPLATE . 'assets/img/thumb6.png >';
+                                break;
+                        }
+                        ?>
+                    </div>
+                    <div class="snall-list-info">
+                        <div class="top-info">
+                                <span>
+                                    <?= rightInterval($place['time_interval']) ?>
+                                </span>
+                            <span>
+                                <?= $place['address_'.$language] ?>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="small-list-action">
+                        <?php
+                        if( $place['friendly_url'] != '' ){
+                            $href = $language . '/detail/' . $place['friendly_url'];
+                        } else {
+                            $href = $language . '/detail/' . $place['id'];
+                        }
+                        ?>
+                        <a href="/<?= $href ?>" hreflang="<?= $language ?>" class="light-gray-btn btn-square js-nice-transition" data-placement="top" data-toggle="tooltip" title="" data-original-title="Edit Item">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <? endforeach; ?>
+                </div>
+            </div>
+
         </div>
 
         <div class="nav nav-tabs">
@@ -276,19 +344,19 @@
                 <li role="presentation" class="active js-tab-sel ripple" data-tab="fast-parking-tab" data-act="FAST">
                     <a href="javascript:void(0);">
                         <i class="fa fa-rocket" aria-hidden="true"></i>
-                        Fast parking
+                        <?= $lang[$language]['fast_parking'] ?>
                     </a>
                 </li>
                 <li role="presentation" class="js-tab-sel ripple" data-tab="filter-tab" data-act="FILTER">
                     <a href="javascript:void(0);">
                         <i class="fa fa-cogs" aria-hidden="true"></i>
-                        Filter
+                        <?= $lang[$language]['filter'] ?>
                     </a>
                 </li>
                 <li role="presentation" class="js-tab-sel ripple" data-tab="search-tab" data-act="SEARCH">
                     <a href="javascript:void(0);">
                         <i class="fa fa-search" aria-hidden="true"></i>
-                        Search
+                        <?= $lang[$language]['search'] ?>
                     </a>
                 </li>
 
@@ -298,7 +366,16 @@
                     style="display: none !important;">
                     <a href="javascript:void(0);">
                         <i class="fa fa-search" aria-hidden="true"></i>
-                        Search result
+                        <?= $lang[$language]['search_result'] ?>
+                    </a>
+                </li>
+
+                <li role="presentation" class="js-tab-sel"
+                    data-tab="all-tab-places"
+                    data-act="ALL_PLACES"
+                    style="display: none !important;">
+                    <a href="javascript:void(0);">
+                        All
                     </a>
                 </li>
 
@@ -308,19 +385,19 @@
     <button class="js-red-btn ripple" data-active="FAST">
         <div class="fast-parking-tab btn-contain">
             <i class="fa fa-refresh" aria-hidden="true"></i>
-            Refresh
+            <?= $lang[$language]['refresh'] ?>
         </div>
         <div class="filter-tab btn-contain" style="display: none;">
             <i class="fa fa-check-square-o" aria-hidden="true"></i>
-            Apply filter
+            <?= $lang[$language]['apply_filter'] ?>
         </div>
         <div class="search-tab btn-contain" style="display: none;">
             <i class="fa fa-search" aria-hidden="true"></i>
-            Search
+            <?= $lang[$language]['search'] ?>
         </div>
         <div class="search-tab-result btn-contain" style="display: none;">
             <i class="fa fa-sign-out" aria-hidden="true"></i>
-            New Search
+            <?= $lang[$language]['new_search'] ?>
         </div>
     </button>
 </div>
@@ -331,7 +408,11 @@
 
 <script>
 
-
+    var lang = {
+      'min': '<?= $lang[$language]['min'] ?>',
+      'h': '<?= $lang[$language]['h'] ?>',
+      'km': '<?= $lang[$language]['km'] ?>'
+    };
 
     $('.js-tab-sel').on('click', function(){
         var id = $(this).attr('data-tab');
@@ -362,14 +443,14 @@
     intervalSlider.noUiSlider.on('update', function(value){
         var index = parseInt(value[0]);
         var convertObj = {
-            "0":"15min",
-            "1":"30min",
-            "2":"1h",
-            "3":"2h",
-            "4":"3h",
-            "5":"5h",
-            "6":"12h",
-            "7":"24h"
+            "0":"15" + lang.min,
+            "1":"30" + lang.min,
+            "2":"1" + lang.h,
+            "3":"2" + lang.h,
+            "4":"3" + lang.h,
+            "5":"5" + lang.h,
+            "6":"12" + lang.h,
+            "7":"24" + lang.h
         };
 
         $('.js-filter-time-from').val( convertObj[index] );
@@ -390,14 +471,14 @@
     intervalSearchSlider.noUiSlider.on('update', function(value){
         var index = parseInt(value[0]);
         var convertObj = {
-            "0":"15min",
-            "1":"30min",
-            "2":"1h",
-            "3":"2h",
-            "4":"3h",
-            "5":"5h",
-            "6":"12h",
-            "7":"24h"
+            "0":"15" + lang.min,
+            "1":"30" + lang.min,
+            "2":"1" + lang.h,
+            "3":"2" + lang.h,
+            "4":"3" + lang.h,
+            "5":"5" + lang.h,
+            "6":"12" + lang.h,
+            "7":"24" + lang.h
         };
 
         $('.js-search-time-from-value').text( convertObj[index] );

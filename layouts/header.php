@@ -17,7 +17,7 @@
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="<?= TEMPLATE ?>css/demo.css" rel="stylesheet" />
     <link href="<?= TEMPLATE ?>css/style.css" rel="stylesheet" />
-    <link href="<?= TEMPLATE ?>assets/css/fix.css" rel="stylesheet" />
+    <link href="<?= TEMPLATE ?>assets/css/fix.min.css" rel="stylesheet" />
     <script src="<?= TEMPLATE ?>js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
     <script src="<?= TEMPLATE ?>js/core/popper.min.js" type="text/javascript"></script>
     <script src="<?= TEMPLATE ?>js/core/bootstrap.min.js" type="text/javascript"></script>

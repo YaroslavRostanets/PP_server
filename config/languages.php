@@ -15,8 +15,12 @@ return array(
         'img' => 'assets/img/ru.png',
         'title' => 'RU'
     ],
+    'uk' => [
+        'img' => 'assets/img/uk.jpg',
+        'title' => 'UK'
+    ],
     'fi' => [
         'img' => 'assets/img/fi.png',
         'title' => 'FI'
-    ],
+    ]
 );

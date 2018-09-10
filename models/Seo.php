@@ -50,6 +50,9 @@ class Seo {
                 title_en = :title_en,
                 description_en = :description_en,
                 keywords_en = :keywords_en,
+                title_uk = :title_uk,
+                description_uk = :description_uk,
+                keywords_uk = :keywords_uk,
                 title_fi = :title_fi,
                 description_fi = :description_fi,
                 keywords_fi = :keywords_fi,
@@ -68,6 +71,10 @@ class Seo {
         $result->bindParam(':title_en', $_POST['title_en'], PDO::PARAM_STR);
         $result->bindParam(':description_en', $_POST['description_en'], PDO::PARAM_STR);
         $result->bindParam(':keywords_en', $_POST['keywords_en'], PDO::PARAM_STR);
+
+        $result->bindParam(':title_uk', $_POST['title_uk'], PDO::PARAM_STR);
+        $result->bindParam(':description_uk', $_POST['description_uk'], PDO::PARAM_STR);
+        $result->bindParam(':keywords_uk', $_POST['keywords_uk'], PDO::PARAM_STR);
 
         $result->bindParam(':title_fi', $_POST['title_fi'], PDO::PARAM_STR);
         $result->bindParam(':description_fi', $_POST['description_fi'], PDO::PARAM_STR);

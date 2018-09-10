@@ -55,6 +55,9 @@ function rightInterval($min) {
             case 'FORBIDDEN_PAY':
                 echo '<img src='. TEMPLATE . 'assets/img/thumb5.png >';
                 break;
+            case 'FORBIDDEN_YELLOW_PAY':
+                echo '<img src='. TEMPLATE . 'assets/img/thumb6.png >';
+                break;
         }
         ?>
     </div>
@@ -67,11 +70,13 @@ function rightInterval($min) {
                                     Distance: <?= rightDistance($place['geodist_pt']) ?>
                                 </span>
         </div>
-        <div class="bot-info">
-            <span><?= rightTimeFormat($place['weekday_from']) ?> - <?= rightTimeFormat($place['weekday_to']) ?></span>
-            <span>(<?= rightTimeFormat($place['saturday_from']) ?> - <?= rightTimeFormat($place['saturday_to']) ?>)</span>
-            <span class="holiday"><?= rightTimeFormat($place['sunday_from']) ?> - <?= rightTimeFormat($place['sunday_to']) ?></span>
-        </div>
+        <table width="90%" class="bot-info">
+            <tr>
+                <td width="30%"><?= rightTimeFormat($place['weekday_from']) ?> - <?= rightTimeFormat($place['weekday_to']) ?></td>
+                <td width="40%">(<?= rightTimeFormat($place['saturday_from']) ?> - <?= rightTimeFormat($place['saturday_to']) ?>)</td>
+                <td width="30%" class="holiday"><?= rightTimeFormat($place['sunday_from']) ?> - <?= rightTimeFormat($place['sunday_to']) ?></td>
+            </tr>
+        </table>
     </div>
     <div class="small-list-action">
         <?php
@@ -81,7 +86,7 @@ function rightInterval($min) {
                 $href = $context['language'] . '/detail/' . $place['id'];
             }
         ?>
-        <a href="<?= $href ?>" class="light-gray-btn btn-square js-nice-transition"
+        <a href="/<?= $href ?>" hreflang="<?= $language ?>" class="light-gray-btn btn-square js-nice-transition"
            data-placement="top"
            data-toggle="tooltip"
            title=""

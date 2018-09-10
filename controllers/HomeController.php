@@ -29,6 +29,8 @@ class HomeController {
 
         $isHomePage = TRUE;
 
+        $allPlacesForSEO = ParkPlace::getAllPlaces();
+
         require_once ROOT."/views/site/index.php";
         return true;
     }

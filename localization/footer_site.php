@@ -33,6 +33,19 @@ $lang = [
         'application' => 'ПРИЛОЖЕНИЕ',
         'navigation' => 'Навигация'
     ],
+    'uk' => [
+        'get_in_touch' => "Зв'язатись з нами",
+        'call' => 'Тел',
+        'address' => 'Київ, вул. Ярославів вал, 1',
+        'home' => 'Головна',
+        'about' => 'Про нас',
+        'favorites' => 'Вибране',
+        'add_place' => 'Додати парковку',
+        'sign_in' => 'Авторизуватись',
+        'connect_us' => 'Ми в соцмережах',
+        'application' => 'ДОДАТОК',
+        'navigation' => 'Навігація'
+    ],
     'fi' => [
         'get_in_touch' => 'GET TO TOUCH',
         'call' => 'puhelinnumero',

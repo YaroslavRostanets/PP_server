@@ -1,0 +1,9 @@
+
+User-agent: *
+Disallow: 
+Disallow: ru/profile
+Disallow: en/profile
+Disallow: fi/profile
+Disallow: uk/profile
+Disallow: /profile
+Sitemap: https://park-panda.com/sitemap.xml/

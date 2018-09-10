@@ -82,6 +82,9 @@ class AdminController {
 
         $currentIdArr = ParkPlace::getCurrentIdPlace();
         $currentId = $currentIdArr[0] + 1;
+
+        $previous = ParkPlace::getPlaceById( $currentIdArr[0] );
+
         if( isset($_POST['submit']) ){
             copy(SRC_TMP_PLACES . $_POST['photo_url'], PLACES . $_POST['photo_url']);
             clearDirectory(SRC_TMP_PLACES);
@@ -89,6 +92,9 @@ class AdminController {
             $friendly_url = mb_strtolower($_POST['friendly_url']);
             $friendly_url = str_replace(' ','-',$friendly_url);
             $friendly_url = str_replace("'","",$friendly_url);
+            $friendly_url = str_replace('ä','a',$friendly_url);
+            $friendly_url = str_replace('å','a',$friendly_url);
+            $friendly_url = str_replace('ö','o',$friendly_url);
             $friendly_url = urlencode ( $friendly_url );
 
             $result = ParkPlace::addNewParkPlace(
@@ -357,21 +363,25 @@ class AdminController {
         return TRUE;
     }
 
-    public function ActionRemoveoUser(){
-        /*if(isset($_GET['id'])){
+    public function actionRemoveuser(){
+        if(isset($_GET['id'])){
             $id = $_GET['id'];
-            $place = OfferPlaces::getOfferPlaceById($id);
-            $photo_path_array = explode("/",$place['photo_url']);
+            $user = User::getUserById($id);
+            $photo_path_array = explode("/",$user['picture']);
+
+            pri($photo_path_array);
 
             $img_name = array_pop($photo_path_array);
-            unlink( OFFER_PLACES . $img_name );
+            unlink( AVATARS . $img_name );
 
-            $result = OfferPlaces::removeOfferPlace($id);
+            $result = User::removeUserbyId($id);
 
+            pri($result);
+            echo $result;
             if($result){
                 header("Location: ".$_SERVER['HTTP_REFERER']);
             }
-        }*/
+        }
     }
 
 }

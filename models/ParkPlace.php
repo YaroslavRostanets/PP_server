@@ -38,7 +38,8 @@ class ParkPlace {
               address_ru,
               address_uk,
               X(coordinates), 
-              Y(coordinates)
+              Y(coordinates),
+              hasnt_table
               FROM parking_place WHERE id=$id";
 
         $result = $db->prepare($sql);
@@ -77,7 +78,8 @@ class ParkPlace {
                   address_ru,
                   address_uk,
                   X(coordinates), 
-                  Y(coordinates)
+                  Y(coordinates),
+                  hasnt_table
               FROM parking_place WHERE friendly_url='$url';";
 
         $result = $db->prepare($sql);
@@ -110,9 +112,23 @@ class ParkPlace {
         $offset = self::PLACES_ON_PAGE * (--$page);
 
         $db = Db::getConnection();
-        $sql = "SELECT *, X(coordinates), Y(coordinates) FROM parking_place LIMIT " . self::PLACES_ON_PAGE . " OFFSET $offset";
+        $sql = "SELECT *, X(coordinates), Y(coordinates) FROM parking_place ORDER BY id LIMIT " . self::PLACES_ON_PAGE . " OFFSET $offset";
         $result = $db->prepare($sql);
         $result->bindParam(':page', $page, PDO::PARAM_INT);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $result->execute();
+        $arrResult = array();
+        while($row = $result->fetch()){
+            $arrResult[] = $row;
+        }
+
+        return $arrResult;
+    }
+
+    public static function getAllPlaces() {
+        $db = Db::getConnection();
+        $sql = "SELECT * FROM parking_place";
+        $result = $db->prepare($sql);
         $result->setFetchMode(PDO::FETCH_ASSOC);
         $result->execute();
         $arrResult = array();
