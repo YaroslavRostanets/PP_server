@@ -209,9 +209,9 @@ function filterFunc() {
     var lng = sessionStorage.getItem('lng');
 
     $('.filter-form').find(':checkbox:not(:checked)').attr('value', '0').prop('checked', true);
-    var values = $('.filter-form').serialize();
-    values = values.replace(/=on/g, "=true").replace(/=0/, "=false");
 
+    var values = $('.filter-form').serialize();
+    values = values.replace(/=on/g, "=true").replace(/=0&/, "=false&");
     $.ajax({
         url: "/ajax?filter&lat=" + lat + '&lng=' + lng,
         type: 'GET',
@@ -228,9 +228,6 @@ function filterFunc() {
             closeRightMenu();
         }
     });
-
-    console.log(values);
-
 
 }
 

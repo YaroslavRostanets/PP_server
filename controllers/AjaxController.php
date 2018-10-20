@@ -39,12 +39,19 @@ class AjaxController {
         }
 
         if(isset($_GET['filter'])){
+            pri('___');
             $MONFRY = $_GET['MONFRY'];
             $SAT = $_GET['SAT'];
             $SUN = $_GET['SUN'];
             $filterFrom = $_GET['filterFrom'];
             $filterTo = $_GET['filterTo'];
             $filterTimeFrom = intervalToSec($_GET['filterTimeFrom']);
+            pri($_GET['MONFRY']);
+            pri($_GET['SAT']);
+            pri($_GET['SUN']);
+            pri($filterFrom);
+            pri($filterTo);
+            pri($filterTimeFrom);
             $resultArray = Api::getPlacesByFilter(
                 $_GET['lat'],
                 $_GET['lng'],
