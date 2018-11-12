@@ -66,12 +66,6 @@ include_once ROOT . "/localization/localization.php";
                                 case 'FORBIDDEN_YELLOW':
                                     echo '<img src='. TEMPLATE . 'assets/img/thumb4.png >';
                                     break;
-                                case 'FORBIDDEN_PAY':
-                                    echo '<img src='. TEMPLATE . 'assets/img/thumb5.png >';
-                                    break;
-                                case 'FORBIDDEN_YELLOW_PAY':
-                                    echo '<img src='. TEMPLATE . 'assets/img/thumb6.png >';
-                                    break;
                             }
                             ?>
                         </div>
@@ -111,80 +105,6 @@ include_once ROOT . "/localization/localization.php";
 
                 </div>
             </div>
-            <div role="tabpanel" class="tab-pane tab-sel" id="filter-tab">
-                <form class="filter-form">
-                    <div class="filter-tab">
-
-                        <div class="one-row">
-                            <div class="one-row-in">
-                                <div class="icon-cont">
-                                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                                </div>
-                                <div class="filt-block-info">
-                                    <div class="label"><?= $lang[$language]['day'] ?>:</div>
-                                    <div class="bot-row">
-                                        <label>
-                                            <input data-styler type="checkbox" name="MONFRY" checked="checked">
-                                            <?= $lang[$language]['mon-fry'] ?>
-                                        </label>
-                                        <label>
-                                            <input data-styler type="checkbox" name="SAT">
-                                            <?= $lang[$language]['sat'] ?>
-                                        </label>
-                                        <label>
-                                            <input data-styler type="checkbox" name="SUN" checked="checked">
-                                            <?= $lang[$language]['sun'] ?>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="one-row">
-                            <div class="one-row-in">
-                                <div class="icon-cont">
-                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                </div>
-                                <div class="filt-block-info">
-                                    <div class="label"><?= $lang[$language]['time'] ?>:</div>
-                                    <div class="bot-row">
-                                        <div class="group">
-                                            <div class="span">
-                                                <?= $lang[$language]['from_time'] ?>
-                                            </div>
-                                            <input data-timepicker value="00:00" type="text" name="filterFrom">
-                                        </div>
-                                        <div class="group">
-                                            <div class="span"><?= $lang[$language]['to'] ?></div>
-                                            <input data-timepicker value="24:00" type="text" name="filterTo">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="one-row">
-                            <div class="one-row-in">
-                                <div class="icon-cont">
-                                    <i class="fa fa-hourglass-half" aria-hidden="true"></i>
-                                </div>
-                                <div class="filt-block-info slider-block-info">
-                                    <div class="label"><?= $lang[$language]['hours'] ?>:</div>
-                                    <div class="bot">
-                                        <div class="span">
-                                            <?= $lang[$language]['from'] ?> <b class="js-filter-time-from-value">30m</b>
-                                        </div>
-                                        <div id="js-interval-slider"></div>
-                                    </div>
-                                    <input type="text" class="js-filter-time-from" name="filterTimeFrom">
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </form>
-
-            </div>
             <div role="tabpanel" class="tab-pane tab-sel" id="search-tab">
                 <form class="search-tab-form">
                     <div class="search-tab">
@@ -218,17 +138,12 @@ include_once ROOT . "/localization/localization.php";
                                     <i class="fa fa-clock-o" aria-hidden="true"></i>
                                 </div>
                                 <div class="filt-block-info">
-                                    <div class="label"><?= $lang[$language]['time'] ?>:</div>
+                                    <div class="label">
+                                        Когда поставить машину?
+                                    </div>
                                     <div class="bot-row">
                                         <div class="group">
-                                            <div class="span">
-                                                <?= $lang[$language]['from_time'] ?>
-                                            </div>
                                             <input data-timepicker value="00:00" type="text" name="filterFrom">
-                                        </div>
-                                        <div class="group">
-                                            <div class="span"><?= $lang[$language]['to'] ?></div>
-                                            <input data-timepicker value="24:00" type="text" name="filterTo">
                                         </div>
                                     </div>
                                 </div>
@@ -241,10 +156,12 @@ include_once ROOT . "/localization/localization.php";
                                     <i class="fa fa-hourglass-half" aria-hidden="true"></i>
                                 </div>
                                 <div class="filt-block-info slider-block-info">
-                                    <div class="label"><?= $lang[$language]['hours'] ?>:</div>
+                                    <div class="label">
+                                        Сколько стоять?
+                                    </div>
                                     <div class="bot">
                                         <div class="span">
-                                            <?= $lang[$language]['from'] ?> <b class="js-search-time-from-value">30m</b>
+                                            <b class="js-search-time-from-value">30m</b>
                                         </div>
                                         <div id="js-search-interval-slider"></div>
                                     </div>
@@ -300,12 +217,6 @@ include_once ROOT . "/localization/localization.php";
                             case 'FORBIDDEN_YELLOW':
                                 echo '<img src='. TEMPLATE . 'assets/img/thumb4.png >';
                                 break;
-                            case 'FORBIDDEN_PAY':
-                                echo '<img src='. TEMPLATE . 'assets/img/thumb5.png >';
-                                break;
-                            case 'FORBIDDEN_YELLOW_PAY':
-                                echo '<img src='. TEMPLATE . 'assets/img/thumb6.png >';
-                                break;
                         }
                         ?>
                     </div>
@@ -347,12 +258,7 @@ include_once ROOT . "/localization/localization.php";
                         <?= $lang[$language]['fast_parking'] ?>
                     </a>
                 </li>
-                <li role="presentation" class="js-tab-sel ripple" data-tab="filter-tab" data-act="FILTER">
-                    <a href="javascript:void(0);">
-                        <i class="fa fa-cogs" aria-hidden="true"></i>
-                        <?= $lang[$language]['filter'] ?>
-                    </a>
-                </li>
+
                 <li role="presentation" class="js-tab-sel ripple" data-tab="search-tab" data-act="SEARCH">
                     <a href="javascript:void(0);">
                         <i class="fa fa-search" aria-hidden="true"></i>
@@ -386,10 +292,6 @@ include_once ROOT . "/localization/localization.php";
         <div class="fast-parking-tab btn-contain">
             <i class="fa fa-refresh" aria-hidden="true"></i>
             <?= $lang[$language]['refresh'] ?>
-        </div>
-        <div class="filter-tab btn-contain" style="display: none;">
-            <i class="fa fa-check-square-o" aria-hidden="true"></i>
-            <?= $lang[$language]['apply_filter'] ?>
         </div>
         <div class="search-tab btn-contain" style="display: none;">
             <i class="fa fa-search" aria-hidden="true"></i>
@@ -428,35 +330,6 @@ include_once ROOT . "/localization/localization.php";
     });
 
 
-
-    var intervalSlider = document.getElementById('js-interval-slider');
-
-    noUiSlider.create(intervalSlider, {
-        start: 0,
-        step: 1,
-        range: {
-            'min': 0,
-            'max': 7
-        }
-    });
-
-    intervalSlider.noUiSlider.on('update', function(value){
-        var index = parseInt(value[0]);
-        var convertObj = {
-            "0":"15" + lang.min,
-            "1":"30" + lang.min,
-            "2":"1" + lang.h,
-            "3":"2" + lang.h,
-            "4":"3" + lang.h,
-            "5":"5" + lang.h,
-            "6":"12" + lang.h,
-            "7":"24" + lang.h
-        };
-
-        $('.js-filter-time-from').val( convertObj[index] );
-        $('.js-filter-time-from-value').text(convertObj[index]);
-    });
-
     var intervalSearchSlider = document.getElementById('js-search-interval-slider');
 
     noUiSlider.create(intervalSearchSlider, {
@@ -471,17 +344,22 @@ include_once ROOT . "/localization/localization.php";
     intervalSearchSlider.noUiSlider.on('update', function(value){
         var index = parseInt(value[0]);
         var convertObj = {
-            "0":"15" + lang.min,
-            "1":"30" + lang.min,
-            "2":"1" + lang.h,
-            "3":"2" + lang.h,
-            "4":"3" + lang.h,
-            "5":"5" + lang.h,
-            "6":"12" + lang.h,
-            "7":"24" + lang.h
+            "0":"15",
+            "1":"30",
+            "2":"60",
+            "3":"120",
+            "4":"180",
+            "5":"300",
+            "6":"720",
+            "7":"1440"
         };
 
-        $('.js-search-time-from-value').text( convertObj[index] );
+        $('.js-search-time-from-value').text( function(){
+            console.log('lala');
+            return (convertObj[index] >= 60) ? convertObj[index] / 60 + lang.h : convertObj[index] + lang.min;
+            /*$()
+            convertObj[index]*/
+        });
         $('.js-search-time-from').val(convertObj[index]);
     });
 

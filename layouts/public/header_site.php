@@ -114,6 +114,9 @@
 
                     <img src="<?= TEMPLATE ?>assets/img/<?= isset($isHomePage) ? 'logo.png' : 'logo-white.png' ?>" class="logo logo-display" alt="">
                     <img src="<?= TEMPLATE ?>assets/img/logo.png" class="logo logo-scrolled" alt="">
+                    <span class="free-card">
+                        <?= $lang[$language]['free_parking_map'] ?>
+                    </span>
                 </a>
             </div>
 

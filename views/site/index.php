@@ -162,10 +162,6 @@
                 return `<img src="${origin}/template/assets/img/thumb3.png" >`;
             case 'FORBIDDEN_YELLOW':
                 return `<img src="${origin}/template/assets/img/thumb4.png" >`;
-            case 'FORBIDDEN_PAY':
-                return `<img src="${origin}/template/assets/img/thumb5.png" >`;
-            case 'FORBIDDEN_YELLOW_PAY':
-                return `<img src="${origin}/template/assets/img/thumb6.png" >`;
             default:
                 return '';
         }

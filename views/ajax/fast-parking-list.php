@@ -52,12 +52,6 @@ function rightInterval($min) {
             case 'FORBIDDEN_YELLOW':
                 echo '<img src='. TEMPLATE . 'assets/img/thumb4.png >';
                 break;
-            case 'FORBIDDEN_PAY':
-                echo '<img src='. TEMPLATE . 'assets/img/thumb5.png >';
-                break;
-            case 'FORBIDDEN_YELLOW_PAY':
-                echo '<img src='. TEMPLATE . 'assets/img/thumb6.png >';
-                break;
         }
         ?>
     </div>

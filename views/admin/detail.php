@@ -291,26 +291,6 @@ $filename = array_pop( $arrUrl );
                                                        name="kind_of_place">
                                             </label>
                                         </div>
-                                        <div class="radio">
-                                            <label>
-                                                <img src="<?= TEMPLATE ?>img/thumb5.png" alt="">
-                                                <input type="radio"
-                                                       value="FORBIDDEN_PAY"
-                                                    <?= ($parkPlace['kind_of_place'] === 'FORBIDDEN_PAY')? "checked" : "" ?>
-                                                       required
-                                                       name="kind_of_place">
-                                            </label>
-                                        </div>
-                                        <div class="radio">
-                                            <label>
-                                                <img src="<?= TEMPLATE ?>img/thumb6.png" alt="">
-                                                <input type="radio"
-                                                       value="FORBIDDEN_YELLOW_PAY"
-                                                    <?= ($parkPlace['kind_of_place'] === 'FORBIDDEN_YELLOW_PAY')? "checked" : "" ?>
-                                                       required
-                                                       name="kind_of_place">
-                                            </label>
-                                        </div>
                                     </div>
 
                                 </div>

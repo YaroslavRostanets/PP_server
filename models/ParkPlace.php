@@ -46,11 +46,13 @@ class ParkPlace {
         $result->setFetchMode(PDO::FETCH_ASSOC);
         $result->execute();
         $arrResult = $result->fetch();
-        foreach ($arrResult as $key => $value){
-            if( strripos($key,"geodist_pt") !== FALSE ){
-                $arrResult['geodist_pt'] = $arrResult[$key];
-                unset($arrResult[$key]);
-                break;
+        if ( is_array($arrResult) ) {
+            foreach ($arrResult as $key => $value){
+                if( strripos($key,"geodist_pt") !== FALSE ){
+                    $arrResult['geodist_pt'] = $arrResult[$key];
+                    unset($arrResult[$key]);
+                    break;
+                }
             }
         }
 

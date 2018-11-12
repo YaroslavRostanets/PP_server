@@ -38,46 +38,14 @@ class AjaxController {
 
         }
 
-        if(isset($_GET['filter'])){
-            pri('___');
-            $MONFRY = $_GET['MONFRY'];
-            $SAT = $_GET['SAT'];
-            $SUN = $_GET['SUN'];
-            $filterFrom = $_GET['filterFrom'];
-            $filterTo = $_GET['filterTo'];
-            $filterTimeFrom = intervalToSec($_GET['filterTimeFrom']);
-            pri($_GET['MONFRY']);
-            pri($_GET['SAT']);
-            pri($_GET['SUN']);
-            pri($filterFrom);
-            pri($filterTo);
-            pri($filterTimeFrom);
-            $resultArray = Api::getPlacesByFilter(
-                $_GET['lat'],
-                $_GET['lng'],
-                $MONFRY,
-                $SAT,
-                $SUN,
-                str_replace('-',':',$filterFrom),
-                str_replace('-',':',$filterTo),
-                $filterTimeFrom
-            );
-
-            echo json_encode(
-                array(
-                    'places'=>$resultArray
-                )
-            );
-        }
-
         if(isset($_GET['search'])){
+            echo "SEARCH";
             $language = $this->lang;
             $MONFRY = $_GET['MONFRY'];
             $SAT = $_GET['SAT'];
             $SUN = $_GET['SUN'];
             $filterFrom = $_GET['filterFrom'];
-            $filterTo = $_GET['filterTo'];
-            $filterTimeFrom = intervalToSec($_GET['filterTimeFrom']);
+            $filterTimeFrom = $_GET['filterTimeFrom'];
             $places = Api::getPlacesByFilter(
                 $_GET['lat'],
                 $_GET['lng'],
@@ -85,7 +53,6 @@ class AjaxController {
                 $SAT,
                 $SUN,
                 str_replace('-',':',$filterFrom),
-                str_replace('-',':',$filterTo),
                 $filterTimeFrom
             );
 
@@ -101,7 +68,7 @@ class AjaxController {
             echo json_encode(
                 array(
                     'places'=>$places,
-                    'template'=>$template
+                    //'template'=>$template
                 )
             );
         }

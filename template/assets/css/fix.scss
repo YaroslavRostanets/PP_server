@@ -141,7 +141,7 @@ nav.navbar.bootsnav ul.nav>li>a {
   .tab-selector {
     display: flex;
     li {
-      width: 33.333%;
+      width: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1244,6 +1244,30 @@ ul.footer-navigation li {
     }
   }
 }
+.navbar-header {
+  .navbar-brand {
+    position: relative;
+    .free-card{
+      position: absolute;
+      font-size: 14px;
+      font-weight: 400;
+      bottom: -4px;
+      left: 57px;
+      white-space: nowrap;
+      color: #282F33;
+    }
+  }
+}
+.navbar-transparent {
+  .navbar-header {
+    .navbar-brand {
+      .free-card{
+        color: #FFFFFF;
+      }
+    }
+  }
+}
+
 @media (min-width: 992px) {
   nav.navbar.bootsnav.navbar-fixed .logo-display {
     display: none;
@@ -1990,3 +2014,4 @@ ul.footer-navigation li {
     }
   }
 }
+

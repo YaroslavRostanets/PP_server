@@ -138,7 +138,9 @@ class User {
     }
 
     public static function isLogged(){
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         if( isset($_SESSION['userId']) ){
             return $_SESSION['userId'];
         }

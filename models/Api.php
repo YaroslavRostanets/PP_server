@@ -159,9 +159,11 @@ class Api {
         return json_encode($arrResult, JSON_UNESCAPED_UNICODE);
     }
 
-    public static function getPlacesByFilter ($lat, $lon, $MONFRY, $SAT, $SUN, $FilterFrom, $FilterTo, $FilterTimeFrom, $distance = 999){
-        //pri($FilterTimeFrom);
+    public static function getPlacesByFilter ($lat, $lon, $MONFRY, $SAT, $SUN, $FilterFrom, $FilterTimeFrom, $distance = 999){
+
         $hour24sec = 86400;
+
+        echo $FilterTimeFrom;
 
         function time_to_sec($time){
             $timeArr = explode(':',$time);
@@ -171,7 +173,7 @@ class Api {
         }
 
         $FilterFromSec = time_to_sec($FilterFrom);
-        $FilterToSec = time_to_sec($FilterTo);
+        $FilterTimeFromSec = $FilterTimeFrom * 60;
 
         function sql_template($lat, $lon, $type){
             $sql_template = "(SELECT 
@@ -192,42 +194,34 @@ class Api {
 
             return $sql_template;
         }
-
-        $free = "(hasnt_table = 1 AND $FilterTimeFrom <= time_to_sec(time_interval) AND kind_of_place = 'FREE')";
+        $free = "(FALSE)";
         $pay = "(FALSE)";
         $forbidden = "(FALSE)";
         $forbidden_yellow = "(FALSE)";
-        $forbidden_pay = "(FALSE)";
-        $forbidden_yellow_pay = "(FALSE)";
 
         if ($MONFRY == 'true') {
-            $free .= " 
-            OR ( time_to_sec(weekday_from) <= $FilterFromSec AND $FilterToSec <= (time_to_sec(weekday_to) + time_interval * 60 ) 
-                AND $FilterTimeFrom <= time_to_sec(time_interval) AND kind_of_place = 'FREE' )
+
+/*            $free .= "
+                OR ( -time_to_sec(weekday_to) <= $FilterFromSec AND $FilterFromSec+$FilterTimeFromSec <= time_to_sec(weekday_from) AND kind_of_place = 'FREE' )
+                OR ( time_to_sec(weekday_to) <= $FilterFromSec AND $FilterFromSec+$FilterTimeFromSec <= time_to_sec('24:00') + time_to_sec(weekday_from) AND kind_of_place = 'FREE' )
+                OR ( time_to_sec(weekday_from) <= $FilterFromSec AND $FilterFromSec+$FilterTimeFromSec <= time_to_sec(weekday_to) AND $FilterTimeFromSec <= 60*time_interval AND kind_of_place = 'FREE' )
+                OR ( time_interval = 0 AND kind_of_place = 'FREE' )
             ";
 
-            $pay .= " OR ( 0 <= $FilterFromSec AND $FilterToSec <= time_to_sec(weekday_from) AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'PAY' )
-            OR ( time_to_sec(weekday_to) <= $FilterFromSec AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'PAY' )
-            ";
+            $pay .= "
+                OR ( -time_to_sec(weekday_to) <= $FilterFromSec AND $FilterFromSec+$FilterTimeFromSec <= time_to_sec(weekday_from) AND kind_of_place = 'PAY' )
+                OR ( time_to_sec(weekday_to) <= $FilterFromSec AND $FilterFromSec+$FilterTimeFromSec <= time_to_sec('24:00') + time_to_sec(weekday_from) AND kind_of_place = 'PAY' )
+            ";*/
 
-            $forbidden .= " OR ( 0 <= $FilterFromSec AND $FilterToSec <= time_to_sec(weekday_from) AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN' )
-            OR ( time_to_sec(weekday_to) <= $FilterFromSec AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN' )
-            ";
-
-            $forbidden_yellow .= " OR ( 0 <= $FilterFromSec AND $FilterToSec <= time_to_sec(weekday_from) AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_YELLOW' )
-            OR ( time_to_sec(weekday_to) <= $FilterFromSec AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_YELLOW' )
-            ";
-
-            $forbidden_pay .= " OR ( 0 <= $FilterFromSec AND $FilterToSec <= time_to_sec(weekday_from) AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_PAY' )
-            OR ( time_to_sec(weekday_to) <= $FilterFromSec AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_PAY' )
-            ";
-
-            $forbidden_yellow_pay .= " OR ( 0 <= $FilterFromSec AND $FilterToSec <= time_to_sec(weekday_from) AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_YELLOW_PAY' )
-            OR ( time_to_sec(weekday_to) <= $FilterFromSec AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_YELLOW_PAY' )
+            $forbidden .= "
+                OR ( -time_to_sec(weekday_to) <= $FilterFromSec AND $FilterFromSec+$FilterTimeFromSec <= time_to_sec(weekday_from) 
+                    AND ( time_interval = 0 OR $FilterTimeFromSec <= 60*time_interval ) AND kind_of_place = 'FORBIDDEN' )
+                OR ( time_to_sec(weekday_to) <= $FilterFromSec AND $FilterFromSec+$FilterTimeFromSec <= time_to_sec('24:00') + time_to_sec(weekday_from) 
+                    AND ( time_interval = 0 OR $FilterTimeFromSec <= 60*time_interval ) AND kind_of_place = 'FORBIDDEN' )
             ";
 
         }
-        if ($SAT == 'true') {
+/*        if ($SAT == 'true') {
             $free .= "
             OR ( time_to_sec(saturday_from) <= $FilterFromSec AND $FilterToSec <= (time_to_sec(saturday_to) + time_interval * 60 ) 
             AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FREE' )
@@ -245,13 +239,6 @@ class Api {
             OR ( time_to_sec(saturday_to) <= $FilterFromSec AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_YELLOW' )
             ";
 
-            $forbidden_pay .= " OR ( 0 <= $FilterFromSec AND $FilterToSec <= time_to_sec(saturday_from) AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_PAY' )
-            OR ( time_to_sec(saturday_to) <= $FilterFromSec AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_PAY' )
-            ";
-
-            $forbidden_yellow_pay .= " OR ( 0 <= $FilterFromSec AND $FilterToSec <= time_to_sec(saturday_from) AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_YELLOW_PAY' )
-            OR ( time_to_sec(saturday_to) <= $FilterFromSec AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_YELLOW_PAY' )
-            ";
 
         }
         if ($SUN == 'true') {
@@ -272,14 +259,7 @@ class Api {
             OR ( time_to_sec(sunday_to) <= $FilterFromSec AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_YELLOW' )
             ";
 
-            $forbidden_pay .= " OR ( 0 <= $FilterFromSec AND $FilterToSec <= time_to_sec(sunday_from) AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_PAY' )
-            OR ( time_to_sec(sunday_to) <= $FilterFromSec AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_PAY' )
-            ";
-
-            $forbidden_yellow_pay .= " OR ( 0 <= $FilterFromSec AND $FilterToSec <= time_to_sec(sunday_from) AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_YELLOW_PAY' )
-            OR ( time_to_sec(sunday_to) <= $FilterFromSec AND $FilterTimeFrom <= time_interval * 60 AND kind_of_place = 'FORBIDDEN_YELLOW_PAY' )
-            ";
-        }
+        }*/
 
 
         $db = Db::getConnection();
@@ -287,9 +267,7 @@ class Api {
         $sql = sql_template($lat, $lon,$free) .
             ' UNION ' . sql_template($lat, $lon,$pay) .
             ' UNION ' . sql_template($lat, $lon, $forbidden) .
-            ' UNION ' . sql_template($lat, $lon, $forbidden_yellow) .
-            ' UNION ' . sql_template($lat, $lon, $forbidden_pay).
-            ' UNION ' . sql_template($lat, $lon, $forbidden_yellow_pay);
+            ' UNION ' . sql_template($lat, $lon, $forbidden_yellow);
         //echo $sql;
 
         $result = $db->prepare($sql);

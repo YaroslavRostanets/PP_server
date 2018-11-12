@@ -255,18 +255,6 @@
                                             <input type="radio"  value="FORBIDDEN_YELLOW" required name="kind_of_place">
                                         </label>
                                     </div>
-                                    <div class="radio">
-                                        <label>
-                                            <img src="<?= TEMPLATE ?>img/thumb5.png" alt="">
-                                            <input type="radio"  value="FORBIDDEN_PAY" required name="kind_of_place">
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-                                        <label>
-                                            <img src="<?= TEMPLATE ?>img/thumb6.png" alt="">
-                                            <input type="radio"  value="FORBIDDEN_YELLOW_PAY" required name="kind_of_place">
-                                        </label>
-                                    </div>
                                 </div>
 
                             </div>
@@ -332,9 +320,11 @@
 
         var center = new google.maps.LatLng( 60.16318816140338, 24.941539764404297);
 
-        var parkPlace = {lat: <?= $previous['X(coordinates)'] ?>, lng: <?= $previous['Y(coordinates)'] ?>};
-        $('.js-lat').val(<?= $previous['X(coordinates)'] ?>);
-        $('.js-lon').val(<?= $previous['Y(coordinates)'] ?>);
+        var parkPlace = {
+            lat: <?= $previous['X(coordinates)'] || 60.16318816140338 ?>,
+            lng: <?= $previous['Y(coordinates)'] || 24.941539764404297 ?>};
+        $('.js-lat').val( parkPlace.lat );
+        $('.js-lon').val( parkPlace.lon );
         var map = new google.maps.Map(document.getElementById('map'), {
             center: center,
             zoom: 13,

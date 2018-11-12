@@ -139,9 +139,6 @@ $('.js-red-btn').on('click', function(){
         case 'FAST':
             fastFunc();
             break;
-        case 'FILTER':
-            filterFunc();
-            break;
         case 'SEARCH':
             searchFunc();
             break;
@@ -201,34 +198,6 @@ function fastFunc() {
             }
         }
     });
-
-}
-
-function filterFunc() {
-    var lat = sessionStorage.getItem('lat');
-    var lng = sessionStorage.getItem('lng');
-
-    $('.filter-form').find(':checkbox:not(:checked)').attr('value', '0').prop('checked', true);
-
-    var values = $('.filter-form').serialize();
-    values = values.replace(/=on/g, "=true").replace(/=0&/, "=false&");
-    $.ajax({
-        url: "/ajax?filter&lat=" + lat + '&lng=' + lng,
-        type: 'GET',
-        cache: false,
-        dataType: 'json',
-        data: values,
-        success: function(respond){
-            for (var i = 0; i < markersArr.length; i++) {
-                markersArr[i].setMap(null);
-            }
-            markerCluster.clearMarkers();
-            markersArr = [];
-            map.newMarkersResresh(JSON.parse(respond.places));
-            closeRightMenu();
-        }
-    });
-
 }
 
 function searchFunc() {
@@ -237,8 +206,15 @@ function searchFunc() {
     var lang = $('html').attr('lang');
 
     $('.search-tab-form').find(':checkbox:not(:checked)').attr('value', '0').prop('checked', true);
-    var values = $('.search-tab-form').serialize();
-    values = values.replace(/=on/g, "=true").replace(/=0/g, "=false");
+    var valuesArray = $('.search-tab-form').serializeArray();
+    valuesArray.forEach(function(item,i){
+        if(item.value == "on"){
+            item.value = 'true';
+        } else if(item.value == "0") {
+            item.value = 'false';
+        }
+    });
+    var values = $.param(valuesArray);
 
     $('.search-tab-form').find(':checkbox').each(function(i,item){
         console.log(item);
@@ -255,11 +231,11 @@ function searchFunc() {
         url: "/" + lang + "/ajax?search&lat=" + lat + '&lng=' + lng,
         type: 'GET',
         cache: false,
-        dataType: 'json',
+        dataType: 'text',
         data: values,
         success: function(respond, status){
             console.log(respond);
-            if(status == 'success'){
+            /*if(status == 'success'){
                 $('.search-result-list').html(respond.template);
                 $('.js-tab-sel[data-tab=search-tab-result]').click();
                 $('.js-tab-sel[data-tab=search-tab]').addClass('active');
@@ -293,7 +269,7 @@ function searchFunc() {
                         break;
                     }
                 }
-            });
+            });*/
         }
     });
 }

@@ -56,12 +56,6 @@
                                                     case "FORBIDDEN_YELLOW":
                                                         echo '<img src="' . TEMPLATE .'img/thumb4.png" >';
                                                         break;
-                                                    case "FORBIDDEN_PAY":
-                                                        echo '<img src="' . TEMPLATE .'img/thumb5.png" >';
-                                                        break;
-                                                    case "FORBIDDEN_YELLOW_PAY":
-                                                        echo '<img src="' . TEMPLATE .'img/thumb6.png" >';
-                                                        break;
                                                 }
                                             ?>
                                         </td>
