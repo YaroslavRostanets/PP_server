@@ -237,6 +237,35 @@ function searchFunc() {
                 $('.search-result-list').html(respond.template);
                 $('.js-tab-sel[data-tab=search-tab-result]').click();
                 $('.js-tab-sel[data-tab=search-tab]').addClass('active');
+
+                for (var i = 0; i < markersArr.length; i++) {
+                    markersArr[i].setMap(null);
+                }
+                markerCluster.clearMarkers();
+                markersArr = [];
+                map.newMarkersResresh(JSON.parse(respond.places));
+                $('.fast-parking-list .js-nice-transition').on('click', function(e){
+                    e.preventDefault();
+                    var href = $(this).attr('href');
+                    $('body').addClass('leave');
+                    setTimeout(function(){
+                        window.location.href = href;
+                    },500);
+                });
+
+                $('.js-one-place').on('click', function(){
+                    var markerId = $(this).attr('data-id');
+
+                    for( var marker in markersArr ){
+                        var selMarker = markersArr[marker];
+                        if(markersArr[marker]['id'] == markerId){
+                            google.maps.event.trigger(markersArr[marker], 'click');
+                            map.setCenter(selMarker.position);
+                            map.setZoom(16);
+                            break;
+                        }
+                    }
+                });
             }
             /*if(status == 'success'){
                 $('.search-result-list').html(respond.template);

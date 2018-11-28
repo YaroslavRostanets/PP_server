@@ -255,14 +255,18 @@ include_once ROOT . "/localization/localization.php";
                 <li role="presentation" class="active js-tab-sel ripple" data-tab="fast-parking-tab" data-act="FAST">
                     <a href="javascript:void(0);">
                         <i class="fa fa-rocket" aria-hidden="true"></i>
-                        <?= $lang[$language]['fast_parking'] ?>
+                        <span>
+                            <?= $lang[$language]['fast_parking'] ?>
+                        </span>
                     </a>
                 </li>
 
                 <li role="presentation" class="js-tab-sel ripple" data-tab="search-tab" data-act="SEARCH">
                     <a href="javascript:void(0);">
                         <i class="fa fa-search" aria-hidden="true"></i>
-                        <?= $lang[$language]['search'] ?>
+                        <span>
+                            <?= $lang[$language]['search'] ?>
+                        </span>
                     </a>
                 </li>
 
@@ -272,7 +276,9 @@ include_once ROOT . "/localization/localization.php";
                     style="display: none !important;">
                     <a href="javascript:void(0);">
                         <i class="fa fa-search" aria-hidden="true"></i>
-                        <?= $lang[$language]['search_result'] ?>
+                        <span>
+                            <?= $lang[$language]['search_result'] ?>
+                        </span>
                     </a>
                 </li>
 

@@ -13,6 +13,9 @@ body {
     opacity: 0;
   }
 }
+.w3-sidebar {
+  width: 375px;
+}
 nav.navbar.bootsnav ul.nav>li>a {
   &.disabled {
     color: #C2D2DD !important;
@@ -167,6 +170,9 @@ nav.navbar.bootsnav ul.nav>li>a {
     padding: 0;
     margin-bottom: 10px;
   }
+  .search-result-list {
+    height: 100%;
+  }
   .fast-parking-list, .all-places-list {
     height: 100%;
     overflow: auto;
@@ -206,6 +212,9 @@ nav.navbar.bootsnav ul.nav>li>a {
       display: flex;
       justify-content: space-between;
       padding-right: 14px;
+      span {
+        white-space: nowrap;
+      }
     }
     .bot-info {
       font-size: 14px;

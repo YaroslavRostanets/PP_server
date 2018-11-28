@@ -11,6 +11,9 @@ body {
     filter: grayscale(100%);
     opacity: 0; }
 
+.w3-sidebar {
+  width: 375px; }
+
 nav.navbar.bootsnav ul.nav > li > a.disabled {
   color: #C2D2DD !important; }
   nav.navbar.bootsnav ul.nav > li > a.disabled:hover, nav.navbar.bootsnav ul.nav > li > a.disabled:active, nav.navbar.bootsnav ul.nav > li > a.disabled:focus {
@@ -134,6 +137,8 @@ nav.navbar.bootsnav ul.nav > li > a.disabled {
   min-height: 340px;
   padding: 0;
   margin-bottom: 10px; }
+.tab .search-result-list {
+  height: 100%; }
 .tab .fast-parking-list, .tab .all-places-list {
   height: 100%;
   overflow: auto; }
@@ -166,6 +171,8 @@ nav.navbar.bootsnav ul.nav > li > a.disabled {
     display: flex;
     justify-content: space-between;
     padding-right: 14px; }
+    .tab .fast-parking-list .top-info span, .tab .all-places-list .top-info span {
+      white-space: nowrap; }
   .tab .fast-parking-list .bot-info, .tab .all-places-list .bot-info {
     font-size: 14px;
     font-family: Roboto;
