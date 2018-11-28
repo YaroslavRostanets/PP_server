@@ -217,7 +217,6 @@ function searchFunc() {
     var values = $.param(valuesArray);
 
     $('.search-tab-form').find(':checkbox').each(function(i,item){
-        console.log(item);
         if($(item).attr('value') === '0'){
             $(item).removeAttr('value');
             $(item).prop('checked', false);
@@ -225,16 +224,20 @@ function searchFunc() {
         }
 
     });
-    console.log(values);
 
     $.ajax({
         url: "/" + lang + "/ajax?search&lat=" + lat + '&lng=' + lng,
         type: 'GET',
         cache: false,
-        dataType: 'text',
+        dataType: 'json',
         data: values,
         success: function(respond, status){
             console.log(respond);
+            if(status == 'success') {
+                $('.search-result-list').html(respond.template);
+                $('.js-tab-sel[data-tab=search-tab-result]').click();
+                $('.js-tab-sel[data-tab=search-tab]').addClass('active');
+            }
             /*if(status == 'success'){
                 $('.search-result-list').html(respond.template);
                 $('.js-tab-sel[data-tab=search-tab-result]').click();

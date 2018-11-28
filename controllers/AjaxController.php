@@ -39,7 +39,6 @@ class AjaxController {
         }
 
         if(isset($_GET['search'])){
-            echo "SEARCH";
             $language = $this->lang;
             $MONFRY = $_GET['MONFRY'];
             $SAT = $_GET['SAT'];
@@ -68,7 +67,7 @@ class AjaxController {
             echo json_encode(
                 array(
                     'places'=>$places,
-                    //'template'=>$template
+                    'template'=>$template
                 )
             );
         }
