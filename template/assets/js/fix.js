@@ -74,7 +74,7 @@ $(document).ready(function(){
            if(markersArr[marker]['id'] == markerId){
                google.maps.event.trigger(markersArr[marker], 'click');
                map.setCenter(selMarker.position);
-               map.setZoom(16);
+               map.setZoom(19);
                break;
            }
        }
@@ -140,7 +140,6 @@ $(document).ready(function(){
         });
     });
 
-    $('.js-disabled-auth').on('')
 
     $('body').removeClass('showed');
 
@@ -152,5 +151,7 @@ $(document).ready(function(){
             window.location.href = href;
         },500);
     });
+
+    $('.fast-parking-list').mCustomScrollbar();
 
 });

@@ -143,7 +143,7 @@ nav.navbar.bootsnav ul.nav > li > a.disabled {
   height: 100%;
   overflow: auto; }
   .tab .fast-parking-list .small-listing-box, .tab .all-places-list .small-listing-box {
-    padding: 10px 0;
+    padding: 10px 14px 10px 5px;
     border-bottom: 1px solid #FFFFFF;
     display: flex;
     align-items: stretch; }
@@ -1005,6 +1005,21 @@ ul.footer-navigation li {
 
 .navbar-transparent .navbar-header .navbar-brand .free-card {
   color: #FFFFFF; }
+
+.mCSB_inside > .mCSB_container {
+  margin-right: 0; }
+
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+  background-color: rgba(0, 0, 0, 0.25); }
+
+.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar {
+  background-color: rgba(0, 0, 0, 0.55); }
+
+.mCSB_scrollTools .mCSB_draggerRail {
+  background-color: rgba(0, 0, 0, 0.1); }
+
+.mCSB_scrollTools .mCSB_draggerContainer {
+  z-index: 15; }
 
 @media (min-width: 992px) {
   nav.navbar.bootsnav.navbar-fixed .logo-display {

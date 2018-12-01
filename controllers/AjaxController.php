@@ -72,6 +72,26 @@ class AjaxController {
             );
         }
 
+        if( isset($_GET['isauth']) ) {
+            if(!isset($_SESSION))
+            {
+                session_start();
+            }
+            if( isset($_SESSION['userId']) ) {
+                echo json_encode(
+                    array(
+                        'isauth'=>'1'
+                    )
+                );
+            } else {
+                echo json_encode(
+                    array(
+                        'isauth'=>''
+                    )
+                );
+            }
+        }
+
         return TRUE;
     }
 }

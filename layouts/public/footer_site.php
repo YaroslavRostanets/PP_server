@@ -135,6 +135,8 @@ include_once ROOT . "/localization/footer_site.php";
 
 <script src="<?= TEMPLATE ?>assets/plugins/moment/moment.min.js"></script>
 
+<script src="<?= TEMPLATE ?>assets/plugins/mCustomScrollbar/jquery.mCustomScrollbar.min.js"></script>
+
 <script src="<?= TEMPLATE ?>assets/plugins/bootstrap-material-datetimepicker/bootstrap-material-datetimepicker.js"></script>
 
 <!-- Custom Js -->

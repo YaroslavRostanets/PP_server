@@ -35,7 +35,11 @@ if(typeof window.map !== 'undefined'){
                 var point = marker['placeInfo'];
                 console.log(point);
 
-                var href = '';
+                var lang = $('html').attr('lang');
+
+                var href = '/' + lang + '/' + 'detail/' + (point['friendly_url'] ? point['friendly_url'] : point['id']);
+
+                //var href = '<?= "/$language" ?>' + '/detail/' + (point['friendly_url'] ? point['friendly_url'] : point['id']);
 
                 infowindow.setContent(`<div class="info-window">
                                 <div class="top">
@@ -82,40 +86,52 @@ if(typeof window.map !== 'undefined'){
                 });
 
                 $('.js-add-to-favorites').on('click', function(){
-                    console.log(marker.placeInfo.id);
+                    //console.log(marker.placeInfo.id);
+                    console.log('lalala456');
                     $.ajax({
-                        url: "/favorites/add?placeId=" + marker.placeInfo.id,
+                        url: "/" + lang + "/ajax?isauth",
                         type: 'GET',
                         cache: false,
-                        dataType: 'html',
+                        dataType: 'json',
                         success: function(respond,status){
                             console.log(respond);
-                            $('#confirm-modal').remove();
-                            $('body').append(respond);
-                            $('#confirm-modal').modal();
+                            if (respond.isauth) {
+                                $.ajax({
+                                    url: "/favorites/add?placeId=" + marker.placeInfo.id,
+                                    type: 'GET',
+                                    cache: false,
+                                    dataType: 'html',
+                                    success: function(respond,status){
+                                        console.log(respond);
+                                        $('#confirm-modal').remove();
+                                        $('body').append(respond);
+                                        $('#confirm-modal').modal();
 
-                            $.ajax({
-                                url: "/favorites/index?count",
-                                type: 'GET',
-                                cache: false,
-                                dataType: 'html',
-                                success: function(respond){
-                                    console.log(respond);
-                                    if($('.js-show-favorites span').length){
-                                        $('.js-show-favorites span').text(respond);
-                                    } else {
-                                        $('.js-show-favorites').append('<span></span>');
-                                        $('.js-show-favorites span').text(respond);
+                                        $.ajax({
+                                            url: "/favorites/index?count",
+                                            type: 'GET',
+                                            cache: false,
+                                            dataType: 'html',
+                                            success: function(respond){
+                                                if($('.js-show-favorites span').length){
+                                                    $('.js-show-favorites span').text(respond);
+                                                } else {
+                                                    $('.js-show-favorites').append('<span></span>');
+                                                    $('.js-show-favorites span').text(respond);
+                                                }
+                                            }
+                                        })
                                     }
-                                }
-                            })
+                                });
+                            } else {
+                                $('#no-sign').modal();
+                            }
                         }
                     });
 
+
                 });
             });
-
-            //map.setZoom(11);
 
             return marker;
 
@@ -161,11 +177,11 @@ function fastFunc() {
         cache: false,
         dataType: 'json',
         success: function(respond,status){
-            console.log('____');
-            console.log(respond);
+
             if(status == 'success'){
                 var markers = respond.places;
                 $('#fast-parking-tab').html(respond.html);
+                $('.fast-parking-list').mCustomScrollbar();
                 for (var i = 0; i < markersArr.length; i++) {
                     google.maps.event.clearListeners(markersArr[i], 'click');
                     markersArr[i].setMap(null);
@@ -181,23 +197,25 @@ function fastFunc() {
                         window.location.href = href;
                     },500);
                 });
+
+                $('.js-one-place').on('click', function(){
+                    var markerId = $(this).attr('data-id');
+
+                    for( var marker in markersArr ){
+                        var selMarker = markersArr[marker];
+                        if(markersArr[marker]['id'] == markerId){
+                            google.maps.event.trigger(markersArr[marker], 'click');
+                            map.setCenter(selMarker.position);
+                            map.setZoom(19);
+                            break;
+                        }
+                    }
+                });
+
             }
         }
     });
 
-    $('.js-one-place').on('click', function(){
-        var markerId = $(this).attr('data-id');
-
-        for( var marker in markersArr ){
-            var selMarker = markersArr[marker];
-            if(markersArr[marker]['id'] == markerId){
-                google.maps.event.trigger(markersArr[marker], 'click');
-                map.setCenter(selMarker.position);
-                map.setZoom(16);
-                break;
-            }
-        }
-    });
 }
 
 function searchFunc() {
@@ -235,6 +253,7 @@ function searchFunc() {
             console.log(respond);
             if(status == 'success') {
                 $('.search-result-list').html(respond.template);
+                $('.fast-parking-list').mCustomScrollbar();
                 $('.js-tab-sel[data-tab=search-tab-result]').click();
                 $('.js-tab-sel[data-tab=search-tab]').addClass('active');
 
@@ -261,47 +280,12 @@ function searchFunc() {
                         if(markersArr[marker]['id'] == markerId){
                             google.maps.event.trigger(markersArr[marker], 'click');
                             map.setCenter(selMarker.position);
-                            map.setZoom(16);
+                            map.setZoom(19);
                             break;
                         }
                     }
                 });
             }
-            /*if(status == 'success'){
-                $('.search-result-list').html(respond.template);
-                $('.js-tab-sel[data-tab=search-tab-result]').click();
-                $('.js-tab-sel[data-tab=search-tab]').addClass('active');
-
-                for (var i = 0; i < markersArr.length; i++) {
-                    markersArr[i].setMap(null);
-                }
-                markerCluster.clearMarkers();
-                markersArr = [];
-                map.newMarkersResresh(JSON.parse(respond.places));
-                $('.fast-parking-list .js-nice-transition').on('click', function(e){
-                    e.preventDefault();
-                    var href = $(this).attr('href');
-                    $('body').addClass('leave');
-                    setTimeout(function(){
-                        window.location.href = href;
-                    },500);
-                });
-            }
-            console.log(respond);
-
-            $('.js-one-place').on('click', function(){
-                var markerId = $(this).attr('data-id');
-
-                for( var marker in markersArr ){
-                    var selMarker = markersArr[marker];
-                    if(markersArr[marker]['id'] == markerId){
-                        google.maps.event.trigger(markersArr[marker], 'click');
-                        map.setCenter(selMarker.position);
-                        map.setZoom(16);
-                        break;
-                    }
-                }
-            });*/
         }
     });
 }

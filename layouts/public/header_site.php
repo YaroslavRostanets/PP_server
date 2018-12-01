@@ -71,6 +71,8 @@
     <!-- nouislider -->
     <link href="<?= TEMPLATE ?>assets/plugins/nouislider/nouislider.min.css" rel="stylesheet">
 
+    <link href="<?= TEMPLATE ?>assets/plugins/mCustomScrollbar/jquery.mCustomScrollbar.min.css" rel="stylesheet">
+
     <!-- Time Picker -->
     <link href="<?= TEMPLATE ?>assets/plugins/bootstrap-material-datetimepicker/bootstrap-material-datetimepicker.css" rel="stylesheet">
 

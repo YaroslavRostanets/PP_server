@@ -228,11 +228,16 @@
                                     <a href="${href}" class="std-btn js-nice-transition">
                                         <i class="fa fa-info-circle" aria-hidden="true"></i>
                                     </a>
+                                    <? if( isset($user) ): ?>
                                     <a href="javascript:void(0);" class="std-btn js-add-to-favorites ripple">
                                         <i class="fa fa-star-o" aria-hidden="true"></i>
                                     </a>
-                                    <a
-                                    href="http://maps.google.com/maps?q=${point['lat']},${point['lon']}&ll=${point['lat']},${point['lon']}&z=13"
+                                    <? else : ?>
+                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#no-sign" class="std-btn disabled ripple">
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    </a>
+                                    <? endif; ?>
+                                    <a href="http://maps.google.com/maps?q=${point['lat']},${point['lon']}&ll=${point['lat']},${point['lon']}&z=13"
                                     class="std-btn gm js-nice-transition">
                                         <i class="fa fa-map-o" aria-hidden="true"></i>
                                         Open in GM2
