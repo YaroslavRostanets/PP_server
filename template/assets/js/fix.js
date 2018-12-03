@@ -98,15 +98,16 @@ $(document).ready(function(){
     });
 
     $('.js-show-favorites').on('click', function(){
-       console.log('favorites');
+        console.log('favrites');
        var lat = sessionStorage.getItem('lat');
        var lng = sessionStorage.getItem('lng');
         $.ajax({
-            url: "/favorites?get-list-modal&lat=" + lat + '&lng=' + lng,
+            url: window.location.href + "/favorites?get-list-modal&lat=" + lat + '&lng=' + lng,
             type: 'GET',
             cache: false,
             dataType: 'html',
             success: function(respond,status){
+                console.log(respond);
                 $('#favorites-modal').remove();
                 $('body').append(respond);
                 $('#favorites-modal').modal();
@@ -115,7 +116,7 @@ $(document).ready(function(){
                     var id = $(this).attr('data-id');
                     var item =  $(this).closest('.item');
                     $.ajax({
-                        url: "/favorites?remove_from_favorites=" + id,
+                        url: window.location.href + "/favorites?remove_from_favorites=" + id,
                         type: 'GET',
                         cache: false,
                         dataType: 'json',
@@ -155,3 +156,48 @@ $(document).ready(function(){
     $('.fast-parking-list').mCustomScrollbar();
 
 });
+
+function addToFavorites(markerId) {
+    console.log('addFavorites');
+    $.ajax({
+        url: window.location.href + "/ajax?isauth",
+        type: 'GET',
+        cache: false,
+        dataType: 'json',
+        success: function(respond,status){
+            console.log(respond);
+            if (respond.isauth) {
+                $.ajax({
+                    url: "/favorites/add?placeId=" + markerId,
+                    type: 'GET',
+                    cache: false,
+                    dataType: 'html',
+                    success: function(respond,status){
+                        console.log(respond);
+                        $('#confirm-modal').remove();
+                        $('body').append(respond);
+                        $('#confirm-modal').modal();
+
+                        $.ajax({
+                            url: window.location.href + "/favorites/index?count",
+                            type: 'GET',
+                            cache: false,
+                            dataType: 'html',
+                            success: function(respond){
+                                console.log(respond);
+                                /*if($('.js-show-favorites span').length){
+                                    $('.js-show-favorites span').text(respond);
+                                } else {
+                                    $('.js-show-favorites').append('<span></span>');
+                                    $('.js-show-favorites span').text(respond);
+                                }*/
+                            }
+                        })
+                    }
+                });
+            } else {
+                $('#no-sign').modal();
+            }
+        }
+    });
+}

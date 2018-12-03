@@ -13,7 +13,10 @@ class FavoritesController {
     }
 
     public function actionAddfavoriteplace(){
-        session_start();
+        if(!isset($_SESSION))
+        {
+            session_start();
+        }
         $language = $this->lang;
 
         if(isset($_GET['placeId']) && isset($_SESSION['userId'])){
@@ -32,7 +35,11 @@ class FavoritesController {
     }
 
     public function actionIndex() {
-        session_start();
+        if(!isset($_SESSION))
+        {
+            session_start();
+        }
+
         $language = $this->lang;
         if(isset($_GET['get-list-modal']) && isset($_SESSION['userId'])){
             $userId = $_SESSION['userId'];

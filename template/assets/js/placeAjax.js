@@ -32,8 +32,8 @@ if(typeof window.map !== 'undefined'){
             });
 
             marker.addListener('click', function() {
+                console.log('markerClick');
                 var point = marker['placeInfo'];
-                console.log(point);
 
                 var lang = $('html').attr('lang');
 
@@ -62,7 +62,9 @@ if(typeof window.map !== 'undefined'){
                                     <a href="${href}" class="std-btn js-nice-transition">
                                         <i class="fa fa-info-circle" aria-hidden="true"></i>
                                     </a>
-                                    <a href="javascript:void(0);" class="std-btn js-add-to-favorites ripple">
+                                    <a href="javascript:void(0);"
+                                        onclick="addToFavorites( ${marker.placeInfo.id} );"
+                                        class="std-btn ripple">
                                         <i class="fa fa-star-o" aria-hidden="true"></i>
                                     </a>
                                     <a
@@ -85,52 +87,6 @@ if(typeof window.map !== 'undefined'){
                     },500);
                 });
 
-                $('.js-add-to-favorites').on('click', function(){
-                    //console.log(marker.placeInfo.id);
-                    console.log('lalala456');
-                    $.ajax({
-                        url: "/" + lang + "/ajax?isauth",
-                        type: 'GET',
-                        cache: false,
-                        dataType: 'json',
-                        success: function(respond,status){
-                            console.log(respond);
-                            if (respond.isauth) {
-                                $.ajax({
-                                    url: "/favorites/add?placeId=" + marker.placeInfo.id,
-                                    type: 'GET',
-                                    cache: false,
-                                    dataType: 'html',
-                                    success: function(respond,status){
-                                        console.log(respond);
-                                        $('#confirm-modal').remove();
-                                        $('body').append(respond);
-                                        $('#confirm-modal').modal();
-
-                                        $.ajax({
-                                            url: "/favorites/index?count",
-                                            type: 'GET',
-                                            cache: false,
-                                            dataType: 'html',
-                                            success: function(respond){
-                                                if($('.js-show-favorites span').length){
-                                                    $('.js-show-favorites span').text(respond);
-                                                } else {
-                                                    $('.js-show-favorites').append('<span></span>');
-                                                    $('.js-show-favorites span').text(respond);
-                                                }
-                                            }
-                                        })
-                                    }
-                                });
-                            } else {
-                                $('#no-sign').modal();
-                            }
-                        }
-                    });
-
-
-                });
             });
 
             return marker;

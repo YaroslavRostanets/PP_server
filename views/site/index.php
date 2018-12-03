@@ -229,7 +229,9 @@
                                         <i class="fa fa-info-circle" aria-hidden="true"></i>
                                     </a>
                                     <? if( isset($user) ): ?>
-                                    <a href="javascript:void(0);" class="std-btn js-add-to-favorites ripple">
+                                    <a href="javascript:void(0);"
+                                        onclick="addToFavorites( ${marker.placeInfo.id} );"
+                                        class="std-btn ripple">
                                         <i class="fa fa-star-o" aria-hidden="true"></i>
                                     </a>
                                     <? else : ?>
@@ -257,38 +259,7 @@
                     },500);
                 });
 
-                $('.js-add-to-favorites').on('click', function(){
-                    console.log(marker.placeInfo.id);
-                    $.ajax({
-                        url: "/favorites/add?placeId=" + marker.placeInfo.id,
-                        type: 'GET',
-                        cache: false,
-                        dataType: 'html',
-                        success: function(respond,status){
-                            console.log(respond);
-                            $('#confirm-modal').remove();
-                            $('body').append(respond);
-                            $('#confirm-modal').modal();
 
-                            $.ajax({
-                                url: "/favorites/index?count",
-                                type: 'GET',
-                                cache: false,
-                                dataType: 'html',
-                                success: function(respond){
-                                    console.log(respond);
-                                    if($('.js-show-favorites span').length){
-                                        $('.js-show-favorites span').text(respond);
-                                    } else {
-                                        $('.js-show-favorites').append('<span></span>');
-                                        $('.js-show-favorites span').text(respond);
-                                    }
-                                }
-                            })
-                        }
-                    });
-
-                });
             });
 
             return marker;

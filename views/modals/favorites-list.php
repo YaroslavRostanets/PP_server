@@ -83,9 +83,9 @@ function rightDistance($dist) {
                                     </div>
                                     <table width="90%" class="bot-info">
                                         <tr>
-                                            <td width="30%"><?= rightTimeFormat($place['weekday_from']) ?> - <?= rightTimeFormat($place['weekday_to']) ?></td>
-                                            <td width="40%">(<?= rightTimeFormat($place['saturday_from']) ?> - <?= rightTimeFormat($place['saturday_to']) ?>)</td>
-                                            <td width="30%" class="holiday"><?= rightTimeFormat($place['sunday_from']) ?> - <?= rightTimeFormat($place['sunday_to']) ?></td>
+                                            <td width="30%"><?= rightTimeFormat($value['weekday_from']) ?> - <?= rightTimeFormat($value['weekday_to']) ?></td>
+                                            <td width="40%">(<?= rightTimeFormat($value['saturday_from']) ?> - <?= rightTimeFormat($value['saturday_to']) ?>)</td>
+                                            <td width="30%" class="holiday"><?= rightTimeFormat($value['sunday_from']) ?> - <?= rightTimeFormat($value['sunday_to']) ?></td>
                                         </tr>
                                     </table>
 
