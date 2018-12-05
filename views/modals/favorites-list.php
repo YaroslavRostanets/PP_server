@@ -81,7 +81,7 @@ function rightDistance($dist) {
                                     Distance: <?= rightDistance($value['geodist_pt']) ?>
                                 </span>
                                     </div>
-                                    <table width="90%" class="bot-info">
+                                    <table width="90%" >
                                         <tr>
                                             <td width="30%"><?= rightTimeFormat($value['weekday_from']) ?> - <?= rightTimeFormat($value['weekday_to']) ?></td>
                                             <td width="40%">(<?= rightTimeFormat($value['saturday_from']) ?> - <?= rightTimeFormat($value['saturday_to']) ?>)</td>

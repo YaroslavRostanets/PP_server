@@ -122,18 +122,17 @@ $('.js-red-btn').on('click', function(){
 
 
 function fastFunc() {
-    console.log('ajax');
+
     var lat = sessionStorage.getItem('lat');
     var lng = sessionStorage.getItem('lng');
     var lang = $('html').attr('lang');
-
+    showLoader();
     $.ajax({
-        url: "/" + lang + "/ajax?fast&lat=" + lat + '&lng=' + lng,
+        url: window.location.origin + "/" + lang + "/ajax?fast&lat=" + lat + '&lng=' + lng,
         type: 'GET',
         cache: false,
         dataType: 'json',
         success: function(respond,status){
-
             if(status == 'success'){
                 var markers = respond.places;
                 $('#fast-parking-tab').html(respond.html);
@@ -167,7 +166,7 @@ function fastFunc() {
                         }
                     }
                 });
-
+                hideLoader();
             }
         }
     });
@@ -178,6 +177,7 @@ function searchFunc() {
     var lat = sessionStorage.getItem('lat');
     var lng = sessionStorage.getItem('lng');
     var lang = $('html').attr('lang');
+    showLoader();
 
     $('.search-tab-form').find(':checkbox:not(:checked)').attr('value', '0').prop('checked', true);
     var valuesArray = $('.search-tab-form').serializeArray();
@@ -200,7 +200,7 @@ function searchFunc() {
     });
 
     $.ajax({
-        url: "/" + lang + "/ajax?search&lat=" + lat + '&lng=' + lng,
+        url: window.location.origin + "/" + lang + "/ajax?search&lat=" + lat + '&lng=' + lng,
         type: 'GET',
         cache: false,
         dataType: 'json',
@@ -241,6 +241,7 @@ function searchFunc() {
                         }
                     }
                 });
+                hideLoader();
             }
         }
     });

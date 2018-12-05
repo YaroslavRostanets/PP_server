@@ -18,7 +18,6 @@ class FavoritesController {
             session_start();
         }
         $language = $this->lang;
-
         if(isset($_GET['placeId']) && isset($_SESSION['userId'])){
             $respond = Favorites::addPlaceToFavorite($_SESSION['userId'], $_GET['placeId']);
             if (!$respond['errors']){

@@ -15,9 +15,9 @@ class AjaxController {
 
 
     public function actionIndex(){
+        $language = $this->lang;
 
         if(isset($_GET['fast'])){
-            $language = $this->lang;
             $lat = $_GET['lat'];
             $lng = $_GET['lng'];
             $places = Api::getPlacesListNearPoint($lat, $lng);
@@ -39,7 +39,6 @@ class AjaxController {
         }
 
         if(isset($_GET['search'])){
-            $language = $this->lang;
             $MONFRY = $_GET['MONFRY'];
             $SAT = $_GET['SAT'];
             $SUN = $_GET['SUN'];

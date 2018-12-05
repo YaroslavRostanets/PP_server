@@ -55,7 +55,7 @@ include_once ROOT . "/localization/footer_site.php";
                 </div>
             </div>
 
-
+            <? include_once ROOT . "/layouts/public/loader.php"; ?>
 
         </div>
     </div>

@@ -6,6 +6,8 @@
  * Time: 20:33
  */
 
+include_once ROOT . "/localization/localization.php";
+
 function rightTimeFormat($time){
     $arr = explode(":", $time);
     return $arr[0]; //Возвращает часы
@@ -30,6 +32,8 @@ function rightInterval($min) {
         return floor( $min ) . " min";
     }
 }
+
+$language = $context['language'];
 
 ?>
 
@@ -61,7 +65,7 @@ function rightInterval($min) {
                                     <?= rightInterval($place['time_interval']) ?>
                                 </span>
             <span>
-                                    Distance: <?= rightDistance($place['geodist_pt']) ?>
+                                    <?= $lang[$language]['distance'] ?> : <?= rightDistance($place['geodist_pt']) ?>
                                 </span>
         </div>
         <table width="90%" class="bot-info">

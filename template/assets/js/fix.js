@@ -158,7 +158,7 @@ $(document).ready(function(){
 });
 
 function addToFavorites(markerId) {
-    console.log('addFavorites');
+
     $.ajax({
         url: window.location.href + "/ajax?isauth",
         type: 'GET',
@@ -168,12 +168,11 @@ function addToFavorites(markerId) {
             console.log(respond);
             if (respond.isauth) {
                 $.ajax({
-                    url: "/favorites/add?placeId=" + markerId,
+                    url: window.location.href + "/favorites/add?placeId=" + markerId,
                     type: 'GET',
                     cache: false,
                     dataType: 'html',
                     success: function(respond,status){
-                        console.log(respond);
                         $('#confirm-modal').remove();
                         $('body').append(respond);
                         $('#confirm-modal').modal();
@@ -185,12 +184,12 @@ function addToFavorites(markerId) {
                             dataType: 'html',
                             success: function(respond){
                                 console.log(respond);
-                                /*if($('.js-show-favorites span').length){
+                                if($('.js-show-favorites span').length){
                                     $('.js-show-favorites span').text(respond);
                                 } else {
                                     $('.js-show-favorites').append('<span></span>');
                                     $('.js-show-favorites span').text(respond);
-                                }*/
+                                }
                             }
                         })
                     }
@@ -200,4 +199,11 @@ function addToFavorites(markerId) {
             }
         }
     });
+}
+
+function showLoader() {
+    $('#loader').fadeIn(150);
+}
+function hideLoader() {
+    $('#loader').fadeOut(250);
 }
